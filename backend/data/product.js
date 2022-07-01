@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: "1",
     name: "Velcro Ballerinas for girls (pink)",
     image: "/images/6.png",
     description: "Lorem Ipsum dummy dummy text",
@@ -10,7 +9,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: "2",
     name: "Velcro Ballerinas for girls (blue)",
     image: "/images/6.png",
     description: "Lorem Ipsum dummy dummy text",
@@ -20,7 +18,6 @@ const products = [
     numReviews: 5,
   },
   {
-    _id: "3",
     name: "Fubu Ballerinas for girls (pink)",
     image: "/images/6.png",
     description: "Lorem Ipsum dummy dummy text",
@@ -30,7 +27,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: "4",
     name: "Rated Ballerinas for girls (pink)",
     image: "/images/6.png",
     description: "Lorem Ipsum dummy dummy text",

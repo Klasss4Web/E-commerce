@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import { Rating } from "../components/homeComponents/Rating";
 import Message from "../components/loadingError/Error";
 import Loading from "../components/loadingError/Loading";
+import { addItemToCart } from "../redux/actions/cartActions";
 import { productDetails } from "../redux/actions/productActions";
 
 const SingleProduct = ({ history, match }) => {
@@ -21,6 +22,7 @@ const SingleProduct = ({ history, match }) => {
 
   const addToCart = (e) => {
     e.preventDefault();
+    dispatch(addItemToCart(productId, quantity));
     history.push(`/cart/${productId}?qty=${quantity}`);
   };
 
