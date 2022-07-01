@@ -15,7 +15,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       else {
         return {
           ...state,
-          cartItems: state.cartItems.filter(x => x.product !== action.payload)
+          cartItems: [...state.cartItems, item]
         }
       }
 
