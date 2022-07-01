@@ -1,0 +1,88 @@
+@media (max-width: 991.98px) {
+  .display-none {
+    display: none !important;
+  }
+  .search-button {
+    font-size: 10px;
+  }
+  .login-register a {
+    font-size: 10px
+  }
+  .btn-group button {
+    font-size: 13px;
+  }
+  .badge {
+    top: -10px;
+    padding: 5px;
+    font-size: 7px;
+  }
+  .input-group {
+    height: 30px;
+  }
+  .single-image,
+  .single-image img {
+    height: 400px;
+  }
+  .author-card-avatar img {
+    margin-top: -20%;
+  }
+  .order-box {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
+  .order-detail p {
+    font-size: 12px;
+  }
+  .order-detail {
+    font-size: 13px;
+  }
+  .subtotal-order button {
+    margin-bottom: 30px;
+  }
+  .single-product {
+    margin-top: 20px;
+  }
+
+ 
+}
+
+@media (max-width: 760px) {
+  .pc-header {
+    display: none !important;
+  }
+  .mobile-header {
+    display: block;
+  }
+  .cart-mobile-icon i {
+    font-size: 13px;
+    margin-left: 10px;
+  }
+  .btn-group button {
+    font-size: 12px;
+  }
+  .mobile-header img {
+    width: 60px;
+  }
+  .input-group {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .search-button {
+    width: 30%;
+  }
+  .subscribe-head .form-section input[type="email"] {
+    height: 45px;
+    width: 70%;
+  }
+  .subscribe-head .form-section input[type="submit"] {
+    height: 47px;
+    width: 0 58px;
+  }
+  .subscribe-head h2 {
+    font-size: 25px;
+  }
+  .contact-box {
+    margin: 30px 0;
+  }
+}
