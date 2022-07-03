@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectToDataBase from "./config/mongodb.js";
 import importData from "./dataImport.js";
 import productRoute from "./routes/productRoutes.js";
+import { errorHandler, notFound } from "./middleware/errors.js";
 
 dotenv.config();
 connectToDataBase();
@@ -12,6 +13,8 @@ const app = express();
 // API
 app.use("/api/import", importData);
 app.use("/api/products", productRoute);
+app.use(notFound);
+app.use(errorHandler)
 
 // //GET PRODUCTS
 // app.get("/api/products", (req, res) => {
