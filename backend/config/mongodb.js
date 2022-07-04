@@ -2,14 +2,15 @@ import mongoose from "mongoose";
 
 const connectToDataBase = () => {
   try {
-    const connect =  mongoose.connect(process.env.MONGO_URL, {
+    const connection = mongoose.connect(process.env.MONGO_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
 
-    console.log("Mongo dB Connected");
+    console.log("Mongo dB Connected", connection);
   } catch (error) {
     console.error(`Error:, ${error.message}`);
+    // throw new Error(`Error:, ${error.message}`);
     process.exit(1);
   }
 };
