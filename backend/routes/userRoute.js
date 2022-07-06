@@ -30,7 +30,7 @@ userRoute.post(
 );
 
 //REGISTER
-userRoute.get(
+userRoute.post(
   "/",
   asyncHandler(async (req, res) => {
     const { name, email, password } = req.body
