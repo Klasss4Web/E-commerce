@@ -146,23 +146,36 @@ const Header = () => {
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-center">
                 {userInfo ? (
-                  <div className="btn-group">
+                  <div className="btn-group dropdown">
                     <button
                       type="button"
                       className="name-button dropdown-toggle"
-                      data-toggle="dropdown"
+                      data-bs-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
                       Hi, {userInfo?.name}
                     </button>
                     <div className="dropdown-menu">
-                      <Link className="dropdown-item" to="/profile">
+                      <Link
+                        className="dropdown-item"
+                        to="/profile"
+                        style={{
+                          color: "#fff",
+                          background: "green",
+                          border: "1px solid #fff",
+                        }}
+                      >
                         Profile
                       </Link>
                       <Link
                         className="dropdown-item"
                         to="#"
+                        style={{
+                          color: "#fff",
+                          background: "green",
+                          border: "1px solid #fff",
+                        }}
                         onClick={handleLogout}
                       >
                         Logout

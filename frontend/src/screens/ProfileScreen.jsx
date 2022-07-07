@@ -1,7 +1,26 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from '../components/Header'
+import { getUserProfile } from '../redux/actions/userActions'
+import Orders from "./../components/profileComponents/Orders"
+import ProfileTabs from "../components/profileComponents/ProfileTabs"
+import moment from "moment"
 
 export const ProfileScreen = () => {
+
+  window.scrollTo(0, 0)
+
+  const dispatch = useDispatch()
+  
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    dispatch(getUserProfile("PROFILE"))
+  },[dispatch])
+
+
   return (
     <div>
       <Header />
@@ -16,9 +35,9 @@ export const ProfileScreen = () => {
                 </div>
                 <div className='author-card-details col-md-7'>
                   <h5 className='author-card-name mb-2'>
-                    <strong>Admin Doe</strong>
+                    <strong>{userInfo?.name}</strong>
                   </h5>
-                  <span className='author-card-position'>Joined Jan 1, 2022</span>
+                  <span className='author-card-position'>Joined {moment(userInfo.createdAt).format("LL")}</span>
                 </div>
               </div>
             </div>
@@ -63,7 +82,7 @@ export const ProfileScreen = () => {
            className='tab-content col-lg-8 pb-5 pt-lg-0 pt-3'
            id='v-pills-tabContent'
           >
-            
+            <ProfileTabs />
           </div>
         </div>
       </div>
