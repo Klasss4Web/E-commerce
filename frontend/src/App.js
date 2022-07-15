@@ -27,7 +27,7 @@ function App() {
       <Route path="/cart/:id?" component={CartScreen} />
       <Route path="/shipping" component={ShippingScreen} />
       <Route path="/payment" component={PaymentScreen} />
-      <Route path="/placeholder" component={PlaceOrderScreen} />
+      <Route path="/placeorder" component={PlaceOrderScreen} />
       <Route path="/order" component={OrderScreen} />
       <Route path="*" component={NotFound} />
     </Switch>

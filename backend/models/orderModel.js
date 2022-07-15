@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose  from "mongoose";
 
 const orderSchema = mongoose.Schema(
   {
@@ -17,7 +17,7 @@ const orderSchema = mongoose.Schema(
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          ref: "Product",
+          ref: "Products",
         },
       },
     ],
@@ -32,7 +32,7 @@ const orderSchema = mongoose.Schema(
     paymentMethod: {
       type: String,
       required: true,
-      default: paypal,
+      default: "PayPal",
     },
 
     paymentResult: {

@@ -6,6 +6,7 @@ import importData from "./dataImport.js";
 import productRoute from "./routes/productRoutes.js";
 import { errorHandler, notFound } from "./middleware/errors.js";
 import userRoute from "./routes/userRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 
 dotenv.config();
 connectToDataBase();
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use("/api/import", importData);
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
 
 //ERROR HANDLER
 app.use(notFound);
