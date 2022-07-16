@@ -32,13 +32,14 @@ export const PlaceOrderScreen = ({ history }) => {
     Number(cart?.taxPrice)
   ).toFixed(2);
 
-  const createOrder = useSelector((state) => state.createOrders);
+  const createOrders = useSelector((state) => state.createOrders);
 
-  const { order, success, error } = createOrder;
+  const { order, success, error } = createOrders;
+  console.log("orders", order)
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-   dispatch( createOrderAction({
+   dispatch(createOrderAction({
       orderItems: cart.cartItems,
       shippingAddress: cart.shippingAddress,
       paymentMethod: cart.paymentMethod,
