@@ -6,6 +6,7 @@ import { getUserProfile } from '../redux/actions/userActions'
 import Orders from "./../components/profileComponents/Orders"
 import ProfileTabs from "../components/profileComponents/ProfileTabs"
 import moment from "moment"
+import { ordersListAction } from '../redux/actions/orderActions'
 
 export const ProfileScreen = () => {
 
@@ -15,9 +16,12 @@ export const ProfileScreen = () => {
   
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+    const orderList = useSelector((state) => state.orderList);
+    const { loading, error, orders } = orderList;
 
   useEffect(() => {
-    dispatch(getUserProfile("PROFILE"))
+    dispatch(ordersListAction());
+    dispatch(getUserProfile("profile"));
   },[dispatch])
 
 
@@ -38,7 +42,7 @@ export const ProfileScreen = () => {
                     <strong>{userInfo?.name}</strong>
                   </h5>
                   <span className="author-card-position">
-                    Joined {moment(userInfo.createdAt).format("LL")}
+                    Joined {moment(userInfo?.createdAt).format("LL")}
                   </span>
                 </div>
               </div>
@@ -54,7 +58,7 @@ export const ProfileScreen = () => {
                   <button
                     className="nav-link active"
                     id="v-pills-home-tab"
-                    data-bs-toggle="pills"
+                    data-bs-toggle="pill"
                     data-bs-target="#v-pills-home"
                     role="tab"
                     type="button"
@@ -66,7 +70,7 @@ export const ProfileScreen = () => {
                   <button
                     className="nav-link d-flex justify-content-between"
                     id="v-pills-profile-tab"
-                    data-bs-toggle="pills"
+                    data-bs-toggle="pill"
                     data-bs-target="#v-pills-profile"
                     role="tab"
                     type="button"
@@ -74,7 +78,9 @@ export const ProfileScreen = () => {
                     aria-selected="false"
                   >
                     Order List
-                    <span className="badge2">3</span>
+                    <span className="badge2">
+                      {orders ? orders?.length : 0}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -86,7 +92,22 @@ export const ProfileScreen = () => {
             className="tab-content col-lg-8 pb-5 pt-lg-0 pt-3"
             id="v-pills-tabContent"
           >
-            <ProfileTabs />
+            <div
+              className="tab-pane fade show active"
+              id="v-pills-home"
+              role="tabpanel"
+              aria-labelledby="v-pills-home-tab"
+            >
+              <ProfileTabs />
+            </div>
+            <div
+              className="tab-pane fade"
+              id="v-pills-profile"
+              role="tabpanel"
+              aria-labelledby="v-pills-profile-tab"
+            >
+              <Orders orders={orders} loading={loading} error={error} />
+            </div>
           </div>
           {/* <div
             className="tab-content col-lg-8 pb-5 pt-lg-0 pt-3"

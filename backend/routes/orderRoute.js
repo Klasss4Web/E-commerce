@@ -73,7 +73,7 @@ orderRoute.put(
 
     if (order) {
       order.isPaid = true
-      order.paidAt = Date.now
+      order.paidAt = Date.now()
       order.paymentResult = {
         id: req.body.id,
         status: req.body.status,
@@ -93,6 +93,18 @@ orderRoute.put(
     }
   })
 );
+
+//LOGGED IN USER ORDERS
+orderRoute.get(
+  "/",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.find({user: req.user._id}).sort({_id: -1})
+    res.json(order)
+ 
+  })
+);
+
 
 
 

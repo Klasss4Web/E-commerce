@@ -23,4 +23,17 @@ productRoute.get("/:id", asyncHandler(async(req, res) => {
  
 }))
 
+//PRODUCT REVIEW/RATING
+productRoute.post("/:id/review", asyncHandler(async(req, res) => {
+  const {rating, comment} = req.body
+  const product = await Products.findById(req.params.id)
+  if(product) {
+     const alreadyReviewed = product.reviews.find((rev) => rating.user.toString() === req.user._id.toString())
+  } else {
+    res.status(404)
+    throw new Error("Product Not Found")
+  }
+ 
+}))
+
 export default productRoute
