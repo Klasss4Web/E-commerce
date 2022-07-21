@@ -1,36 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const Pagination = () => {
+export const Pagination = ({ page, pages, keyword }) => {
+
   return (
-    <nav>
-      <ul className="pagination justify-content-center">
-        <li className="page-item active" to={"#"}>
-          <Link className="page-link" to={"#"}>
-            1
-          </Link>
-        </li>
-        <li className="page-item" to={"#"}>
-          <Link className="page-link" to={"#"}>
-            2
-          </Link>
-        </li>
-        <li className="page-item" to={"#"}>
-          <Link className="page-link" to={"#"}>
-            3
-          </Link>
-        </li>
-        <li className="page-item" to={"#"}>
-          <Link className="page-link" to={"#"}>
-            4
-          </Link>
-        </li>
-        <li className="page-item" to={"#"}>
-          <Link className="page-link" to={"#"}>
-            5
-          </Link>
-        </li>
-      </ul>
-    </nav>
-  )
+    pages > 1 && (
+      <nav>
+        <ul className="pagination justify-content-center">
+          {[...Array(pages).keys()]?.map((pageNum) => (
+            <li key={pageNum + 1} className={`page-item  ${pageNum + 1 === page ? "active" : ""}`} to={"#"}>
+              <Link className="page-link" to={keyword ? `/search/${keyword}/page/${pageNum + 1}` : `/page/${pageNum + 1}`}>
+                {pageNum + 1}
+              </Link>
+            </li>
+          ))}
+         
+        </ul>
+      </nav>
+    )
+  );
 }

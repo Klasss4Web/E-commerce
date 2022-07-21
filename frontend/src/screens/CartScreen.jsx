@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Header from "./../components/Header"
+// import Header from "./../components/Header"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -38,7 +38,7 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {/* CART */}
       <div className="container">
         {cartItems.length === 0 ? (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Header from '../components/Header'
+// import Header from '../components/Header'
 import { saveShippingAddress } from '../redux/actions/cartActions'
 
 const ShippingScreen = ({ history }) => {
@@ -29,7 +29,7 @@ const ShippingScreen = ({ history }) => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container d-flex justify-content-center align-items-center">
         <form
           className="login col-md-8 col-lg-4 col-11"

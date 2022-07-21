@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import Header from '../components/Header'
+// import { useHistory } from 'react-router-dom';
+// import Header from '../components/Header'
 import { savePaymentMethod } from '../redux/actions/cartActions';
 
 const PaymentScreen = ({ history }) => {
@@ -25,7 +25,7 @@ const PaymentScreen = ({ history }) => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className='container d-flex justify-content-center align-items-center login-'>
         <form
           className='login2 col-md-8 col-lg col-11'

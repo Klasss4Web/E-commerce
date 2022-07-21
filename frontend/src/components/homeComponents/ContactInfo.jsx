@@ -4,7 +4,7 @@ export const ContactInfo = () => {
   return (
     <div className="contactInfo container">
       <div className="row">
-        <div className="col-12 col-md-4 contact-Box">
+        <div className="col-12 col-md-4 contact-box">
           <div className="box-info">
             <div className="info-image">
               <i className="fas fa-phone-alt"></i>

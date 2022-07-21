@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import Message from "../components/loadingError/Error";
 import Loading from "../components/loadingError/Loading";
 import { login } from "../redux/actions/userActions";
@@ -32,7 +32,7 @@ export const Login = ({ history, location }) => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container d-flex flex-column justify-content-center align-items-center">
         {error && <Message variant="alert-danger">{error}</Message>}
         {loading && <Loading />}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Header from '../components/Header'
+// import Header from '../components/Header'
 import { getUserProfile } from '../redux/actions/userActions'
 import Orders from "./../components/profileComponents/Orders"
 import ProfileTabs from "../components/profileComponents/ProfileTabs"
@@ -21,13 +21,13 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     dispatch(ordersListAction());
-    dispatch(getUserProfile("profile"));
+    dispatch(getUserProfile());
   },[dispatch])
 
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container mt-lg-5 mt-3">
         <div className="row align-items-start">
           <div className="col-lg-4 p-0 shadow">

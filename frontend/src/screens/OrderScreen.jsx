@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import { PayPalButton } from "react-paypal-button-v2";
 
 import {
@@ -63,7 +63,7 @@ export const OrderScreen = ({ match }) => {
     } else {
     }
     dispatch(getOrderDetailsAction(orderId));
-  }, [dispatch, successPay, orderId]);
+  }, [dispatch, successPay, orderId, order]);
 
   const handleSuccessPayment = (paymentResult) => {
     console.log("paymentResult", paymentResult);
@@ -72,7 +72,7 @@ export const OrderScreen = ({ match }) => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         {loading && <Loading />}
         {error && <Message variant="alert-danger">{error}</Message>}

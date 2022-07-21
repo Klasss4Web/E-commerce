@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Message from "../components/loadingError/Error";
 import { createOrderAction } from "../redux/actions/orderActions";
 import { ORDER_CREATE_RESET } from "../redux/constants/orderConstants";
-import Header from "./../components/Header";
+// import Header from "./../components/Header";
 
 export const PlaceOrderScreen = ({ history }) => {
   window.scrollTo(0, 0);
@@ -35,7 +35,7 @@ export const PlaceOrderScreen = ({ history }) => {
   const createOrders = useSelector((state) => state.createOrders);
 
   const { order, success, error } = createOrders;
-  console.log("orders", order)
+  // console.log("orders", order)
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ export const PlaceOrderScreen = ({ history }) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         <div className="row order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">

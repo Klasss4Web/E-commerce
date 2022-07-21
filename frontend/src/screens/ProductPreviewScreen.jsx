@@ -2,23 +2,50 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import { Rating } from "../components/homeComponents/Rating";
 import Message from "../components/loadingError/Error";
 import Loading from "../components/loadingError/Loading";
 import { addItemToCart } from "../redux/actions/cartActions";
-import { productDetails } from "../redux/actions/productActions";
+import { productDetails, productReviewAction } from "../redux/actions/productActions";
+import { PRODUCT_REVIEW_RESET } from "../redux/constants/productConstants";
+import moment from "moment";
 
-const SingleProduct = ({ history, match }) => {
+const ProductPreviewScreen = ({ history, match }) => {
+
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   const productId = match.params.id;
   const dispatch = useDispatch();
+
   const singleProductDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = singleProductDetails;
 
+  
+
+  const productReviews = useSelector((state) => state.productReviews);
+  
+  const {
+    error: createReviewError,
+    loading: createReviewLoading,
+    success: createReviewSuccess,
+  } = productReviews;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  
+
   useEffect(() => {
+    if (createReviewSuccess) {
+      alert("Review successfully submited");
+      setRating(0);
+      setComment("");
+      dispatch({ type: PRODUCT_REVIEW_RESET });
+    }
     dispatch(productDetails(productId));
-  }, [productId, dispatch]);
+  }, [productId, dispatch, createReviewSuccess]);
 
   const addToCart = (e) => {
     e.preventDefault();
@@ -36,9 +63,14 @@ const SingleProduct = ({ history, match }) => {
   //   fetchData()
   // },[match])
 
+  const handleReviewHandler = (e) => {
+    e.preventDefault()
+    dispatch(productReviewAction(productId, {rating, comment}));
+  }
+
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container single-product">
         {loading ? (
           <Loading />
@@ -112,58 +144,87 @@ const SingleProduct = ({ history, match }) => {
             <div className="row my-5">
               <div className="col-md-6">
                 <h6 className="mb-3">REVIEWS</h6>
-                <Message variant={"alert-info mt-3"}>No Reviews</Message>
-                <div className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded">
-                  <strong>Admin Doe</strong>
-                  <Rating />
-                  <span>Jan 12 2022</span>
-                  <div className="alert alert-info mt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Sunt, suscipit laudantium asperiores reiciendis dolorum amet
-                    nostrum, aliquam, nobis perspiciatis corporis adipisci non
-                    praesentium architecto quo. Non, repellat? Ex, nobis
-                    deserunt!
+                {product?.reviews?.length === 0 && (
+                  <Message variant={"alert-info mt-3"}>No Reviews</Message>
+                )}
+                {product?.reviews?.map((review) => (
+                  <div
+                    key={review?._id}
+                    className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded"
+                  >
+                    <strong>{review?.name}</strong>
+                    <Rating value={review?.rating} />
+                    <span>{moment(review?.createdAt).calendar()}</span>
+                    <div className="alert alert-info mt-3">
+                      <p>{review?.comment}</p>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
               <div className="col-md-6">
                 <h6>WRITE A CUSTOMER REVIEW</h6>
-                <div className="my-4"></div>
-
-                <form>
-                  <div className="my-4">
-                    <strong>Rating</strong>
-                    <select className="col-12 bg-light p-3 mt-2 border-0 rounded">
-                      <option value="">Select...</option>
-                      <option value="1">Poor</option>
-                      <option value="2">Fair</option>
-                      <option value="3">Good</option>
-                      <option value="4">Very Good</option>
-                      <option value="5">Excellent</option>
-                    </select>
-                  </div>
-                  <div className="my-4">
-                    <strong>Comment</strong>
-                    <textarea
-                      row="3"
-                      className="col-12 bg-light p-3 mt border-o rounded"
-                    ></textarea>
-                  </div>
-                  <div className="my-3">
-                    <button className="col-12 bg-black border-0 p-3 rounded text-center">
-                      SUBMIT
-                    </button>
-                  </div>
-                </form>
-                <div className="my-3">
-                  <Message variant="alert-warning">
-                    Please{" "}
-                    <Link to={"/login"}>
-                      " <strong>Login</strong> "
-                    </Link>
-                    to write a review{" "}
-                  </Message>
+                <div className="my-4">
+                  {createReviewLoading && <Loading />}
+                  {createReviewError && (
+                    <Message variant={"alert-danger"}>
+                      {createReviewError}
+                    </Message>
+                  )}
                 </div>
+
+                {userInfo ? (
+                  <form onSubmit={handleReviewHandler}>
+                    <div className="my-4">
+                      <strong>Rating</strong>
+                      <select
+                        value={rating}
+                        className="col-12 bg-light p-3 mt-2 border-0 rounded"
+                        onChange={(e) => setRating(parseInt(e.target.value))}
+                      >
+                        <option value="">Select Rating</option>
+                        <option value="1">Poor</option>
+                        <option value="2">Fair</option>
+                        <option value="3">Good</option>
+                        <option value="4">Very Good</option>
+                        <option value="5">Excellent</option>
+                      </select>
+                    </div>
+                    <div className="my-4">
+                      <strong>Comment</strong>
+                      <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        row="3"
+                        className="col-12 bg-light p-3 mt border-o rounded"
+                      ></textarea>
+                    </div>
+                    <div className="my-3">
+                      <button
+                        className="col-12 bg-black border-0 p-3 rounded text-center"
+                        disabled={createReviewLoading}
+                        // onLoad={createReviewLoading}
+                      >
+                        {createReviewLoading ? (
+                          <>
+                            <i class="fa fa-spinner fa-spin"></i>"Loading"
+                          </>
+                        ) : (
+                          "SUBMIT"
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="my-3">
+                    <Message variant="alert-warning">
+                      Please{" "}
+                      <Link to={"/login"}>
+                        " <strong>Login</strong> "
+                      </Link>
+                      to write a review{" "}
+                    </Message>
+                  </div>
+                )}
               </div>
             </div>
           </>
@@ -173,4 +234,4 @@ const SingleProduct = ({ history, match }) => {
   );
 };
 
-export default SingleProduct;
+export default ProductPreviewScreen;

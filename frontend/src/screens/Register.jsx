@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import Message from "../components/loadingError/Error";
 import Loading from "../components/loadingError/Loading";
 import { register } from "../redux/actions/userActions";
@@ -32,7 +32,7 @@ const Register = ({ history, location }) => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="container d-flex flex-column justify-content-center">
         {error && <Message variant="alert-danger">{error}</Message>}
         {loading && <Loading />}
@@ -58,7 +58,7 @@ const Register = ({ history, location }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Register</button>
+          <button style={{ marginBottom: "10px", marginTop: "20px"}} type="submit">Register</button>
           <p>
             <Link
               to={redirect ? `/login?redirect=${redirect}` : "/login"}

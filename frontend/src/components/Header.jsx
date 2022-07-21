@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { logout } from "../redux/actions/userActions";
 
 const Header = () => {
+
+  const logo =
+    "https://cdn2.vectorstock.com/i/thumb-large/68/01/shopping-cart-logo-design-vector-14646801.jpg";
+  
+  const [keyword, setKeyword] = useState("")
   const dispatch = useDispatch();
+  const history = useHistory()
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -14,6 +20,15 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(keyword.trim()) {
+      history.push(`/search/${keyword}`)
+    } else {
+      history.push("/")
+    }
+  }
 
   return (
     <div>
@@ -51,7 +66,7 @@ const Header = () => {
               <div className="row">
                 <div className="col-6 d-flex align-items-center">
                   <Link className="navbar-brand" to="/">
-                    <img alt="logo" src="/images/logo.png" />
+                    <img alt="logo" src={logo} />
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-center">
@@ -109,11 +124,13 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
-                  <form className="input-group">
+                  <form className="input-group" onSubmit={handleSubmit}>
                     <input
                       type={"search"}
                       className="form-control rounded-search"
                       placeholder="Search"
+                      value={keyword}
+                      onChange={(e) => setKeyword(e.target.value)}
                     />
                     <button type="submit" className="search-button">
                       Search
@@ -129,15 +146,21 @@ const Header = () => {
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">
                 <Link className="navbar-brand" to="/">
-                  <img alt="logo" src="/images/logo.png" />
+                  <img alt="logo" src={logo} width="120px" height={"80px"} />
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
-                <form className="input-group">
+                <form
+                  className="input-group"
+                  style={{ width: "100%" }}
+                  onClick={handleSubmit}
+                >
                   <input
                     type="search"
                     className="form-control rounded search"
                     placeholder="Search"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
                   />
                   <button type="submit" className="search-button">
                     Search
@@ -153,6 +176,7 @@ const Header = () => {
                       data-bs-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
+                      style={{ color: "#2A9D8F" }}
                     >
                       Hi, {userInfo?.name}
                     </button>
@@ -162,7 +186,7 @@ const Header = () => {
                         to="/profile"
                         style={{
                           color: "#fff",
-                          background: "green",
+                          background: "#2A9D8F",
                           border: "1px solid #fff",
                         }}
                       >
@@ -173,7 +197,7 @@ const Header = () => {
                         to="#"
                         style={{
                           color: "#fff",
-                          background: "green",
+                          background: "#2A9D8F",
                           border: "1px solid #fff",
                         }}
                         onClick={handleLogout}
@@ -184,17 +208,29 @@ const Header = () => {
                   </div>
                 ) : (
                   <>
-                    <Link className="dropdown-menu" login="/register">
+                    <Link
+                      style={{ marginRight: "20px" }}
+                      className=""
+                      to="/register"
+                    >
                       Register
                     </Link>
-                    <Link className="dropdown-menu" to="/login">
+                    <Link
+                      style={{ marginRight: "20px" }}
+                      className=""
+                      to="/login"
+                    >
                       Login
                     </Link>
                   </>
                 )}
 
                 <Link className="" to="/cart">
-                  <i className="fas fa-shopping-bag"></i>
+                  <i
+                    class="fa fa-shopping-cart"
+                    aria-hidden="true"
+                    style={{ fontSize: "40px", color: "#264653" }}
+                  ></i>
                   <span className="badge">{cartItems?.length}</span>
                 </Link>
               </div>

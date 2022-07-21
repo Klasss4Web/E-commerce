@@ -9,14 +9,17 @@ import { listProducts } from "../../redux/actions/productActions";
 import Loading from "../loadingError/Loading";
 import Message from "../loadingError/Error";
 
-export const ShopSection = () => {
+export const ShopSection = ({ keyword, pageNumber }) => {
+  const dummyImage =
+    "https://m.media-amazon.com/images/I/61iyNZf8IvL._AC_UL320_.jpg";
+
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   // const [products, setProducts] = useState([])
 
@@ -48,10 +51,13 @@ export const ShopSection = () => {
                         className="shop col-lg-4 col-md-6 col-sm-6"
                         key={product?._id}
                       >
-                        <div className="boreder-product">
+                        <div className="border-product">
                           <Link to={`/products/${product?._id}`}>
                             <div className="shopBack">
-                              <img src={product?.image} alt={product?.name} />
+                              <img
+                                src={dummyImage || product?.image}
+                                alt={product?.name}
+                              />
                             </div>
                           </Link>
                           <div className="shoptext">
@@ -72,7 +78,11 @@ export const ShopSection = () => {
                   </>
                 )}
 
-                <Pagination />
+                <Pagination
+                  page={page}
+                  pages={pages}
+                  keyword={keyword ? keyword : ""}
+                />
               </div>
             </div>
           </div>

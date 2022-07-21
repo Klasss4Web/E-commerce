@@ -108,6 +108,7 @@ const ProfileTabs = () => {
           <div className="form">
             <label for="account-confirm-pass">Confirm Password</label>
             <input
+            style={{ marginBottom: "20px"}}
               className="form-control"
               type="password"
               value={confirmPassword}

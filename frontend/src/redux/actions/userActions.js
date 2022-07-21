@@ -77,7 +77,7 @@ export const register = (name, email, password) => async(dispatch) => {
 
 
 // USER PROFILE ACTIONS
-export const getUserProfile = (id) => async(dispatch, getState) => {
+export const getUserProfile = () => async(dispatch, getState) => {
   try{
     dispatch({
       type: USER_PROFILE_REQUEST
@@ -92,7 +92,7 @@ export const getUserProfile = (id) => async(dispatch, getState) => {
       }
     }
 
-  const { data } = await axios.get(`/api/users/${id}`, config);
+  const { data } = await axios.get(`/api/users/profile`, config);
 
   dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
 
