@@ -1,4 +1,9 @@
 import {
+  ADMIN_ORDER_DETAILS_FAILURE,
+  ADMIN_ORDER_DETAILS_REQUEST,
+  ADMIN_ORDER_DETAILS_SUCCESS,
+  ADMIN_ORDER_LIST_FAILURE,
+  ADMIN_ORDER_LIST_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_PAYMENT_FAILURE,
   ORDER_CREATE_PAYMENT_REQUEST,
@@ -15,6 +20,7 @@ import {
   ORDER_LIST_RESET,
   ORDER_LIST_SUCCESS,
 } from "../constants/orderConstants";
+import { ADMIN_ADD_PRODUCT_REQUEST } from "../constants/productConstants";
 
 // CREATE ORDER REDUCER
 export const orderCreateReducer = (state = {}, action) => {
@@ -128,6 +134,64 @@ export const orderListReducer = (state = { orders: []}, action) => {
 
     case ORDER_LIST_RESET:
       return { orders: [] };
+
+    default:
+      return state;
+  }
+};
+
+
+//ADMIN GET ALL ORDERS
+export const adminOrderListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_ADD_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case ADMIN_ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        // page: action.payload.page,
+        // pages: action.payload.pages,
+        orders: action.payload
+      };
+
+    case ADMIN_ORDER_LIST_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// ADMIN GET ORDER DETAILS REDUCER
+export const adminOrderDetailsReducer = (
+  state = { loading: true, orderItems: [], shippingAddress: {} },
+  action
+) => {
+  switch (action.type) {
+    case ADMIN_ORDER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ADMIN_ORDER_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        order: action.payload,
+      };
+
+    case ADMIN_ORDER_DETAILS_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
     default:
       return state;

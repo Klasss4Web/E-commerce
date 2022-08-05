@@ -1,6 +1,12 @@
 import axios from "axios";
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
 import {
+  ADMIN_ORDER_DETAILS_FAILURE,
+  ADMIN_ORDER_DETAILS_REQUEST,
+  ADMIN_ORDER_DETAILS_SUCCESS,
+  ADMIN_ORDER_LIST_FAILURE,
+  ADMIN_ORDER_LIST_REQUEST,
+  ADMIN_ORDER_LIST_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_PAYMENT_FAILURE,
   ORDER_CREATE_PAYMENT_REQUEST,
@@ -173,3 +179,80 @@ export const ordersListAction =
       });
     }
   };
+
+  
+//ADMIN GET ALL ORDERS ACTIONS
+export const adminOrdersListAction =
+  () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADMIN_ORDER_LIST_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/orders/admin/orders`, config);
+
+      console.log("orderData", data)
+
+      dispatch({ type: ADMIN_ORDER_LIST_SUCCESS, payload: data });
+    } catch (error) {
+         console.log("orderError", error.response);
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ADMIN_ORDER_LIST_FAILURE,
+        payload: message,
+      });
+    }
+  };
+
+  // ADMIN GET ORDER DETAILS ACTIONS
+export const admiGetOrderDetailsAction = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_ORDER_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/orders/${id}`, config);
+
+    dispatch({ type: ADMIN_ORDER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error?.response && error?.response?.data?.message
+        ? error?.response?.data?.message
+        : error?.message;
+    if (message === "Not authorized, no token found") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: ADMIN_ORDER_DETAILS_FAILURE,
+      payload: message,
+    });
+  }
+};
+

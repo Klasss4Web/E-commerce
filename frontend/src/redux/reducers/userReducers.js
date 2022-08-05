@@ -1,4 +1,4 @@
-import { USER_LOGIN_FAILURE, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_FAILURE, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE, USER_REGISTER_FAILURE, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAILURE, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants";
+import { GET_USERS_FAILURE, GET_USERS_REQUEST, GET_USERS_RESET, GET_USERS_SUCCESS, USER_LOGIN_FAILURE, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_FAILURE, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE, USER_REGISTER_FAILURE, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAILURE, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants";
 
 // LOGIN
 export const userLoginReducer = (
@@ -115,6 +115,37 @@ export const userUpdateProfileReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+
+    default:
+      return state;
+  }
+};
+
+// GET USERS LIST
+export const userListReducer = (
+  state = {users:[]},
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+
+    case GET_USERS_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case GET_USERS_RESET:
+      return {users:[]};
 
     default:
       return state;

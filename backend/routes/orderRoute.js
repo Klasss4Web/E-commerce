@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import protect from "../middleware/authMidedleware.js";
+import {adminOnly, protect} from "../middleware/authMidedleware.js";
 import Order from "../models/orderModel.js";
 
 const orderRoute = express.Router();
@@ -105,6 +105,17 @@ orderRoute.get(
   })
 );
 
+//ADMIN GET ORDERS
+orderRoute.get(
+  "/admin/orders",
+  protect,
+  adminOnly,
+  asyncHandler(async (req, res) => {
+    const orders = await Order.find({}).sort({_id: -1}).populate("user", "id name email");
+    res.json(orders)
+ 
+  })
+);
 
 
 

@@ -41,6 +41,6 @@ app.get("/", (req, res) => {
   res.send("API is running...")
 });
 
-const PORT = process.env.PORT || 1000
+const PORT = process.env.PORT || 2000
 
 app.listen(PORT, console.log(`Server running in port ${PORT}`))
