@@ -10,8 +10,8 @@ import Loading from "../loadingError/Loading";
 import Message from "../loadingError/Error";
 
 export const ShopSection = ({ keyword, pageNumber }) => {
-  const dummyImage =
-    "https://m.media-amazon.com/images/I/61iyNZf8IvL._AC_UL320_.jpg";
+  // const dummyImage =
+  //   "https://m.media-amazon.com/images/I/61iyNZf8IvL._AC_UL320_.jpg";
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
@@ -48,14 +48,14 @@ export const ShopSection = ({ keyword, pageNumber }) => {
                   <>
                     {products?.map((product) => (
                       <div
-                        className="shop col-lg-4 col-md-6 col-sm-6"
+                        className="shop col-lg-4 col-md-6 col-sm-6 mb-3"
                         key={product?._id}
                       >
                         <div className="border-product">
                           <Link to={`/products/${product?._id}`}>
                             <div className="shopBack">
                               <img
-                                src={dummyImage || product?.image}
+                                src={product?.image}
                                 alt={product?.name}
                               />
                             </div>

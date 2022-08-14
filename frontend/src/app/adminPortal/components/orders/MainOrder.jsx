@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Message from "../loadingError/Error";
 import Loading from "../loadingError/Loading";
 import { Orders } from "./Orders";
 
 export const MainOrder = ({ orderId }) => {
-  const dispatch = useDispatch();
+
+  // const dispatch = useDispatch();
   const adminOrderList = useSelector((state) => state.adminOrderList);
   const { loading, error, orders } = adminOrderList;
 

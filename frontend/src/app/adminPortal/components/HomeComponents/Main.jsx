@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { LatestOrders } from './LatestOrders'
 import { ProductsStatistics } from './ProductsStatistics'
 import { SalesStatistics } from './SalesStatistics'
-import { TopTotal } from './TopTotal'
+import { Cards } from './Cards'
 
 export const Main = () => {
 
@@ -19,7 +19,7 @@ export const Main = () => {
         </div>
 
         {/* Total Sales */}
-        <TopTotal orders={orders} products={products} />
+        <Cards orders={orders} products={products} />
 
         <div className="d-flex justify-content-between">
           {/* STATS */}

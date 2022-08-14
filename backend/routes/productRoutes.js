@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import {adminOnly, protect} from "../middleware/authMidedleware.js";
+import { adminOnly, protect } from "../middleware/authMidedleware.js";
 import Products from "./../models/productModel.js";
 
 const productRoute = express.Router();
@@ -9,8 +9,8 @@ const productRoute = express.Router();
 productRoute.get(
   "/",
   asyncHandler(async (req, res) => {
-    const pageSize = 3
-    const page = Number(req.query.pageNumber) || 1
+    const pageSize = 3;
+    const page = Number(req.query.pageNumber) || 1;
     const keyword = req.query.keyword
       ? {
           name: {
@@ -20,23 +20,25 @@ productRoute.get(
         }
       : {};
 
-      const count = await Products.countDocuments({ ...keyword })
+    const count = await Products.countDocuments({ ...keyword });
     const products = await Products.find({ ...keyword })
-        .limit(pageSize)
-        .skip(pageSize * (page - 1))
-        .sort({ _id: -1 })
-    res.json({products, page, pages: Math.ceil(count / pageSize)});
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
 
 //GET ALL PRODUCTS: ADMIN ONLY
 productRoute.get(
-  "/admin/products", protect, adminOnly,
-  asyncHandler(async(req, res) => {
-    const products = await Products.find({}).sort({ _id: -1})
-    res.json(products)
+  "/admin/products",
+  protect,
+  adminOnly,
+  asyncHandler(async (req, res) => {
+    const products = await Products.find({}).sort({ _id: -1 });
+    res.json(products);
   })
-)
+);
 
 //GET SINGLE PRODUCTS
 productRoute.get(
@@ -92,15 +94,44 @@ productRoute.post(
   })
 );
 
+//ADMIN: GET ALL PRODUCT REVIEWS/RATINGS
+//PRODUCT REVIEW/RATING
+productRoute.get(
+  "/admin/reviews",
+  protect,
+  adminOnly,
+  asyncHandler(async (req, res) => {
+    // console.log("req", req, "user", req.user);
+    // const { rating, comment } = req.body;
+    const products = await Products.find({});
+    const productWithReviews = products.filter(review=>review.reviews.length > 0)
+    const reviews = productWithReviews.map(reviews=> reviews.reviews)
+    // const reviews = product.reviews;
+    if (products) {
+      
+      res.json({
+        status: 200,
+        message: "Reviews successfully fetched",
+        data: productWithReviews,
+      });
+    } else {
+      res.status(404);
+      throw new Error("No Reviews Found");
+    }
+  })
+);
+
 //ADD PRODUCT: ONLY ADMIN
 productRoute.post(
-  "/admin/add-product", protect, adminOnly,
+  "/admin/add-product",
+  protect,
+  adminOnly,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock} = req.body
-    const productExist = await Products.findOne({name})
+    const { name, price, description, image, countInStock } = req.body;
+    const productExist = await Products.findOne({ name });
 
     if (productExist) {
-      res.status(400)
+      res.status(400);
       throw new Error("Product name alread exist");
     } else {
       const product = new Products({
@@ -109,16 +140,15 @@ productRoute.post(
         description,
         image,
         countInStock,
-        user: req.user._id
+        user: req.user._id,
       });
-      if(product) {
+      if (product) {
         const createdProduct = await product.save();
         res.status(200).json(createdProduct);
       } else {
-        res.status(400)
-         throw new Error("Invalid product data");
+        res.status(400);
+        throw new Error("Invalid product data");
       }
-     
     }
   })
 );
@@ -133,30 +163,31 @@ productRoute.put(
     const product = await Products.findById(req.params.id);
 
     if (product) {
-        product.name = name || product.name;
-        product.price = price || product.price;
-        product.description = description || product.description;
-        product.image = image || product.image;
-        product.countInStock = countInStock || product.countInStock;
+      product.name = name || product.name;
+      product.price = price || product.price;
+      product.description = description || product.description;
+      product.image = image || product.image;
+      product.countInStock = countInStock || product.countInStock;
 
-        const updatedProduct = await product.save();
-        res.json(updatedProduct)
+      const updatedProduct = await product.save();
+      res.json(updatedProduct);
     } else {
-       res.status(404);
-       throw new Error("Product not found");
-     
+      res.status(404);
+      throw new Error("Product not found");
     }
   })
 );
 
 //DELETE PRODUCT
 productRoute.delete(
-  "/admin/:id", protect, adminOnly,
+  "/admin/:id",
+  protect,
+  adminOnly,
   asyncHandler(async (req, res) => {
     const product = await Products.findById(req.params.id);
     if (product) {
-      await product.remove()
-      res.json({message: "Product deleted successfully"});
+      await product.remove();
+      res.json({ message: "Product deleted successfully" });
     } else {
       res.status(404);
       throw new Error("Product Not Found");

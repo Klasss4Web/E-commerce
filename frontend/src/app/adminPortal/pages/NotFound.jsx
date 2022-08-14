@@ -15,7 +15,7 @@ export const NotFound = () => {
             alt='Not Found'
           />
           <button className='col-md-3 col-sm-6 col-12 btn btn-success mt-5'>
-            <Link to={"/"} className="text-white text-decoration-none">
+            <Link to={"/dashboard"} className="text-white text-decoration-none">
               Home Page
             </Link>
           </button>

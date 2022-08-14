@@ -9,6 +9,9 @@ import {
   ADMIN_EDIT_PRODUCT_FAILURE,
   ADMIN_EDIT_PRODUCT_REQUEST,
   ADMIN_EDIT_PRODUCT_SUCCESS,
+  ADMIN_GET_REVIEWS_FAILURE,
+  ADMIN_GET_REVIEWS_REQUEST,
+  ADMIN_GET_REVIEWS_SUCCESS,
   ADMIN_PRODUCT_LIST_FAILURE,
   ADMIN_PRODUCT_LIST_REQUEST,
   ADMIN_PRODUCT_LIST_SUCCESS,
@@ -247,6 +250,32 @@ export const adminDeleteProductReducer = (state = {}, action) => {
       };
 
     case ADMIN_DELETE_PRODUCT_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN GET ALL REVIEWS
+export const adminReviewListReducer = (state = { reviews: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_GET_REVIEWS_REQUEST:
+      return {
+        loading: true,
+        reviews: [],
+      };
+
+    case ADMIN_GET_REVIEWS_SUCCESS:
+      return {
+        loading: false,
+        reviews: action.payload,
+      };
+
+    case ADMIN_GET_REVIEWS_FAILURE:
       return {
         loading: false,
         error: action.payload,

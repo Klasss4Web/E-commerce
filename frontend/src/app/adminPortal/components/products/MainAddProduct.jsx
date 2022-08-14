@@ -10,18 +10,18 @@ import Message from "../loadingError/Error";
 import Loading from "../loadingError/Loading";
 
 export const MainAddProduct = () => {
-
   const ToastObjects = {
     pauseOnFocusLoss: false,
     draggable: false,
     pauseOnHover: false,
-    autoClose: 2000
-  }
+    autoClose: 2000,
+  };
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [displayImage, setDisplayImage] = useState();
 
   const dispatch = useDispatch();
 
@@ -38,6 +38,7 @@ export const MainAddProduct = () => {
       setImage("");
       setPrice(0);
       setCountInStock(0);
+      setDisplayImage();
     }
   }, [product, dispatch]);
 
@@ -52,11 +53,11 @@ export const MainAddProduct = () => {
       <section className="content-main" style={{ maxWidth: "1200px" }}>
         <form onSubmit={handleCreateProduct}>
           <div className="content-header">
-            <Link to="/products" className="btn btn-danger">
+            <Link to="/products" className="btn btn-primary">
               Go to products
             </Link>
             <h2 className="content-title">Add Product</h2>
-            <div style={{visibility: "hidden"}}>
+            <div style={{ visibility: "hidden" }}>
               <button type="submit" className="btn btn-primary">
                 Update
               </button>
@@ -132,17 +133,38 @@ export const MainAddProduct = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Enter Product image"
+                      placeholder="Enter Product image url"
                       className="form-control"
                       id="product_image"
-                      value={image}
-                      onChange={(e) => setImage(e.target.value)}
+                      // value={image}
+                      // onChange={(e) => setImage(e.target.value)}
                     />
-                    <input type="file" className="form-control mt-3" />
+                    <input
+                      type="file"
+                      className="form-control mt-3"
+                      onChange={(e) => {
+                        setDisplayImage(
+                          URL.createObjectURL(e.target.files?.[0])
+                        );
+                        setImage(e.target.files?.[0]);
+                      }}
+                    />
                   </div>
-                  <button>Add to store</button>
+                  {loading ? (
+                    <>
+                      <button>
+                        {" "}
+                        <i class="fa fa-spinner fa-spin"></i>Loading
+                      </button>
+                    </>
+                  ) : (
+                    <button>Add to store</button>
+                  )}
                 </div>
               </div>
+            </div>
+            <div className="col-xs col-lg-4 rounded">
+              <img src={displayImage} width="100%" height={"300px"} />
             </div>
           </div>
         </form>

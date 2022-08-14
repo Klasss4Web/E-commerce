@@ -206,7 +206,7 @@ const ProductPreviewScreen = ({ history, match }) => {
                       >
                         {createReviewLoading ? (
                           <>
-                            <i class="fa fa-spinner fa-spin"></i>"Loading"
+                            <i class="fa fa-spinner fa-spin"></i>Loading
                           </>
                         ) : (
                           "SUBMIT"

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Header } from '../components/Header'
+// import { Header } from '../components/Header'
 import { MainEditProduct } from '../components/products/MainEditProduct'
-import { Sidebar } from '../components/Sidebar'
+// import { Sidebar } from '../components/Sidebar'
 
 export const ProductEditPage = ({ match }) => {
 
@@ -9,9 +9,9 @@ export const ProductEditPage = ({ match }) => {
   
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className='main-wrap'>
-        <Header />
+        {/* <Header /> */}
         <MainEditProduct productId={productId} />
       </main>
     </div>

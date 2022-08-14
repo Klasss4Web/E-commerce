@@ -1,7 +1,7 @@
 import React from 'react'
-import { Header } from '../components/Header';
+// import { Header } from '../components/Header';
 import { OrderDetailsMain } from '../components/orders/OrderDetailsMain';
-import { Sidebar } from '../components/Sidebar';
+// import SideBar from "../components/sidebar/index";
 
 export const OrderDetailsPage = ({ match }) => {
 
@@ -9,9 +9,9 @@ export const OrderDetailsPage = ({ match }) => {
 
   return (
     <div>
-      <Sidebar />
+      {/* <SideBar />
+      <Header /> */}
       <main className="main-wrap">
-        <Header />
         <OrderDetailsMain orderId={orderId} />
       </main>
     </div>

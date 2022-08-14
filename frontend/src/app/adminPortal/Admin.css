@@ -150,11 +150,16 @@ body .offcanvas-active {
 }
 
 .main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   padding-left: 3%;
   padding-right: 3%;
   min-height: 72px;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(108, 117, 125, 0.25);
+  background-color: #f4f4f4;
+  /* border-bottom: 1px solid rgba(108, 117, 125, 0.25); */
+  z-index: 100;
 }
 
 .main-header .nav {
@@ -198,6 +203,7 @@ body .offcanvas-active {
 
 body .aside-mini .main-wrap {
   margin-left: 70px;
+  border: 1px solid grey;
 }
 
 body .aside-mini .navbar-aside {
@@ -243,6 +249,7 @@ body .aside-mini .menu-aside .submenu {
 
 .body .aside-mini .menu-aside .menu-item {
   position: relative;
+
 }
 
 .body .aside-mini .menu-aside .menu-item:hover .submenu {
@@ -376,4 +383,14 @@ body .aside-mini .menu-aside .menu .has-submenu .menu-link:after {
   margin-left: 30px;
   vertical-align: baseline;
   flex-grow: 1;
+}
+
+.card-img_bg {
+  width: 100%;
+  height: 200px;
+}
+
+.slide {
+  display: flex !important;
+  justify-content: space-between !important;
 }

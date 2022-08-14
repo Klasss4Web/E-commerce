@@ -57,17 +57,20 @@ export const UserComponent = ({ users, error, loading }) => {
           ) : (
             <div className="row row-cols-sm-2 row cols-lg-3 row-cols-xl-4">
               {users?.map((user) => (
-                <div key={user?._id} className="col">
+                <div key={user?._id} className="col mb-4">
                   <div className="card card-user shadow-sm">
                     <div className="card-header">
                       <img
                         className="img-md img-avatar"
-                        src="images/favicon.png"
+                        src={user?.image}
                         alt="User Picture"
+                        style={{ height: "170px", width: "100%" }}
                       />
                     </div>
                     <div className="card-body">
-                      <h5 className="card-title mt-5">{user?.name}</h5>
+                      <h5 className="card-title mt-5 text-truncate d-inline-block">
+                        {user?.name}
+                      </h5>
                       <div className="card-text text-muted">
                         {user?.isAdmin ? (
                           <p className="m-0">Admin</p>
@@ -76,7 +79,13 @@ export const UserComponent = ({ users, error, loading }) => {
                         )}
 
                         <p>
-                          <a href={`mailto:${user?.email}`}>{user?.email}</a>
+                          <a
+                            href={`mailto:${user?.email}`}
+                            className="text-truncate d-inline-block"
+                            style={{ maxWidth: "200px" }}
+                          >
+                            {user?.email}
+                          </a>
                         </p>
                       </div>
                     </div>

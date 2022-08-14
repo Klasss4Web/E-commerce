@@ -14,27 +14,31 @@ export const Product = ({ product }) => {
   }
 
   return (
-    <div className="col-md-6 col-sm-6 col-lg-3 mb-5">
+    <div className="col-md-6 col-sm-6 col-lg-3 mt-4">
       <div className="card card-product-grid shadow-sm">
         <Link to={"#"} className="img-wrap">
-          <img src={product?.image} alt="Product Image" />
+          <img
+            src={product?.image}
+            alt="Product Image"
+            style={{ height: "170px", width: "100%" }}
+          />
         </Link>
-        <div className="info-wrap">
+        <div className="info-wrap p-2" style={{ width: "100%", overflowX: "hidden" }}>
           <Link to="#" className="title text-truncate">
             {product?.name}
           </Link>
           <p className="price mb-2">${product?.price}</p>
-          <div className="row">
+          <div className="row justify-content-between">
             <Link
               to={`/product/${product?._id}/edit`}
-              className="btn btn-sm btn-outline-success p-2 pb-3 col-md-6"
+              className="btn btn-sm btn-outline-success p-1 pb-0 col-md-5"
             >
               <i className="fas fa-pen"></i>
             </Link>
             <Link
               to="#"
-              onClick={()=>handleDeleteProduct(product?._id)}
-              className="btn btn-sm btn-outline-danger p-2 pb-3 col-md-6"
+              onClick={() => handleDeleteProduct(product?._id)}
+              className="btn btn-sm btn-outline-danger p-1 pb-1 col-md-5"
             >
               <i className="fas fa-trash-alt"></i>
             </Link>

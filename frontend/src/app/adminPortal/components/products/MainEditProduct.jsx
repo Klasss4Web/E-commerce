@@ -73,7 +73,7 @@ export const MainEditProduct = ({ productId }) => {
       <section className="content-main" style={{ maxWidth: "1200px" }}>
         <form onSubmit={handleUpdateProduct}>
           <div className="content-header">
-            <Link to="/products" className="btn btn-danger">
+            <Link to="/products" className="btn btn-primary">
               Go to products
             </Link>
             <h2 className="content-title">Update Product</h2>
@@ -177,6 +177,12 @@ export const MainEditProduct = ({ productId }) => {
                   )}
                 </div>
               </div>
+            </div>
+            <div className="col-xs col-lg-4 rounded">
+              <img src={image} width="100%" height={"300px"} />
+              <p>{name}</p>
+              <hr />
+              <p>{description}</p>
             </div>
           </div>
         </form>

@@ -22,17 +22,15 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../constants/userConstants";
 
-
 // LOGIN ACTIONS
 export const login = (email, password) => async (dispatch) => {
-  
   const ToastObjects = {
     pauseOnFocusLoss: false,
     draggable: false,
     pauseOnHover: false,
-    autoClose: 2000
-  }
-  
+    autoClose: 2000,
+  };
+
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -50,15 +48,15 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
-    if(!data.isAdmin === true) {
-      toast.error("You dont have admin access", ToastObjects);
-      dispatch({type: USER_LOGIN_FAILURE})
-    } else {
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-    }  
-
+    // if (!data.isAdmin === true) {
+    //   toast.error("You dont have admin access", ToastObjects);
+    //   dispatch({ type: USER_LOGIN_FAILURE });
+    // } else {
+    //   dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    // }
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    window.location.href = "/";
     localStorage.setItem("userInfo", JSON.stringify(data));
-    
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAILURE,
@@ -82,9 +80,9 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: ORDER_LIST_RESET,
   });
-   dispatch({
-     type: GET_USERS_RESET,
-   });
+  dispatch({
+    type: GET_USERS_RESET,
+  });
   //optional
   window.location.href = "/login";
 };
@@ -199,31 +197,24 @@ export const updateProfile = (user) => async (dispatch, getState) => {
 
 // GET ALL USERS ACTIONS
 export const getUsers = () => async (dispatch, getState) => {
-  
   try {
     dispatch({
       type: GET_USERS_REQUEST,
     });
 
-      const {
-        userLogin: { userInfo },
-      } = getState()
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get(
-      "/api/users",
-      config
-    );
+    const { data } = await axios.get("/api/users", config);
 
-      dispatch({ type: GET_USERS_SUCCESS, payload: data });
-
-
-    
+    dispatch({ type: GET_USERS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: GET_USERS_FAILURE,
@@ -234,4 +225,3 @@ export const getUsers = () => async (dispatch, getState) => {
     });
   }
 };
-

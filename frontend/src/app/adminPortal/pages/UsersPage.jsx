@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../redux/actions/userActions';
 import { Header } from '../components/Header';
-import { Sidebar } from '../components/Sidebar';
+// import { Sidebar } from '../components/Sidebar';
+import SideBar from "../components/sidebar/index";
 import { UserComponent } from '../components/users/UserComponent';
 
 export const UsersPage = () => {
@@ -18,9 +19,9 @@ export const UsersPage = () => {
 
   return (
     <div>
-      <Sidebar />
+      {/* <Header />
+      <SideBar /> */}
       <main className="main-wrap">
-        <Header />
         <UserComponent users={users} error={error} loading={loading} />
       </main>
     </div>
