@@ -171,7 +171,16 @@ export const MainEditProduct = ({ productId }) => {
                           onChange={(e) => setImage(e.target.value)}
                         />
                         <input type="file" className="form-control my-3" />
-                        <button>Update Product</button>
+                        {updateLoading ? (
+                          <>
+                            <button>
+                              {" "}
+                              <i class="fa fa-spinner fa-spin"></i>Loading
+                            </button>
+                          </>
+                        ) : (
+                          <button>Add to store</button>
+                        )}
                       </div>
                     </>
                   )}
@@ -179,7 +188,12 @@ export const MainEditProduct = ({ productId }) => {
               </div>
             </div>
             <div className="col-xs col-lg-4 rounded">
-              <img src={image} width="100%" height={"300px"} />
+              <img
+                src={image}
+                width="100%"
+                height={"300px"}
+                style={{ borderRadius: "10px" }}
+              />
               <p>{name}</p>
               <hr />
               <p>{description}</p>

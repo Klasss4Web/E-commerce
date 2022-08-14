@@ -164,7 +164,7 @@ export const MainAddProduct = () => {
               </div>
             </div>
             <div className="col-xs col-lg-4 rounded">
-              <img src={displayImage} width="100%" height={"300px"} />
+              <img src={displayImage} width="100%" height={"300px"} style={{borderRadius: "10px"}} />
             </div>
           </div>
         </form>
