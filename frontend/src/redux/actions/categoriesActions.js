@@ -1,5 +1,6 @@
 import axios from "axios"
-import { ADMIN_ADD_MERCHANT_FAILURE, ADMIN_ADD_MERCHANT_REQUEST, ADMIN_ADD_MERCHANT_SUCCESS, ADMIN_DELETE_MERCHANT_FAILURE, ADMIN_DELETE_MERCHANT_REQUEST, ADMIN_DELETE_MERCHANT_SUCCESS, ADMIN_GET_MERCHANT_FAILURE, ADMIN_GET_MERCHANT_REQUEST, ADMIN_GET_MERCHANT_SUCCESS, ADMIN_MERCHANT_LIST_REQUEST, ADMIN_MERCHANT_LIST_SUCCESS, ADMIN_UPDATE_MERCHANT_STATUS_FAILURE, ADMIN_UPDATE_MERCHANT_STATUS_REQUEST, ADMIN_UPDATE_MERCHANT_STATUS_SUCCESS } from "../constants/merchantConstant";
+import { ADMIN_ADD_CATEGORIES_FAILURE, ADMIN_ADD_CATEGORIES_REQUEST, ADMIN_ADD_CATEGORIES_SUCCESS, ADMIN_CATEGORIES_LIST_REQUEST, ADMIN_CATEGORIES_LIST_SUCCESS, ADMIN_DELETE_CATEGORY_FAILURE, ADMIN_DELETE_CATEGORY_REQUEST, ADMIN_DELETE_CATEGORY_SUCCESS, ADMIN_GET_CATEGORY_FAILURE, ADMIN_GET_CATEGORY_REQUEST, ADMIN_GET_CATEGORY_SUCCESS, ADMIN_UPDATE_CATEGORY_STATUS_FAILURE, ADMIN_UPDATE_CATEGORY_STATUS_REQUEST, ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS } from "../constants/categoriesConstants";
+
 import { logout } from "./userActions";
 
 
@@ -25,11 +26,11 @@ import { logout } from "./userActions";
 // };
 
 
-// ADMIN CREATE MERCHANTS
-export const adminCreateMerchantAction = (payload) => async (dispatch, getState) => {
+// ADMIN CREATE CATEGORIES
+export const adminCreateCategoriesAction = (payload) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ADMIN_ADD_MERCHANT_REQUEST,
+      type: ADMIN_ADD_CATEGORIES_REQUEST,
     });
 
     const {
@@ -43,9 +44,9 @@ export const adminCreateMerchantAction = (payload) => async (dispatch, getState)
       },
     };
 
-    const {data} = await axios.post(`/api/merchants`, payload, config);
+    const {data: { data }} = await axios.post(`/api/categories/add-categories`, payload, config);
 console.log("merchants added", data)
-    dispatch({ type: ADMIN_ADD_MERCHANT_SUCCESS, payload: data });
+    dispatch({ type: ADMIN_ADD_CATEGORIES_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error?.response && error?.response?.data?.message
@@ -55,17 +56,17 @@ console.log("merchants added", data)
       dispatch(logout());
     }
     dispatch({
-      type: ADMIN_ADD_MERCHANT_FAILURE,
+      type: ADMIN_ADD_CATEGORIES_FAILURE,
       payload: message,
     });
   }
 };
 
 // ADMIN GET ALL MERCHANTS
-export const adminMerchantListAction = () => async(dispatch, getState) => {
+export const adminCategoriesListAction = () => async(dispatch, getState) => {
   try{
     dispatch({
-      type: ADMIN_MERCHANT_LIST_REQUEST
+      type: ADMIN_CATEGORIES_LIST_REQUEST
     })
 
     const {
@@ -80,10 +81,10 @@ export const adminMerchantListAction = () => async(dispatch, getState) => {
     };
 
 
-  const { data: {data} } = await axios.get(`/api/merchants`, config);
+  const { data: {data} } = await axios.get(`/api/categories`, config);
   console.log("data", data)
 
-  dispatch({ type: ADMIN_MERCHANT_LIST_SUCCESS, payload: data })
+  dispatch({ type: ADMIN_CATEGORIES_LIST_SUCCESS, payload: data })
 
   } catch (error) {
     const message =
@@ -94,17 +95,17 @@ export const adminMerchantListAction = () => async(dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: ADMIN_ADD_MERCHANT_FAILURE,
+      type: ADMIN_ADD_CATEGORIES_FAILURE,
       payload: message
     })
   }
 }
 
-// ADMIN GET MERCHANT BY ID: This action only gets the product details to populate the fields
-export const getMerchantDetails = (id) => async (dispatch, getState) => {
+// ADMIN GET CATEGORIES BY ID: This action only gets the product details to populate the fields
+export const getCategoryDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ADMIN_GET_MERCHANT_REQUEST,
+      type: ADMIN_GET_CATEGORY_REQUEST,
     });
 
     const {
@@ -120,9 +121,9 @@ export const getMerchantDetails = (id) => async (dispatch, getState) => {
 
     const {
       data: { data },
-    } = await axios.get(`/api/merchants/${id}`, config);
+    } = await axios.get(`/api/categories/${id}`, config);
     console.log("dataaaa", data);
-    dispatch({ type: ADMIN_GET_MERCHANT_SUCCESS, payload: data });
+    dispatch({ type: ADMIN_GET_CATEGORY_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error?.response && error?.response?.data?.message
@@ -132,18 +133,18 @@ export const getMerchantDetails = (id) => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: ADMIN_GET_MERCHANT_FAILURE,
+      type: ADMIN_GET_CATEGORY_FAILURE,
       payload: message,
     });
   }
 };
 
 
-// ADMIN UPDATE MERCHANT: This is the action that does the final updates
-export const updateMerchantStatusAction = (merchantId, status) => async (dispatch, getState) => {
+// ADMIN UPDATE CATEGORY: This is the action that does the final updates
+export const updateMerchantStatusAction = (categoryId, payload) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ADMIN_UPDATE_MERCHANT_STATUS_REQUEST,
+      type: ADMIN_UPDATE_CATEGORY_STATUS_REQUEST,
     });
 
       const {
@@ -159,10 +160,10 @@ export const updateMerchantStatusAction = (merchantId, status) => async (dispatc
 
     const {
       data: { data },
-    } = await axios.put(`/api/merchants/${merchantId}`, status, config);
+    } = await axios.put(`/api/categories/${categoryId}`, payload, config);
     console.log("dataaaa", data)
-    dispatch({ type: ADMIN_UPDATE_MERCHANT_STATUS_SUCCESS, payload: data });
-    dispatch({ type: ADMIN_GET_MERCHANT_SUCCESS, payload: data });
+    dispatch({ type: ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS, payload: data });
+    dispatch({ type: ADMIN_GET_CATEGORY_SUCCESS, payload: data });
  
   } catch (error) {
     const message =
@@ -173,7 +174,7 @@ export const updateMerchantStatusAction = (merchantId, status) => async (dispatc
       dispatch(logout());
     }
     dispatch({
-      type: ADMIN_UPDATE_MERCHANT_STATUS_FAILURE,
+      type: ADMIN_UPDATE_CATEGORY_STATUS_FAILURE,
       payload: message
         
     });
@@ -182,10 +183,10 @@ export const updateMerchantStatusAction = (merchantId, status) => async (dispatc
 
 
 // ADMIN DELETE PRODUCT
-export const adminDeleteMerchant = (merchantId) => async (dispatch, getState) => {
+export const adminDeleteMerchant = (categoryId) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ADMIN_DELETE_MERCHANT_REQUEST,
+      type: ADMIN_DELETE_CATEGORY_REQUEST,
     });
 
     const {
@@ -199,9 +200,9 @@ export const adminDeleteMerchant = (merchantId) => async (dispatch, getState) =>
       },
     };
 
-    await axios.delete(`/api/merchants/${merchantId}`, config);
+    await axios.delete(`/api/categories/${categoryId}`, config);
 
-    dispatch({ type: ADMIN_DELETE_MERCHANT_SUCCESS });
+    dispatch({ type: ADMIN_DELETE_CATEGORY_SUCCESS });
   } catch (error) {
     const message =
       error?.response && error?.response?.data?.message
@@ -211,7 +212,7 @@ export const adminDeleteMerchant = (merchantId) => async (dispatch, getState) =>
       dispatch(logout());
     }
     dispatch({
-      type: ADMIN_DELETE_MERCHANT_FAILURE,
+      type: ADMIN_DELETE_CATEGORY_FAILURE,
       payload: message,
     });
   }

@@ -4,6 +4,8 @@ import { LatestOrders } from './LatestOrders'
 import { ProductsStatistics } from './ProductsStatistics'
 import { SalesStatistics } from './SalesStatistics'
 import { Cards } from './Cards'
+import Loading from '../loadingError/Loading'
+import Message from '../loadingError/Error'
 
 export const Main = () => {
 
@@ -17,7 +19,7 @@ export const Main = () => {
         <div className="content-header">
           <h2 className="content-title">Dashboard</h2>
         </div>
-
+        
         {/* Total Sales */}
         <Cards orders={orders} products={products} />
 

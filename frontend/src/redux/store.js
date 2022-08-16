@@ -1,11 +1,45 @@
-import { legacy_createStore as createStore, combineReducers, applyMiddleware } from "redux";
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { adminAddProductReducer, adminDeleteProductReducer, adminEditProductReducer, adminProductListReducer, adminReviewListReducer, adminUpdateProductDetailsReducer, createProductReviewReducer, productDetailsReducer, productListReducer } from "./reducers/productReducers";
+import {
+  adminAddProductReducer,
+  adminDeleteProductReducer,
+  adminEditProductReducer,
+  adminProductListReducer,
+  adminReviewListReducer,
+  adminUpdateProductDetailsReducer,
+  createProductReviewReducer,
+  productDetailsReducer,
+  productListReducer,
+} from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
-import { userListReducer, userLoginReducer, userProfileReducer, userRegisterReducer, userUpdateProfileReducer } from "./reducers/userReducers";
-import { adminOrderDetailsReducer, adminOrderListReducer, orderCreateReducer, orderDetailsReducer, orderListReducer, orderPaymentDetailsReducer } from "./reducers/orderReducer";
-import { adminAddMerchantReducer, adminDeleteMerchantReducer, adminUpdateMerchantStatusReducer, merchantListReducer } from "./reducers/merchantReducer";
+import {
+  userListReducer,
+  userLoginReducer,
+  userProfileReducer,
+  userRegisterReducer,
+  userUpdateProfileReducer,
+} from "./reducers/userReducers";
+import {
+  adminOrderDetailsReducer,
+  adminOrderListReducer,
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderListReducer,
+  orderPaymentDetailsReducer,
+} from "./reducers/orderReducer";
+import {
+  adminAddMerchantReducer,
+  adminDeleteMerchantReducer,
+  adminGetMerchantById,
+  adminUpdateMerchantStatusReducer,
+  merchantListReducer,
+} from "./reducers/merchantReducer";
+import { adminAddCategoryReducer, categoryListReducer } from "./reducers/categoriesReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -29,13 +63,18 @@ const reducer = combineReducers({
   adminOrderList: adminOrderListReducer,
   adminOrderDetails: adminOrderDetailsReducer,
   adminMerchantList: merchantListReducer,
+  adminGetSingleMerchant: adminGetMerchantById,
   updateMerchantStatus: adminUpdateMerchantStatusReducer,
   adminAddMerchant: adminAddMerchantReducer,
   adminDeleteMerchant: adminDeleteMerchantReducer,
   adminGetReviews: adminReviewListReducer,
+  adminAddCategory: adminAddCategoryReducer,
+  adminGetCategories: categoryListReducer,
 });
 
-const cartItemsFromLocalStorage = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [];
+const cartItemsFromLocalStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
 
 //Login Details
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")
@@ -63,4 +102,4 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 );
 
-  export default store
+export default store;

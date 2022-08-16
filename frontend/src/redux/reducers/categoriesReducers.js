@@ -1,67 +1,53 @@
-import {
-  ADMIN_MERCHANT_LIST_SUCCESS,
-  ADMIN_MERCHANT_LIST_FAILURE,
-  ADMIN_MERCHANT_LIST_REQUEST,
-  ADMIN_UPDATE_MERCHANT_STATUS_REQUEST,
-  ADMIN_UPDATE_MERCHANT_STATUS_SUCCESS,
-  ADMIN_UPDATE_MERCHANT_STATUS_FAILURE,
-  ADMIN_ADD_MERCHANT_REQUEST,
-  ADMIN_ADD_MERCHANT_SUCCESS,
-  ADMIN_ADD_MERCHANT_FAILURE,
-  ADMIN_DELETE_MERCHANT_REQUEST,
-  ADMIN_DELETE_MERCHANT_SUCCESS,
-  ADMIN_DELETE_MERCHANT_FAILURE,
-  ADMIN_GET_MERCHANT_REQUEST,
-  ADMIN_GET_MERCHANT_SUCCESS,
-  ADMIN_GET_MERCHANT_FAILURE,
-} from "../constants/merchantConstant";
+//CATEGORIES
+import { ADMIN_ADD_CATEGORIES_FAILURE, ADMIN_ADD_CATEGORIES_REQUEST, ADMIN_ADD_CATEGORIES_RESET, ADMIN_ADD_CATEGORIES_SUCCESS, ADMIN_CATEGORIES_LIST_FAILURE, ADMIN_CATEGORIES_LIST_REQUEST, ADMIN_CATEGORIES_LIST_SUCCESS, ADMIN_DELETE_CATEGORY_FAILURE, ADMIN_DELETE_CATEGORY_REQUEST, ADMIN_DELETE_CATEGORY_SUCCESS, ADMIN_GET_CATEGORY_FAILURE, ADMIN_GET_CATEGORY_REQUEST, ADMIN_GET_CATEGORY_SUCCESS, ADMIN_UPDATE_CATEGORY_STATUS_FAILURE, ADMIN_UPDATE_CATEGORY_STATUS_REQUEST, ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS } from "../constants/categoriesConstants";
 
-
-//MERCHANTS
-//ADMIN ADD PRODUCT
-export const adminAddMerchantReducer = (state = {}, action) => {
+//ADMIN ADD CATEGORIES
+export const adminAddCategoryReducer = (state = {}, action) => {
   switch (action.type) {
-    case ADMIN_ADD_MERCHANT_REQUEST:
+    case ADMIN_ADD_CATEGORIES_REQUEST:
       return {
         loading: true,
       };
 
-    case ADMIN_ADD_MERCHANT_SUCCESS:
+    case ADMIN_ADD_CATEGORIES_SUCCESS:
       return {
         loading: false,
         success: true,
-        merchant: action.payload,
+        categories: action.payload,
       };
 
-    case ADMIN_ADD_MERCHANT_FAILURE:
+    case ADMIN_ADD_CATEGORIES_FAILURE:
       return {
         loading: false,
         error: action.payload,
       };
+
+    case ADMIN_ADD_CATEGORIES_RESET:
+      return {};
 
     default:
       return state;
   }
 };
 
-//ADMIN GET ALL MERCHANTS
-export const merchantListReducer = (state = { merchants: [] }, action) => {
+//ADMIN GET ALL CATEGORIES
+export const categoryListReducer = (state = { categories: [] }, action) => {
   switch (action.type) {
-    case ADMIN_MERCHANT_LIST_REQUEST:
+    case ADMIN_CATEGORIES_LIST_REQUEST:
       return {
         loading: true,
-        merchants: [],
+        categories: [],
       };
 
-    case ADMIN_MERCHANT_LIST_SUCCESS:
+    case ADMIN_CATEGORIES_LIST_SUCCESS:
       return {
         loading: false,
         // page: action.payload.page,
         // pages: action.payload.pages,
-        merchants: action.payload,
+        categories: action.payload,
       };
 
-    case ADMIN_MERCHANT_LIST_FAILURE:
+    case ADMIN_CATEGORIES_LIST_FAILURE:
       return {
         loading: false,
         error: action.payload,
@@ -73,22 +59,22 @@ export const merchantListReducer = (state = { merchants: [] }, action) => {
 };
 
 
-//GET MERCHANT BY ID
-export const adminGetMerchantById = (state = { merchants: [] }, action) => {
+//GET CATEGORY BY ID
+export const adminGetCategoryById = (state = { category: [] }, action) => {
   switch (action.type) {
-    case ADMIN_GET_MERCHANT_REQUEST:
+    case ADMIN_GET_CATEGORY_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case ADMIN_GET_MERCHANT_SUCCESS:
+    case ADMIN_GET_CATEGORY_SUCCESS:
       return {
         loading: false,
-        merchant: action.payload,
+        category: action.payload,
       };
 
-    case ADMIN_GET_MERCHANT_FAILURE:
+    case ADMIN_GET_CATEGORY_FAILURE:
       return {
         loading: false,
         error: action.payload,
@@ -100,25 +86,25 @@ export const adminGetMerchantById = (state = { merchants: [] }, action) => {
 };
 
 //ADMIN UPDATE MERCHANT STATUS:
-export const adminUpdateMerchantStatusReducer = (
+export const adminUpdateCategoryReducer = (
   state = {  },
   action
 ) => {
   switch (action.type) {
-    case ADMIN_UPDATE_MERCHANT_STATUS_REQUEST:
+    case ADMIN_UPDATE_CATEGORY_STATUS_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case ADMIN_UPDATE_MERCHANT_STATUS_SUCCESS:
+    case ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS:
       return {
         loading: false,
         success: true,
-        // merchant: action.payload,
+        // CATEGORY: action.payload,
       };
 
-    case ADMIN_UPDATE_MERCHANT_STATUS_FAILURE:
+    case ADMIN_UPDATE_CATEGORY_STATUS_FAILURE:
       return {
         loading: false,
         error: action.payload,
@@ -131,20 +117,20 @@ export const adminUpdateMerchantStatusReducer = (
 };
 
 //ADMIN DELETE PRODUCTS
-export const adminDeleteMerchantReducer = (state = {}, action) => {
+export const adminDeleteCategoryReducer = (state = {}, action) => {
   switch (action.type) {
-    case ADMIN_DELETE_MERCHANT_REQUEST:
+    case ADMIN_DELETE_CATEGORY_REQUEST:
       return {
         loading: true,
       };
 
-    case ADMIN_DELETE_MERCHANT_SUCCESS:
+    case ADMIN_DELETE_CATEGORY_SUCCESS:
       return {
         loading: false,
         success: true,
       };
 
-    case ADMIN_DELETE_MERCHANT_FAILURE:
+    case ADMIN_DELETE_CATEGORY_FAILURE:
       return {
         loading: false,
         error: action.payload,

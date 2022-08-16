@@ -394,3 +394,10 @@ body .aside-mini .menu-aside .menu .has-submenu .menu-link:after {
   display: flex !important;
   justify-content: space-between !important;
 }
+
+.categories {
+  display: flex !important;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
