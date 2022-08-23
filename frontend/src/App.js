@@ -25,6 +25,8 @@ function App() {
     if (userInfo && userInfo?.isAdmin) {
       dispatch(adminListProducts());
       dispatch(adminOrdersListAction());
+      // dispatch(adminListProducts());
+      
     }
 
     if (parsedData?.token) {

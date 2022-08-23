@@ -10,7 +10,7 @@ export const Orders = ({ orders }) => {
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Total</th>
+          <th scope="col">Amount</th>
           <th scope="col">Paid</th>
           <th scope="col">Date</th>
           <th scope="col">Status</th>
@@ -33,7 +33,7 @@ export const Orders = ({ orders }) => {
                   className="alert-success"
                   style={{ borderRadius: "5px", padding: "2px 5px" }}
                 >
-                  Paid At {moment(order?.paidAt).format("MMM Do YY")}
+                  Paid At {moment(order?.paidAt).format("MMM Do YYYY")}
                 </span>
               ) : (
                 <span

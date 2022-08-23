@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { adminCreateCategoriesAction } from "../../../../../redux/actions/categoriesActions";
+import { updateCategoryAction } from "../../../../../redux/actions/categoriesActions";
 
-export const EditCategoryModal = ({ loading, error }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const dispatch = useDispatch()
+export const EditCategoryModal = ({ loading, error, category, setRefresh }) => {
+  const [name, setName] = useState(() => category?.name);
+  const [description, setDescription] = useState(() => category?.description);
+  const [image, setImage] = useState(() => category?.image);
+  const [imageUrl, setimageUrl] = useState(() => category?.image);
+  const [file, setFile] = useState(() => category?.image);
+  const dispatch = useDispatch();
 
-  const handleCreate = () => {
-
+  const handleUpdateCategory = () => {
     const payload = {
+      ...category,
       name,
       description,
-      image
-    }
-    dispatch(adminCreateCategoriesAction(payload));
-  }
+      image: image || imageUrl,
+    };
+    dispatch(updateCategoryAction(payload, setRefresh));
+  };
 
   return (
     <div>
@@ -31,19 +33,24 @@ export const EditCategoryModal = ({ loading, error }) => {
         Add New Category
       </button> */}
       <div
+        // id={category?._id}
         type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#staticBackdropModal1"
+        data-bs-target={`#staticBackdropModal1${category?._id}`}
         className="px-2"
-        style={{border: "1px solid green", borderRadius: "5px", color: "green"}}
+        style={{
+          border: "1px solid green",
+          borderRadius: "5px",
+          color: "green",
+        }}
       >
         <i className="fas fa-pen"></i>
       </div>
 
       <div
         class="modal fade"
-        id="staticBackdropModal1"
+        id={`staticBackdropModal1${category?._id}`}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
@@ -84,28 +91,72 @@ export const EditCategoryModal = ({ loading, error }) => {
 
               <label htmlFor="image">Image</label>
 
-              <input
-                placeholder="Select Image"
+              <div
                 style={{
-                  width: "100%",
-                  height: "40px",
-                  borderRadius: "5px",
-                  border: "1px solid #d4d4d4",
-                  marginTop: "10px",
-                  marginBottom: "15px",
-                  paddingLeft: "10px",
-                  paddingRight: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              />
+              >
+                <input
+                  placeholder={
+                    image?.name || "Enter Image Url or click the plus sign"
+                  }
+                  style={{
+                    width: "80%",
+                    height: "40px",
+                    borderRadius: "5px",
+                    border: "1px solid #d4d4d4",
+                    marginTop: "10px",
+                    marginBottom: "15px",
+                    paddingLeft: "10px",
+                    paddingRight: "20px",
+                  }}
+                  value={imageUrl}
+                  onChange={(e) => setimageUrl(e.target.value)}
+                />
+                <div style={{ position: "relative" }}>
+                  <i className="fa fa-plus"></i>
+                  <img
+                    width={"40px"}
+                    height="40px"
+                    style={{ borderRadius: "50%" }}
+                    src={
+                      file ||
+                      "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Z2FkZ2V0c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                    }
+                    alt=""
+                  />
+                  <input
+                    type={"file"}
+                    name="file"
+                    cursor={"pointer"}
+                    // value={image}
+                    style={{
+                      position: "absolute",
+                      opacity: 0,
+                      cursor: "pointer",
+                      zIndex: "100",
+                      background: "transparent",
+                      right: "0%",
+                      width: "80px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onChange={(e) => {
+                      setImage(e.target.files?.[0]);
+                      setFile(URL.createObjectURL(e.target.files?.[0]));
+                    }}
+                  />
+                </div>
+              </div>
 
               <label htmlFor="description">Description</label>
-              <input
+              <textarea
                 placeholder="Add description"
                 style={{
                   width: "100%",
-                  height: "40px",
+                  height: "100px",
                   borderRadius: "5px",
                   border: "1px solid #d4d4d4",
                   marginTop: "10px",
@@ -115,7 +166,7 @@ export const EditCategoryModal = ({ loading, error }) => {
                 }}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-              />
+              ></textarea>
             </div>
 
             <div class="modal-footer">
@@ -132,7 +183,7 @@ export const EditCategoryModal = ({ loading, error }) => {
                   class="btn btn-primary mb-4"
                   data-bs-dismiss="modal"
                   disabled={!name || !image}
-                  onClick={handleCreate}
+                  onClick={handleUpdateCategory}
                 >
                   Edit Category
                 </button>

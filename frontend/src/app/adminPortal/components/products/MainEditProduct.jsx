@@ -25,6 +25,7 @@ export const MainEditProduct = ({ productId }) => {
   const [image, setImage] = useState("")
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState("")
+  const [category, setCategory] = useState("")
 
   const dispatch = useDispatch();
 
@@ -33,6 +34,8 @@ export const MainEditProduct = ({ productId }) => {
   const { loading, error, product } = editedProduct;
 
   const updateProduct = useSelector((state) => state.updateProduct);
+  const adminGetCategories = useSelector((state) => state.adminGetCategories);
+  const { categories } = adminGetCategories;
   
   const {
     loading: updateLoading,
@@ -56,6 +59,7 @@ export const MainEditProduct = ({ productId }) => {
         setImage(product?.image);
         setPrice(product?.price);
         setCountInStock(product?.countInStock);
+        setCategory(product?.category);
       }
     }
   }, [product, dispatch, productId, updateSuccess]);
@@ -63,7 +67,7 @@ export const MainEditProduct = ({ productId }) => {
   const handleUpdateProduct = (e) => {
     e.preventDefault();
     dispatch(
-      updateProductDetails({name, price, description, image, countInStock, _id: product?._id})
+      updateProductDetails({name, price, description, image, countInStock, _id: product?._id, category})
     );
   };
 
@@ -98,47 +102,75 @@ export const MainEditProduct = ({ productId }) => {
                     <Message variant={"alert-danger"}>{error}</Message>
                   ) : (
                     <>
-                      <div className="mb-4">
-                        <label htmlFor="product_count" className="form-label">
-                          Product Name
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Enter Product Title"
-                          className="form-control"
-                          id="product_title"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
+                      <div className="row">
+                        <div className="mb-4 col-lg-6">
+                          <label htmlFor="product_count" className="form-label">
+                            Product Name
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Product Title"
+                            className="form-control"
+                            id="product_title"
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </div>
+                        <div className="mb-4 col-lg-6">
+                          <label htmlFor="product_count" className="form-label">
+                            Product Category
+                          </label>
+                          <select
+                            type="text"
+                            placeholder={product?.category || "Select product category"}
+                            className="form-control"
+                            id="category"
+                            required
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                          >
+                            <option>All Categories</option>
+                            {categories?.map((category) => (
+                              <option
+                                value={category?.name}
+                                key={category?._id}
+                              >
+                                {category?.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
-                      <div className="mb-4">
-                        <label htmlFor="product_price" className="form-label">
-                          Price
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Enter Product price"
-                          className="form-control"
-                          id="product_price"
-                          required
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="product_count" className="form-label">
-                          Quantity Remaining
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Enter Available Product"
-                          className="form-control"
-                          id="product_count"
-                          required
-                          value={countInStock}
-                          onChange={(e) => setCountInStock(e.target.value)}
-                        />
+                      <div className="row">
+                        <div className="mb-4 col-md-6">
+                          <label htmlFor="product_price" className="form-label">
+                            Price
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Product price"
+                            className="form-control"
+                            id="product_price"
+                            required
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                          />
+                        </div>
+                        <div className="mb-4 col-md-6">
+                          <label htmlFor="product_count" className="form-label">
+                            Quantity Remaining
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Available Product"
+                            className="form-control"
+                            id="product_count"
+                            required
+                            value={countInStock}
+                            onChange={(e) => setCountInStock(e.target.value)}
+                          />
+                        </div>
                       </div>
                       <div className="mb-4">
                         <label

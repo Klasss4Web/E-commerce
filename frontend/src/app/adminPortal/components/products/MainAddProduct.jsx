@@ -21,6 +21,7 @@ export const MainAddProduct = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [category, setCategory] = useState("");
   const [displayImage, setDisplayImage] = useState();
 
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ export const MainAddProduct = () => {
   const createProduct = useSelector((state) => state.adminCreateProduct);
 
   const { loading, error, product } = createProduct;
+  
+  const adminGetCategories = useSelector((state) => state.adminGetCategories);
+  const { categories } = adminGetCategories;
 
   useEffect(() => {
     if (product) {
@@ -36,6 +40,7 @@ export const MainAddProduct = () => {
       setName("");
       setDescription("");
       setImage("");
+      setCategory("");
       setPrice(0);
       setCountInStock(0);
       setDisplayImage();
@@ -44,7 +49,16 @@ export const MainAddProduct = () => {
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
-    dispatch(adminCreateProduct(name, price, description, image, countInStock));
+    dispatch(
+      adminCreateProduct(
+        name,
+        price,
+        description,
+        image,
+        countInStock,
+        category
+      )
+    );
   };
 
   return (
@@ -70,48 +84,74 @@ export const MainAddProduct = () => {
                 <div className="card-body">
                   {error && <Message variant={"alert-danger"}>{error}</Message>}
                   {loading && <Loading />}
-                  <div className="mb-4">
-                    <label htmlFor="product_count" className="form-label">
-                      Product Title
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Product Title"
-                      className="form-control"
-                      id="product_title"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
+                  <div className="row">
+                    <div className="mb-4 col-lg-6">
+                      <label htmlFor="product_count" className="form-label">
+                        Product Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter Product Title"
+                        className="form-control"
+                        id="product_title"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-4 col-lg-6">
+                      <label htmlFor="product_count" className="form-label">
+                        Product Category
+                      </label>
+                      <select
+                        type="text"
+                        placeholder="Select product category"
+                        className="form-control"
+                        id="category"
+                        required
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option>All Categories</option>
+                        {categories?.map((category) => (
+                          <option value={category?.name} key={category?._id}>
+                            {category?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="mb-4">
-                    <label htmlFor="product_price" className="form-label">
-                      Price
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Product price"
-                      className="form-control"
-                      id="product_price"
-                      required
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
+                  <div className="row">
+                    <div className="mb-4 col-md-6">
+                      <label htmlFor="product_price" className="form-label">
+                        Price
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter Product price"
+                        className="form-control"
+                        id="product_price"
+                        required
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-4 col-md-6">
+                      <label htmlFor="product_count" className="form-label">
+                        Quantity Remaining
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter Available Product"
+                        className="form-control"
+                        id="product_count"
+                        required
+                        value={countInStock}
+                        onChange={(e) => setCountInStock(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div className="mb-4">
-                    <label htmlFor="product_count" className="form-label">
-                      Quantity Remaining
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Available Product"
-                      className="form-control"
-                      id="product_count"
-                      required
-                      value={countInStock}
-                      onChange={(e) => setCountInStock(e.target.value)}
-                    />
-                  </div>
+
                   <div className="mb-4">
                     <label htmlFor="product_description" className="form-label">
                       Product description
@@ -164,7 +204,12 @@ export const MainAddProduct = () => {
               </div>
             </div>
             <div className="col-xs col-lg-4 rounded">
-              <img src={displayImage} width="100%" height={"300px"} style={{borderRadius: "10px"}} />
+              <img
+                src={displayImage}
+                width="100%"
+                height={"300px"}
+                style={{ borderRadius: "10px" }}
+              />
             </div>
           </div>
         </form>

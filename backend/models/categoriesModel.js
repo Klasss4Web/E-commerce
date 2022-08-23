@@ -19,6 +19,7 @@ const categoriesSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+  
   },
 
   {

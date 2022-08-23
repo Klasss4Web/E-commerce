@@ -19,6 +19,7 @@ import { TransactionsPage } from "../adminPortal/pages/transactions/Transactions
 import { RatingsPage } from "../adminPortal/pages/ratings/Ratings";
 import { Notifications } from "../adminPortal/pages/notifications/Notifications";
 import { CategoriesPage } from "../adminPortal/pages/categories/CategoriesPage";
+import { CounterPractice } from "../adminPortal/pages/CounterPractice";
 
 
 const AdminPortalRoutes = () => {
@@ -42,6 +43,10 @@ const AdminPortalRoutes = () => {
           <ProtectedRoutes
             path="/product/:id/edit"
             component={ProductEditPage}
+          />
+          <ProtectedRoutes
+            path="/counter"
+            component={CounterPractice}
           />
           {/* <Route exact path="/login" component={Login} /> */}
           <ProtectedRoutes path="/*" component={HomePage} />

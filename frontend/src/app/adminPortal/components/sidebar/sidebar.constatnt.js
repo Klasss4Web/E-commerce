@@ -34,11 +34,11 @@ export const ADMIN_NAV_ITEMS = [
     to: PRODUCTS,
     icon: TiShoppingCart,
   },
-  {
-    title: "Add Products",
-    to: ADD_PRODUCTS,
-    icon: FaCartPlus,
-  },
+  // {
+  //   title: "Add Products",
+  //   to: ADD_PRODUCTS,
+  //   icon: FaCartPlus,
+  // },
   {
     title: "Customers",
     to: CUSTOMERS,

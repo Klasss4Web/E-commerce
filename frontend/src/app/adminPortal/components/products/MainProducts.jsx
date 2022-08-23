@@ -1,24 +1,49 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from 'react-router-dom';
-import { adminListProducts } from '../../../../redux/actions/productActions';
-import Message from '../loadingError/Error';
-import Loading from '../loadingError/Loading';
-import { Product } from './Product';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { adminCategoriesListAction } from "../../../../redux/actions/categoriesActions";
+import { adminListProducts } from "../../../../redux/actions/productActions";
+import { handleFilter } from "../../../utils/filterSearch";
+import Message from "../loadingError/Error";
+import Loading from "../loadingError/Loading";
+import { Product } from "./Product";
 
-export const MainProducts = () => {
+export const MainProducts = ({ products, loading, error }) => {
+  const dispatch = useDispatch();
+  const [category, setCategory] = useState("");
 
-  const dispatch = useDispatch()
+  const [value, setValue] = useState("");
 
-  const productList = useSelector((state) => state.adminProductList);
-  const { products, error, loading} = productList
+  const [filteredData, setFilteredData] = useState([...products]);
 
   const adminDeleteProduct = useSelector((state) => state.adminDeleteProduct);
   const { error: deleteError, success } = adminDeleteProduct;
 
+  const adminGetCategories = useSelector((state) => state.adminGetCategories);
+  const { categories } = adminGetCategories;
+
+
+  // const handleFilter = (e) => {
+  //   const keyword = e.target.value;
+
+  //   if (keyword !== "") {
+  //     const results = products?.filter((product) => {
+  //       return product.name.toLowerCase().includes(keyword.toLowerCase());
+  //       // Use the toLowerCase() method to make it case-insensitive
+  //     });
+  //     setFilteredData(results);
+  //   } else {
+  //     setFilteredData(products);
+  //   }
+  //   setValue(keyword);
+  // };
+
+  console.log("filteredData", filteredData);
+
   useEffect(() => {
-    dispatch(adminListProducts())
-  },[dispatch, success])
+    dispatch(adminListProducts());
+    dispatch(adminCategoriesListAction());
+  }, [dispatch, success]);
 
   return (
     <section className="content-main">
@@ -39,20 +64,26 @@ export const MainProducts = () => {
                 type="search"
                 placeholder="Search..."
                 className="form-control p-2"
+                value={value}
+                onChange={(e)=>handleFilter(e, products, setFilteredData, setValue)}
               />
             </div>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
+              <select
+                className="form-select"
+                onChange={(e) => setCategory(e.target.value)}
+              >
                 <option>All Categories</option>
-                <option>Electronics</option>
-                <option>Gadgets</option>
-                <option>Others</option>
+                {categories?.map((category) => (
+                  <option value={category?.name} key={category?._id}>
+                    {category?.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select">
                 <option>Latest</option>
-                <option>Electronics</option>
                 <option>Discounts</option>
                 <option>Popular demand</option>
               </select>
@@ -69,9 +100,20 @@ export const MainProducts = () => {
             <div className="row">
               {/* Products */}
 
-              {products?.map((product) => (
-                <Product product={product} key={product?._id} />
-              ))}
+              {products?.filter((prod) => prod?.category === category).length >
+              0
+                ? products
+                    ?.filter((prod) => prod?.category === category)
+                    ?.map((product) => (
+                      <Product product={product} key={product?._id} />
+                    ))
+                : filteredData?.length > 0
+                ? filteredData?.map((product) => (
+                    <Product product={product} key={product?._id} />
+                  ))
+                : products?.map((product) => (
+                    <Product product={product} key={product?._id} />
+                  ))}
             </div>
           )}
 
@@ -108,4 +150,4 @@ export const MainProducts = () => {
       </div>
     </section>
   );
-}
+};

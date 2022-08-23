@@ -1,7 +1,18 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { adminDeleteCategory } from "../../../../../redux/actions/categoriesActions";
 import { EditCategoryModal } from "./EditCategoryModal";
 
-export const Category = ({ category }) => {
+export const Category = ({ category, setRefresh }) => {
+
+  const dispatch = useDispatch()
+
+  const handleDeleteCategory = () => {
+     if (window.confirm("Are you sure??")) {
+       dispatch(adminDeleteCategory(category?._id, setRefresh));
+     }
+    
+  }
   return (
     <div
       class="card"
@@ -33,16 +44,17 @@ export const Category = ({ category }) => {
           }}
         >
           <div>
-            <EditCategoryModal />
+            <EditCategoryModal category={category} setRefresh={setRefresh} />
           </div>
 
           <div
-            // onClick={() => handleDeleteProduct(product?._id)}
+            onClick={() => handleDeleteCategory(category?._id)}
             className="px-2"
             style={{
               border: "1px solid red",
               borderRadius: "5px",
               color: "red",
+              cursor: "pointer"
             }}
           >
             <i className="fas fa-trash-alt"></i>

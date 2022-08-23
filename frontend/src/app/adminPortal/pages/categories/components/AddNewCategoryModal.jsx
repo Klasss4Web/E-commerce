@@ -4,9 +4,12 @@ import { useDispatch } from "react-redux";
 import { adminCreateCategoriesAction } from "../../../../../redux/actions/categoriesActions";
 
 export const AddNewCategoryModal = ({ loading, error }) => {
+
+  const [file, setFile] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [imageUrl, setimageUrl] = useState("")
   const dispatch = useDispatch()
 
   const handleCreate = () => {
@@ -14,7 +17,7 @@ export const AddNewCategoryModal = ({ loading, error }) => {
     const payload = {
       name,
       description,
-      image
+      image: image || imageUrl
     }
     dispatch(adminCreateCategoriesAction(payload));
   }
@@ -56,7 +59,7 @@ export const AddNewCategoryModal = ({ loading, error }) => {
               <label htmlFor="name">Name</label>
 
               <input
-                placeholder="Enter full name"
+                placeholder="Enter category name"
                 style={{
                   width: "100%",
                   height: "40px",
@@ -73,28 +76,70 @@ export const AddNewCategoryModal = ({ loading, error }) => {
 
               <label htmlFor="image">Image</label>
 
-              <input
-                placeholder="Select Image"
+              <div
                 style={{
-                  width: "100%",
-                  height: "40px",
-                  borderRadius: "5px",
-                  border: "1px solid #d4d4d4",
-                  marginTop: "10px",
-                  marginBottom: "15px",
-                  paddingLeft: "10px",
-                  paddingRight: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              />
+              >
+                <input
+                  placeholder={image?.name || "Enter Image Url or click the plus sign"}
+                  style={{
+                    width: "80%",
+                    height: "40px",
+                    borderRadius: "5px",
+                    border: "1px solid #d4d4d4",
+                    marginTop: "10px",
+                    marginBottom: "15px",
+                    paddingLeft: "10px",
+                    paddingRight: "20px",
+                  }}
+                  value={imageUrl}
+                  onChange={(e) => setimageUrl(e.target.value)}
+                />
+                <div style={{ position: "relative" }}>
+                  <i className="fa fa-plus"></i>
+                  <img
+                    width={"40px"}
+                    height="40px"
+                    style={{ borderRadius: "50%" }}
+                    src={
+                      file ||
+                      "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Z2FkZ2V0c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                    }
+                    alt=""
+                  />
+                  <input
+                    type={"file"}
+                    name="file"
+                    cursor={"pointer"}
+                    // value={image}
+                    style={{
+                      position: "absolute",
+                      opacity: 0,
+                      cursor: "pointer",
+                      zIndex: "100",
+                      background: "transparent",
+                      right: "0%",
+                      width: "80px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onChange={(e) => {
+                      setImage(e.target.files?.[0]);
+                      setFile(URL.createObjectURL(e.target.files?.[0]));
+                    }}
+                  />
+                </div>
+              </div>
 
               <label htmlFor="description">Description</label>
-              <input
+              <textarea
                 placeholder="Add description"
                 style={{
                   width: "100%",
-                  height: "40px",
+                  height: "100px",
                   borderRadius: "5px",
                   border: "1px solid #d4d4d4",
                   marginTop: "10px",
@@ -104,7 +149,7 @@ export const AddNewCategoryModal = ({ loading, error }) => {
                 }}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-              />
+              ></textarea>
             </div>
 
             <div class="modal-footer">

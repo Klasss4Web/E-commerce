@@ -114,7 +114,7 @@ export const productReviewAction =
 
 // ADMIN CREATE PRODUCT
 export const adminCreateProduct =
-  (name, price, description, image, countInStock) =>
+  (name, price, description, image, countInStock, category) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -159,6 +159,7 @@ export const adminCreateProduct =
           description,
           image: imgUrlsFromCloudinary,
           countInStock,
+          category
         },
         config
       );
@@ -252,7 +253,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 };
 
 // ADMIN UPDATE PRODUCT: This is the action that does the finakl updates
-export const updateProductDetails = (product) => async (dispatch, getState) => {
+export const updateProductDetails = (payload) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_DETAILS_REQUEST,
@@ -270,8 +271,8 @@ export const updateProductDetails = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/products/admin/${product._id}`,
-      product,
+      `/api/products/admin/${payload._id}`,
+      payload,
       config
     );
     console.log("dataaaa", data);

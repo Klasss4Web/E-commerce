@@ -28,6 +28,7 @@ import {
   adminOrderDetailsReducer,
   adminOrderListReducer,
   orderCreateReducer,
+  orderDeliveryReducer,
   orderDetailsReducer,
   orderListReducer,
   orderPaymentDetailsReducer,
@@ -39,7 +40,8 @@ import {
   adminUpdateMerchantStatusReducer,
   merchantListReducer,
 } from "./reducers/merchantReducer";
-import { adminAddCategoryReducer, categoryListReducer } from "./reducers/categoriesReducers";
+import { adminAddCategoryReducer, adminDeleteCategoryReducer, adminUpdateCategoryReducer, categoryListReducer } from "./reducers/categoriesReducers";
+import { counterReducer } from "./reducers/counterReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -62,6 +64,7 @@ const reducer = combineReducers({
   updateProduct: adminUpdateProductDetailsReducer,
   adminOrderList: adminOrderListReducer,
   adminOrderDetails: adminOrderDetailsReducer,
+  adminUpdateOrderDelivery: orderDeliveryReducer,
   adminMerchantList: merchantListReducer,
   adminGetSingleMerchant: adminGetMerchantById,
   updateMerchantStatus: adminUpdateMerchantStatusReducer,
@@ -70,6 +73,9 @@ const reducer = combineReducers({
   adminGetReviews: adminReviewListReducer,
   adminAddCategory: adminAddCategoryReducer,
   adminGetCategories: categoryListReducer,
+  adminUpdateCategory: adminUpdateCategoryReducer,
+  adminDeleteCategory: adminDeleteCategoryReducer,
+  counter: counterReducer,
 });
 
 const cartItemsFromLocalStorage = localStorage.getItem("cartItems")

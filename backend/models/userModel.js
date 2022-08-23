@@ -17,13 +17,23 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
-      default: false,
+      default: "12345",
+    },
+    image: {
+      type: String,
+      required: false,
+      default: "https://www.imdb.com/title/tt0499549/",
     },
 
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
+    },
+    userType: {
+      type: "String",
+      required: false,
+      default: "user",
     },
   },
   {

@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Message from '../../../userPortal/components/loadingError/Error';
 import Loading from '../../../userPortal/components/loadingError/Loading';
 
 
-export const UserComponent = ({ users, error, loading }) => {
-
-
-
+export const UserComponent = ({
+  users,
+  error,
+  loading,
+  value,
+  setValue,
+  handleFilter,
+}) => {
   return (
     <section className="content-main">
       <div className="content-header">
@@ -27,6 +31,8 @@ export const UserComponent = ({ users, error, loading }) => {
                 type="text"
                 placeholder="Search User"
                 className="form-control"
+                value={value}
+                onChange={handleFilter}
               />
             </div>
             <div className="col-lg-2 col-6 col-md-3">
@@ -119,4 +125,4 @@ export const UserComponent = ({ users, error, loading }) => {
       </div>
     </section>
   );
-}
+};

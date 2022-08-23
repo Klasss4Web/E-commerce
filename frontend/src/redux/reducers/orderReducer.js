@@ -4,6 +4,9 @@ import {
   ADMIN_ORDER_DETAILS_SUCCESS,
   ADMIN_ORDER_LIST_FAILURE,
   ADMIN_ORDER_LIST_SUCCESS,
+  ADMIN_UPDATE_DELIVERY_FAILURE,
+  ADMIN_UPDATE_DELIVERY_REQUEST,
+  ADMIN_UPDATE_DELIVERY_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_PAYMENT_FAILURE,
   ORDER_CREATE_PAYMENT_REQUEST,
@@ -192,6 +195,36 @@ export const adminOrderDetailsReducer = (
         loading: false,
         error: action.payload,
       };
+
+    default:
+      return state;
+  }
+};
+
+
+// ADMIN UPDATE ORDER DELIVERY STATUS
+export const orderDeliveryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_UPDATE_DELIVERY_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case ADMIN_UPDATE_DELIVERY_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        updatedOrder: action.payload,
+      };
+
+    case ADMIN_UPDATE_DELIVERY_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    // case ORDER_CREATE_RESET:
+    //   return {};
 
     default:
       return state;

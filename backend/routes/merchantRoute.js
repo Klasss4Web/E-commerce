@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { adminOnly, protect } from "../middleware/authMidedleware.js";
 import Merchant from "../models/merchantModel.js";
+import User from "../models/userModel.js";
 
 const merchantRoute = express.Router();
 
@@ -69,13 +70,13 @@ merchantRoute.post(
   adminOnly,
   asyncHandler(async (req, res) => {
     const { name, email, userType, image } = req.body;
-    const merchantExist = await Merchant.findOne({ email });
+    const merchantExist = await User.findOne({ email });
 
     if (merchantExist) {
       res.status(400);
       throw new Error("Merchant alread exist");
     } else {
-      const merchant = new Merchant({
+      const merchant = new User({
         name,
         email,
         userType,

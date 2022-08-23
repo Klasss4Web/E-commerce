@@ -1,28 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { admiGetOrderDetailsAction } from '../../../../redux/actions/orderActions';
+import { admiGetOrderDetailsAction, updatedDeliveryAction } from '../../../../redux/actions/orderActions';
 import Message from '../loadingError/Error';
 import Loading from '../loadingError/Loading';
 import { OrderDetailProducts } from './OrderDetailProducts';
 import { OrderDetailsInfo } from './OrderDetailsInfo';
 import moment from "moment";
+import Toast from '../../../userPortal/components/loadingError/Toast';
 
 
 export const OrderDetailsMain = ({ orderId }) => {
 
   const dispatch = useDispatch()
+  const [refresh, setRefresh] = useState(false)
 
   const orderDetails = useSelector(state=>state.adminOrderDetails)
   const { loading, error, order } = orderDetails
 
-  useEffect(()=>{
+  // const adminUpdateOrderDelivery = useSelector(
+  //   (state) => state?.adminUpdateOrderDelivery
+  // );
+
+
+  const handleUpdateDeliveryStatus = () => {
+    dispatch(updatedDeliveryAction(order, setRefresh));
+  }
+
+  useEffect(() => {
     dispatch(admiGetOrderDetailsAction(orderId));
-  },[orderId, dispatch])
+  }, [orderId, dispatch, refresh]);
 
   return (
     <section className="content-main">
+      <Toast />
       <div className="content-header">
         <Link className="btn btn-dark text-white" to="/orders">
           Back To Orders
@@ -77,9 +89,19 @@ export const OrderDetailsMain = ({ orderId }) => {
               {/* Payment Information */}
               <div className="col-lg-3">
                 <div className="box shadow-sm bg-light">
-                  <button className="btn btn-dark col-12">
-                    Mark as Delovered
-                  </button>
+                  {order?.isDelivered ? (
+                    <div className="justify-content-center d-flex" style={{color: "green", border: "1px solid green", borderRadius: "5px", width: "130px"}}>
+                      Delivered
+                      <i className="fa fa-check"></i>
+                    </div>
+                  ) : (
+                    <button
+                      className="btn btn-dark col-12"
+                      onClick={() => handleUpdateDeliveryStatus()}
+                    >
+                      Mark as Delivered
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

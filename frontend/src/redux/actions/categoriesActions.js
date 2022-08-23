@@ -1,8 +1,24 @@
-import axios from "axios"
-import { ADMIN_ADD_CATEGORIES_FAILURE, ADMIN_ADD_CATEGORIES_REQUEST, ADMIN_ADD_CATEGORIES_SUCCESS, ADMIN_CATEGORIES_LIST_REQUEST, ADMIN_CATEGORIES_LIST_SUCCESS, ADMIN_DELETE_CATEGORY_FAILURE, ADMIN_DELETE_CATEGORY_REQUEST, ADMIN_DELETE_CATEGORY_SUCCESS, ADMIN_GET_CATEGORY_FAILURE, ADMIN_GET_CATEGORY_REQUEST, ADMIN_GET_CATEGORY_SUCCESS, ADMIN_UPDATE_CATEGORY_STATUS_FAILURE, ADMIN_UPDATE_CATEGORY_STATUS_REQUEST, ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS } from "../constants/categoriesConstants";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ToastObjects } from "../../app/adminPortal/components/loadingError/toastObject";
+import {
+  ADMIN_ADD_CATEGORIES_FAILURE,
+  ADMIN_ADD_CATEGORIES_REQUEST,
+  ADMIN_ADD_CATEGORIES_SUCCESS,
+  ADMIN_CATEGORIES_LIST_REQUEST,
+  ADMIN_CATEGORIES_LIST_SUCCESS,
+  ADMIN_DELETE_CATEGORY_FAILURE,
+  ADMIN_DELETE_CATEGORY_REQUEST,
+  ADMIN_DELETE_CATEGORY_SUCCESS,
+  ADMIN_GET_CATEGORY_FAILURE,
+  ADMIN_GET_CATEGORY_REQUEST,
+  ADMIN_GET_CATEGORY_SUCCESS,
+  ADMIN_UPDATE_CATEGORY_STATUS_FAILURE,
+  ADMIN_UPDATE_CATEGORY_STATUS_REQUEST,
+  ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS,
+} from "../constants/categoriesConstants";
 
 import { logout } from "./userActions";
-
 
 // SINGLE PRODUCT
 // export const productDetails = (id) => async (dispatch) => {
@@ -25,12 +41,70 @@ import { logout } from "./userActions";
 //   }
 // };
 
-
 // ADMIN CREATE CATEGORIES
-export const adminCreateCategoriesAction = (payload) => async (dispatch, getState) => {
+export const adminCreateCategoriesAction =
+  (payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADMIN_ADD_CATEGORIES_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      
+      let imgUrlsFromCloudinary;
+      const formData = new FormData();
+
+      formData.append("file", payload?.image);
+      formData.append("upload_preset", "emmanuel");
+      console.log("image", payload?.image);
+      await axios
+        .post(
+          "https://api.cloudinary.com/v1_1/emy-commerce/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
+          imgUrlsFromCloudinary = data.secure_url;
+        });
+payload.image=imgUrlsFromCloudinary
+      const {
+        data: { data },
+      } = await axios.post(`/api/categories/add-categories`, payload, config);
+      console.log("merchants added", data);
+      dispatch({ type: ADMIN_ADD_CATEGORIES_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ADMIN_ADD_CATEGORIES_FAILURE,
+        payload: message,
+      });
+    }
+  };
+
+// ADMIN GET ALL CATEGORIES
+export const adminCategoriesListAction = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ADMIN_ADD_CATEGORIES_REQUEST,
+      type: ADMIN_CATEGORIES_LIST_REQUEST,
     });
 
     const {
@@ -44,9 +118,12 @@ export const adminCreateCategoriesAction = (payload) => async (dispatch, getStat
       },
     };
 
-    const {data: { data }} = await axios.post(`/api/categories/add-categories`, payload, config);
-console.log("merchants added", data)
-    dispatch({ type: ADMIN_ADD_CATEGORIES_SUCCESS, payload: data });
+    const {
+      data: { data },
+    } = await axios.get(`/api/categories`, config);
+    console.log("data", data);
+
+    dispatch({ type: ADMIN_CATEGORIES_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error?.response && error?.response?.data?.message
@@ -61,45 +138,6 @@ console.log("merchants added", data)
     });
   }
 };
-
-// ADMIN GET ALL MERCHANTS
-export const adminCategoriesListAction = () => async(dispatch, getState) => {
-  try{
-    dispatch({
-      type: ADMIN_CATEGORIES_LIST_REQUEST
-    })
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo?.token}`,
-      },
-    };
-
-
-  const { data: {data} } = await axios.get(`/api/categories`, config);
-  console.log("data", data)
-
-  dispatch({ type: ADMIN_CATEGORIES_LIST_SUCCESS, payload: data })
-
-  } catch (error) {
-    const message =
-      error?.response && error?.response?.data?.message
-        ? error?.response?.data?.message
-        : error?.message;
-    if (message === "Not authorized, no token found") {
-      dispatch(logout());
-    }
-    dispatch({
-      type: ADMIN_ADD_CATEGORIES_FAILURE,
-      payload: message
-    })
-  }
-}
 
 // ADMIN GET CATEGORIES BY ID: This action only gets the product details to populate the fields
 export const getCategoryDetails = (id) => async (dispatch, getState) => {
@@ -136,16 +174,17 @@ export const getCategoryDetails = (id) => async (dispatch, getState) => {
       type: ADMIN_GET_CATEGORY_FAILURE,
       payload: message,
     });
+    toast.error(message, ToastObjects);
   }
 };
 
-
 // ADMIN UPDATE CATEGORY: This is the action that does the final updates
-export const updateMerchantStatusAction = (categoryId, payload) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: ADMIN_UPDATE_CATEGORY_STATUS_REQUEST,
-    });
+export const updateCategoryAction =
+  (payload, setRefresh) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADMIN_UPDATE_CATEGORY_STATUS_REQUEST,
+      });
 
       const {
         userLogin: { userInfo },
@@ -158,65 +197,68 @@ export const updateMerchantStatusAction = (categoryId, payload) => async (dispat
         },
       };
 
-    const {
-      data: { data },
-    } = await axios.put(`/api/categories/${categoryId}`, payload, config);
-    console.log("dataaaa", data)
-    dispatch({ type: ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS, payload: data });
-    dispatch({ type: ADMIN_GET_CATEGORY_SUCCESS, payload: data });
- 
-  } catch (error) {
-    const message =
-      error?.response && error?.response?.data?.message
-        ? error?.response?.data?.message
-        : error?.message;
-    if (message === "Not authorized, no token found") {
-      dispatch(logout());
+      const {
+        data: { data },
+      } = await axios.put(`/api/categories/${payload?._id}`, payload, config);
+      console.log("dataaaa", data);
+      dispatch({ type: ADMIN_UPDATE_CATEGORY_STATUS_SUCCESS, payload: data });
+      dispatch({ type: ADMIN_GET_CATEGORY_SUCCESS, payload: data });
+      toast.success("Category updated successfully", ToastObjects);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ADMIN_UPDATE_CATEGORY_STATUS_FAILURE,
+        payload: message,
+      });
+      toast.error(message, ToastObjects);
     }
-    dispatch({
-      type: ADMIN_UPDATE_CATEGORY_STATUS_FAILURE,
-      payload: message
-        
-    });
-  }
-};
+  };
 
+// ADMIN DELETE CATEGORY
+export const adminDeleteCategory =
+  (categoryId, setRefresh) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADMIN_DELETE_CATEGORY_REQUEST,
+      });
 
-// ADMIN DELETE PRODUCT
-export const adminDeleteMerchant = (categoryId) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: ADMIN_DELETE_CATEGORY_REQUEST,
-    });
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo?.token}`,
-      },
-    };
+      await axios.delete(`/api/categories/${categoryId}`, config);
 
-    await axios.delete(`/api/categories/${categoryId}`, config);
-
-    dispatch({ type: ADMIN_DELETE_CATEGORY_SUCCESS });
-  } catch (error) {
-    const message =
-      error?.response && error?.response?.data?.message
-        ? error?.response?.data?.message
-        : error?.message;
-    if (message === "Not authorized, no token found") {
-      dispatch(logout());
+      dispatch({ type: ADMIN_DELETE_CATEGORY_SUCCESS });
+      toast.success("Category deleted successfully", ToastObjects);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ADMIN_DELETE_CATEGORY_FAILURE,
+        payload: message,
+      });
     }
-    dispatch({
-      type: ADMIN_DELETE_CATEGORY_FAILURE,
-      payload: message,
-    });
-  }
-};
+  };
 
 // ADMIN UPDATE PRODUCT: This action only gets the product details to populate the fields
 // export const getProductDetails = (id) => async (dispatch) => {
@@ -250,12 +292,7 @@ export const adminDeleteMerchant = (categoryId) => async (dispatch, getState) =>
 //     dispatch({
 //       type: ADMIN_EDIT_PRODUCT_FAILURE,
 //       payload: message
-        
+
 //     });
 //   }
 // };
-
-
-
-
-
