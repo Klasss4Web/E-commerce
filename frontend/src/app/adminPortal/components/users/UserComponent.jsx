@@ -64,7 +64,10 @@ export const UserComponent = ({
             <div className="row row-cols-sm-2 row cols-lg-3 row-cols-xl-4">
               {users?.map((user) => (
                 <div key={user?._id} className="col mb-4">
-                  <div className="card card-user shadow-sm">
+                  <div
+                    className="card card-user"
+                    style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+                  >
                     <div className="card-header">
                       <img
                         className="img-md img-avatar"

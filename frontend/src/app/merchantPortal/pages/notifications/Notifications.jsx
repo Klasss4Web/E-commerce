@@ -1,7 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { adminListNotifications } from "../../../../redux/actions/notificationsActions";
 import { NotificationCard } from "./components/NotificationCard";
 
 export const Notifications = () => {

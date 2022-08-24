@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { updateNotificationDetails } from "../../../../../redux/actions/notificationsActions";
+import { timeago } from "../../../../../utils/timeAgo";
 import Toast from "../../../components/loadingError/Toast";
 import { RejectRequestModal } from "./RejectRequestModal";
 
@@ -52,10 +53,11 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
                 </div>
               </div>
             ) : (
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: "green", width: "100px",height: "40px", color: "#fff", borderRadius: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: "green", width: "100px",height: "40px", color: "#fff", borderRadius: "10px", marginBottom: "10px" }}>
                 <p>Resolved</p>
               </div>
             )}
+            <p>{timeago(notification?.createdAt)}</p>
           </div>
         </div>
       ))}

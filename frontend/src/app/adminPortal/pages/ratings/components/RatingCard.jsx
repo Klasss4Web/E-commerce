@@ -14,10 +14,23 @@ export const RatingCard = ({ reviews }) => {
     slidesToScroll: 1,
   };
   return (
-    <div style={{ width: "99%", marginBottom: "20px" }}>
+    <div
+      style={{
+        width: "99%",
+        marginBottom: "20px",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        borderRadius: "10px"
+      }}
+     
+    >
       <Slider {...settings}>
         <div className="slide">
-          <div style={{ width: "30%" }}>
+          <div
+            style={{
+              width: "30%",
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+            }}
+          >
             <img
               width={"100%"}
               src={reviews?.image}
