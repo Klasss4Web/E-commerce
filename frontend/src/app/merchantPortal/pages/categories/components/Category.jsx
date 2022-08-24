@@ -35,7 +35,7 @@ export const Category = ({ category, setRefresh }) => {
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <p class="card-text">{category?.name}</p>
-        <div
+        {/* <div
           className=""
           style={{
             width: "30%",
@@ -59,7 +59,7 @@ export const Category = ({ category, setRefresh }) => {
           >
             <i className="fas fa-trash-alt"></i>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

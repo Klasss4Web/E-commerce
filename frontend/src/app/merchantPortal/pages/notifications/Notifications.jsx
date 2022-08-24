@@ -1,34 +1,18 @@
-import React from 'react'
+import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { adminListNotifications } from "../../../../redux/actions/notificationsActions";
+import { NotificationCard } from "./components/NotificationCard";
 
 export const Notifications = () => {
+ 
+
   return (
     <div style={{ padding: "50px" }}>
       <main className="main-wrap">
         <h2>Notifications</h2>
-        <div
-          className="card"
-          style={{ width: "100%", borderRadius: "10px", marginTop: "15px" }}
-        >
-          <div className="card-body">
-            <h5 className="card-title">Request for approval</h5>
-            <p className="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <div
-              className="d-flex justify-content-between my-3"
-              style={{ width: "300px" }}
-            >
-              <button className="btn btn-primary" style={{ width: "48%" }}>
-                Approve
-              </button>
-              <button className="btn btn-danger" style={{ width: "48%" }}>
-                Reject
-              </button>
-            </div>
-          </div>
-        </div>
+        <NotificationCard notifications={[]} />
       </main>
     </div>
   );
-}
+};

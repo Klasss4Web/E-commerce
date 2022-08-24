@@ -25,8 +25,15 @@ productRoute.get(
     const products = await Products.find({ ...keyword })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
-      .sort({ _id: -1 });
-    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+      // .sort({ _id: -1 });
+    const approvedProducts = products?.filter(
+      (product) => product?.createStatus !== "Pending"
+    );
+    res.json({
+      products: approvedProducts,
+      page,
+      pages: Math.ceil(count / pageSize),
+    });
   })
 );
 
@@ -39,6 +46,8 @@ productRoute.get(
     const products = await Products.find({})
       .sort({ _id: -1 })
       .populate("owner", "id name email");
+    
+    // const approvedProducts = products?.filter(product => product?.createStatus !== "Pending")
     res.json(products);
   })
 );

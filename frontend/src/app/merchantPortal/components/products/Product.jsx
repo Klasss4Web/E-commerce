@@ -15,7 +15,7 @@ export const Product = ({ product }) => {
 
   return (
     <div className="col-md-6 col-sm-6 col-lg-3 mt-4">
-      <div className="card card-product-grid shadow-sm">
+      <div className="card card-product-grid shadow-md" style={{ boxShadow:"5px 5px 20px 0px #d4d4d4"}}>
         <Link to={"#"} className="img-wrap">
           <img
             src={product?.image}

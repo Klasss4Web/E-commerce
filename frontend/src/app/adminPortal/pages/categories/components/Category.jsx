@@ -21,6 +21,7 @@ export const Category = ({ category, setRefresh }) => {
         maxHeight: "200px",
         marginBottom: "40px",
         borderRadius: "10px",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
       }}
     >
       <img
@@ -54,7 +55,7 @@ export const Category = ({ category, setRefresh }) => {
               border: "1px solid red",
               borderRadius: "5px",
               color: "red",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
             <i className="fas fa-trash-alt"></i>

@@ -10,8 +10,8 @@ import Products from "./../models/productModel.js";
 
 const notificationRoute = express.Router();
 
-//ADMIN: GET ALL PRODUCT REVIEWS/RATINGS
-//PRODUCT REVIEW/RATING
+//ADMIN: GET ALL NOTIFICATIONS
+//NEW PRODUCT NOTIFICATIONS
 notificationRoute.get(
   "/admin/notifications",
   protect,
@@ -22,7 +22,7 @@ notificationRoute.get(
     const notifications = await Notifications.find({})
       .sort({ _id: -1 })
       .populate("product", "id name image price countInStock")
-      .populate("sender", "id name email");;
+      .populate("sender", "id name email");
     const productNotifications = notifications.filter(
       (product) => product.status === "Pending"
     );
@@ -37,6 +37,41 @@ notificationRoute.get(
     } else {
       res.status(404);
       throw new Error("No Reviews Found");
+    }
+  })
+);
+
+//NEW UPDATE PRODUCT NOTIFICATIONS
+notificationRoute.put(
+  "/admin/notifications/:id",
+  protect,
+  adminOnly,
+  asyncHandler(async (req, res) => {
+    const notification = await Notifications.findById(req.params.id);
+    const product = await Products.findById(notification?.product?._id);
+    const { status, productStatus } = req.body;
+
+    if (notification && product) {
+      notification.sender = notification.sender;
+      notification.product = notification.product;
+      notification.description = notification.description;
+      notification.image = notification.image;
+      notification.title = notification.title;
+      notification.category = notification.category;
+      notification.status = status;
+
+      product.createStatus = productStatus;
+      await product.save()
+
+      const updatedNotification = await notification.save();
+      res.json({
+        status: 200,
+        message: "Notification successfully updated",
+        updatedNotification,
+      });
+    } else {
+      res.status(404);
+      throw new Error("Notification not found");
     }
   })
 );

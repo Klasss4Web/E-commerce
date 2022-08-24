@@ -8,9 +8,13 @@ import UsersPortalRoutes from "./app/routes/usersPortalRoutes";
 import AdminPortalRoutes from "./app/routes/adminRoutes";
 import MerchantPortalRoutes from "./app/routes/merchantRoutes";
 import { useDispatch, useSelector } from "react-redux";
-import { adminListProducts, merchantListProducts } from "./redux/actions/productActions";
+import {
+  adminListProducts,
+  merchantListProducts,
+} from "./redux/actions/productActions";
 import { adminOrdersListAction } from "./redux/actions/orderActions";
 import { UnAuthenticatedRoutes } from "./app/routes/unAuthenticatedRoutes";
+import { adminListNotifications } from "./redux/actions/notificationsActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,14 +31,14 @@ function App() {
       dispatch(adminListProducts());
       dispatch(adminOrdersListAction());
       dispatch(merchantListProducts());
-      
+      // dispatch(adminListNotifications());
     }
 
-     if (userInfo && userInfo?.userType==="merchant") {
+    if (userInfo && userInfo?.userType === "merchant") {
       //  dispatch(adminListProducts());
       //  dispatch(adminOrdersListAction());
-       dispatch(merchantListProducts());
-     }
+      dispatch(merchantListProducts());
+    }
 
     if (parsedData?.token) {
       const decoded = jwtDecode(parsedData?.token);
@@ -54,7 +58,7 @@ function App() {
   if (parsedData?.token) {
     if (parsedData?.isAdmin) {
       return <AdminPortalRoutes />;
-    } else if (parsedData?.userType==="merchant") {
+    } else if (parsedData?.userType === "merchant") {
       return <MerchantPortalRoutes />;
     } else {
       return <UsersPortalRoutes />;
