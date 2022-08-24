@@ -11,7 +11,7 @@ const categoriesRoute = express.Router();
 categoriesRoute.get(
   "/",
   protect,
-  adminOnly,
+  // adminOnly,
   asyncHandler(async (req, res) => {
     const categories = await Categories.find({})
       .sort({ _id: -1 })

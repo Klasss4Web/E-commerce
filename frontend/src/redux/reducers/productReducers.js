@@ -19,6 +19,13 @@ import {
   ADMIN_UPDATE_PRODUCT_DETAILS_REQUEST,
   ADMIN_UPDATE_PRODUCT_DETAILS_RESET,
   ADMIN_UPDATE_PRODUCT_DETAILS_SUCCESS,
+  MERCHANT_ADD_PRODUCT_FAILURE,
+  MERCHANT_ADD_PRODUCT_REQUEST,
+  MERCHANT_ADD_PRODUCT_RESET,
+  MERCHANT_ADD_PRODUCT_SUCCESS,
+  MERCHANT_PRODUCT_LIST_FAILURE,
+  MERCHANT_PRODUCT_LIST_REQUEST,
+  MERCHANT_PRODUCT_LIST_SUCCESS,
   PRODUCT_DETAILS_FAILURE,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
@@ -276,6 +283,61 @@ export const adminReviewListReducer = (state = { reviews: [] }, action) => {
       };
 
     case ADMIN_GET_REVIEWS_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//MERCHANT ADD PRODUCT
+export const merchantAddProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MERCHANT_ADD_PRODUCT_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case MERCHANT_ADD_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        product: action.payload,
+      };
+
+    case MERCHANT_ADD_PRODUCT_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case MERCHANT_ADD_PRODUCT_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+//MERCHANT GET ALL PRODUCTS
+export const merchantProductListReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case MERCHANT_PRODUCT_LIST_REQUEST:
+      return {
+        loading: true,
+        products: [],
+      };
+
+    case MERCHANT_PRODUCT_LIST_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload,
+      };
+
+    case MERCHANT_PRODUCT_LIST_FAILURE:
       return {
         loading: false,
         error: action.payload,

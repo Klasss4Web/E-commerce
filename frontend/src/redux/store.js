@@ -13,6 +13,8 @@ import {
   adminReviewListReducer,
   adminUpdateProductDetailsReducer,
   createProductReviewReducer,
+  merchantAddProductReducer,
+  merchantProductListReducer,
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
@@ -75,6 +77,8 @@ const reducer = combineReducers({
   adminGetCategories: categoryListReducer,
   adminUpdateCategory: adminUpdateCategoryReducer,
   adminDeleteCategory: adminDeleteCategoryReducer,
+  merchantAddProduct: merchantAddProductReducer,
+  merchantProductList: merchantProductListReducer,
   counter: counterReducer,
 });
 

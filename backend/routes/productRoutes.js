@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import { adminOnly, protect } from "../middleware/authMidedleware.js";
+import { adminOnly, merchantsOnly, protect } from "../middleware/authMidedleware.js";
+import Notifications from "../models/notificationModel.js";
 import Products from "./../models/productModel.js";
 
 const productRoute = express.Router();
@@ -35,10 +36,23 @@ productRoute.get(
   protect,
   adminOnly,
   asyncHandler(async (req, res) => {
-    const products = await Products.find({}).sort({ _id: -1 });
+    const products = await Products.find({})
+      .sort({ _id: -1 })
+      .populate("owner", "id name email");
     res.json(products);
   })
 );
+
+//GET ALL PRODUCTS: MERCHANTS ONLY
+// productRoute.get(
+//   "/admin/products",
+//   protect,
+//   adminOnly,
+//   asyncHandler(async (req, res) => {
+//     const products = await Products.find({}).sort({ _id: -1 });
+//     res.json(products);
+//   })
+// );
 
 //GET SINGLE PRODUCTS
 productRoute.get(
@@ -142,6 +156,7 @@ productRoute.post(
         countInStock,
         category,
         user: req.user._id,
+        createStatus: "Approved"
       });
       if (product) {
         const createdProduct = await product.save();
@@ -170,6 +185,7 @@ productRoute.put(
       product.image = image || product.image;
       product.countInStock = countInStock || product.countInStock;
       product.category = category || product.category; 
+      product.createStatus = "Approved"
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);
@@ -194,6 +210,77 @@ productRoute.delete(
       res.status(404);
       throw new Error("Product Not Found");
     }
+  })
+);
+
+//MERCHANTS
+
+//ADD PRODUCT: ONLY MERCHANTS
+productRoute.post(
+  "/merchant/add-product",
+  protect,
+  merchantsOnly,
+  asyncHandler(async (req, res) => {
+    const { name, price, description, image, countInStock, category, createStatus } = req.body;
+    const productExist = await Products.findOne({ name });
+
+    if (productExist) {
+      res.status(400);
+      throw new Error("Product name alread exist");
+    } else {
+      const product = new Products({
+        name,
+        price,
+        description,
+        image,
+        countInStock,
+        category,
+        owner: req.user._id,
+        createStatus: "Pending",
+      });
+
+       const createNotification = new Notifications({
+         title: "Product creation",
+         description: "Please review this product specifications and take the necessary action",
+         product,
+         status: "Pending",
+         sender: req.user._id,
+       });
+      if (product) {
+        const createdProduct = await product.save();
+         await createNotification.save();
+        res.status(200).json(createdProduct);
+      } else {
+        res.status(400);
+        throw new Error("Invalid product data");
+      }
+    }
+  })
+);
+
+//GET ALL PRODUCTS: MERCHANTS ONLY
+productRoute.get(
+  "/merchant/products",
+  protect,
+  merchantsOnly,
+  asyncHandler(async (req, res) => {
+    const owner = req.user.email;
+    // console.log("owneeee", owner)
+    const products = await Products.find({})
+      .sort({ _id: -1 })
+      .populate("owner", "id name email");
+      const merchantsOwnProducts = products?.filter(
+        (product) => product?.owner?._id.toString() === req.user._id.toString()
+      );
+      console.log(
+        "users",
+        req.user,
+        "products",
+        merchantsOwnProducts
+      );
+    res.json(merchantsOwnProducts);
+        
+
   })
 );
 

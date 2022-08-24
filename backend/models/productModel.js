@@ -48,6 +48,17 @@ const productSchema = mongoose.Schema(
       required: true,
     },
 
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+
+    createStatus: {
+      type: String,
+      required: true,
+    },
+
     reviews: [reviewSchema],
 
     rating: {

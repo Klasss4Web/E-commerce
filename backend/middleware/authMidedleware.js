@@ -37,4 +37,13 @@ const adminOnly = (req, res, next) => {
   }
 }
 
-export {adminOnly, protect}
+const merchantsOnly = (req, res, next) => {
+  if (req.user && req.user.userType==="merchant") {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("You are not authorized to access this data, only merchants");
+  }
+};
+
+export {adminOnly, merchantsOnly, protect}

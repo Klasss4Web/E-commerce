@@ -19,6 +19,7 @@ userRoute.post(
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        userType: user.userType,
         createdAt: user.createdAt,
         token: generateToken(user._id),
       });
@@ -53,6 +54,7 @@ userRoute.post(
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        userType: user.userType,
         createdAt: user.createdAt,
         token: generateToken(user._id),
       });

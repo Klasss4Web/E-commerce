@@ -17,6 +17,12 @@ import {
   ADMIN_UPDATE_PRODUCT_DETAILS_FAILURE,
   ADMIN_UPDATE_PRODUCT_DETAILS_REQUEST,
   ADMIN_UPDATE_PRODUCT_DETAILS_SUCCESS,
+  MERCHANT_ADD_PRODUCT_FAILURE,
+  MERCHANT_ADD_PRODUCT_REQUEST,
+  MERCHANT_ADD_PRODUCT_SUCCESS,
+  MERCHANT_PRODUCT_LIST_FAILURE,
+  MERCHANT_PRODUCT_LIST_REQUEST,
+  MERCHANT_PRODUCT_LIST_SUCCESS,
   PRODUCT_DETAILS_FAILURE,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
@@ -364,3 +370,108 @@ export const adminGetReviewsActions = () => async (dispatch, getState) => {
     });
   }
 };
+
+// MERCHANT CREATE PRODUCT
+export const merchantCreateProduct =
+  (name, price, description, image, countInStock, category) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: MERCHANT_ADD_PRODUCT_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      let imgUrlsFromCloudinary;
+      const formData = new FormData();
+
+      formData.append("file", image);
+      formData.append("upload_preset", "emmanuel");
+      console.log("image", image);
+      await axios
+        .post(
+          "https://api.cloudinary.com/v1_1/emy-commerce/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
+          imgUrlsFromCloudinary = data.secure_url;
+        });
+
+      const { data } = await axios.post(
+        `/api/products/merchant/add-product`,
+        {
+          name,
+          price,
+          description,
+          image: imgUrlsFromCloudinary,
+          countInStock,
+          category
+        },
+        config
+      );
+
+      dispatch({ type: MERCHANT_ADD_PRODUCT_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: MERCHANT_ADD_PRODUCT_FAILURE,
+        payload: message,
+      });
+    }
+  };
+
+// MERCHANT GET ALL PRODUCTS
+export const merchantListProducts = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: MERCHANT_PRODUCT_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/products/merchant/products`, config);
+
+    dispatch({ type: MERCHANT_PRODUCT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error?.response && error?.response?.data?.message
+        ? error?.response?.data?.message
+        : error?.message;
+    if (message === "Not authorized, no token found") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: MERCHANT_PRODUCT_LIST_FAILURE,
+      payload: message,
+    });
+  }
+};
+

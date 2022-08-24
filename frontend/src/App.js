@@ -6,8 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import UsersPortalRoutes from "./app/routes/usersPortalRoutes";
 import AdminPortalRoutes from "./app/routes/adminRoutes";
+import MerchantPortalRoutes from "./app/routes/merchantRoutes";
 import { useDispatch, useSelector } from "react-redux";
-import { adminListProducts } from "./redux/actions/productActions";
+import { adminListProducts, merchantListProducts } from "./redux/actions/productActions";
 import { adminOrdersListAction } from "./redux/actions/orderActions";
 import { UnAuthenticatedRoutes } from "./app/routes/unAuthenticatedRoutes";
 
@@ -25,9 +26,15 @@ function App() {
     if (userInfo && userInfo?.isAdmin) {
       dispatch(adminListProducts());
       dispatch(adminOrdersListAction());
-      // dispatch(adminListProducts());
+      dispatch(merchantListProducts());
       
     }
+
+     if (userInfo && userInfo?.userType==="merchant") {
+      //  dispatch(adminListProducts());
+      //  dispatch(adminOrdersListAction());
+       dispatch(merchantListProducts());
+     }
 
     if (parsedData?.token) {
       const decoded = jwtDecode(parsedData?.token);
@@ -47,8 +54,10 @@ function App() {
   if (parsedData?.token) {
     if (parsedData?.isAdmin) {
       return <AdminPortalRoutes />;
-    }else {
-      return <UsersPortalRoutes />
+    } else if (parsedData?.userType==="merchant") {
+      return <MerchantPortalRoutes />;
+    } else {
+      return <UsersPortalRoutes />;
     }
   }
   return <UnAuthenticatedRoutes />;

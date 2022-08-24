@@ -2,7 +2,9 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { adminOnly, protect } from "../middleware/authMidedleware.js";
 import Merchant from "../models/merchantModel.js";
+import Notifications from "../models/notificationModel.js";
 import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 const merchantRoute = express.Router();
 
@@ -69,7 +71,7 @@ merchantRoute.post(
   protect,
   adminOnly,
   asyncHandler(async (req, res) => {
-    const { name, email, userType, image } = req.body;
+    const { name, email, userType, image, password } = req.body;
     const merchantExist = await User.findOne({ email });
 
     if (merchantExist) {
@@ -81,13 +83,34 @@ merchantRoute.post(
         email,
         userType,
         image,
+        password: "12345",
       });
+
+       const createNotification = new Notifications({
+         title: "Merchant creation: Action needed",
+         description:
+           "Please review this merchant details and take the necessary action",
+         product,
+         status: "Pending",
+         sender: req.user._id,
+       });
       if (merchant) {
         const createdMerchant = await merchant.save();
-        res.status(200).json({
+         await createNotification.save();
+        // res.status(200).json({
+        //   status: 200,
+        //   message: "Merchant Successfully Created",
+        //   data: createdMerchant,
+        // });
+        res.status(201).json({
           status: 200,
           message: "Merchant Successfully Created",
-          data: createdMerchant,
+          _id: createdMerchant._id,
+          name: createdMerchant.name,
+          email: createdMerchant.email,
+          isAdmin: createdMerchant.isAdmin,
+          createdAt: createdMerchant.createdAt,
+          token: generateToken(createdMerchant._id),
         });
       } else {
         res.status(400);
@@ -103,7 +126,8 @@ merchantRoute.get(
   protect,
   adminOnly,
   asyncHandler(async (req, res) => {
-    const merchants = await Merchant.find({});
+    const users = await User.find({});
+    const merchants = users.filter((user) => user.userType === "merchant");
     if (merchants) {
       res.status(200).json({
         status: 200,
@@ -128,7 +152,7 @@ merchantRoute.get(
   protect,
   adminOnly,
   asyncHandler(async (req, res) => {
-    const merchant = await Merchant.findById(req.params.id);
+    const merchant = await User.findById(req.params.id);
     if (merchant) {
       res.status(200).json({
         status: 200,
@@ -177,7 +201,7 @@ merchantRoute.put(
   adminOnly,
   asyncHandler(async (req, res) => {
     // res.send("User Profile")
-    const merchant = await Merchant.findById(req.params.id);
+    const merchant = await User.findById(req.params.id);
     // const { name, email, userType, image } = req.body;
 
     if (merchant) {
@@ -211,7 +235,7 @@ merchantRoute.delete(
   protect,
   adminOnly,
   asyncHandler(async (req, res) => {
-    const merchant = await Merchant.findById(req.params.id);
+    const merchant = await User.findById(req.params.id);
     if (merchant) {
       await merchant.remove();
       res.json({ status: 200, message: "Merchant deleted successfully" });

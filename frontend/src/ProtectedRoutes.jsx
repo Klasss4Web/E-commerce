@@ -28,7 +28,7 @@ export const ProtectedRoutes = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         // const token = window.localStorage.getItem("userInfo");
-        if (userInfo && userInfo?.isAdmin) {
+        if (userInfo) {
           return <Component {...props} />;
         } else {
           return <Redirect to={"/login"} />;
