@@ -4,6 +4,7 @@ import { updateNotificationDetails } from "../../../../../redux/actions/notifica
 import { timeago } from "../../../../../utils/timeAgo";
 import Toast from "../../../components/loadingError/Toast";
 import { RejectRequestModal } from "./RejectRequestModal";
+import { ViewDetails } from "./ViewDetailsModal.jsx";
 
 export const NotificationCard = ({ notifications, setRefresh, loading }) => {
   const dispatch = useDispatch();
@@ -24,10 +25,21 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
       {notifications?.map((notification) => (
         <div
           className="card"
-          style={{ width: "100%", borderRadius: "10px", marginTop: "15px", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+          style={{
+            width: "100%",
+            borderRadius: "10px",
+            marginTop: "15px",
+            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+          }}
         >
           <div className="card-body">
-            <h5 className="card-title">{notification?.title}</h5>
+            <div className="d-flex justify-content-between">
+              <h5 className="card-title">{notification?.title}</h5>
+              <ViewDetails
+                notification={notification}
+                handleApprove={handleApprove}
+              />
+            </div>
             <p className="card-text">{notification?.description}</p>
             {notification?.status === "Pending" ? (
               <div
@@ -53,7 +65,20 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
                 </div>
               </div>
             ) : (
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", background: "green", width: "100px",height: "40px", color: "#fff", borderRadius: "10px", marginBottom: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  background: "green",
+                  width: "100px",
+                  height: "40px",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  marginBottom: "10px",
+                  marginTop: "10px",
+                }}
+              >
                 <p>Resolved</p>
               </div>
             )}

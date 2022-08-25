@@ -22,7 +22,8 @@ const userSchema = mongoose.Schema(
     image: {
       type: String,
       required: false,
-      default: "https://www.imdb.com/title/tt0499549/",
+      default:
+        "https://media.istockphoto.com/photos/girl-with-headphones-and-neon-lighting-stylized-3d-character-picture-id1330874201?b=1&k=20&m=1330874201&s=170667a&w=0&h=GL7X6kheNB4ip-Mw8B0aI3KbUfWCzRthJqCNv5qq2jg=",
     },
 
     isAdmin: {

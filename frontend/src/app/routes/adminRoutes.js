@@ -27,7 +27,7 @@ const AdminPortalRoutes = () => {
     <Router>
       <Header />
       <SideBar />
-      <div style={{ marginBottom: "30px", marginTop: "85px" }}>
+      <div style={{ marginBottom: "30px", marginTop: "75px" }}>
         <Switch>
           <ProtectedRoutes path="/dashboard" component={HomePage} exact />
           <ProtectedRoutes path="/products" component={ProductsPage} />

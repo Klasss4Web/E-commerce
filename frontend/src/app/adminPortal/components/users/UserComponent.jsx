@@ -55,7 +55,7 @@ export const UserComponent = ({
         </header>
 
         {/*  Card */}
-        <div className="card-body">
+        <div className="card-body" style={{ marginTop: "100px" }}>
           {loading ? (
             <Loading />
           ) : error ? (
@@ -63,20 +63,39 @@ export const UserComponent = ({
           ) : (
             <div className="row row-cols-sm-2 row cols-lg-3 row-cols-xl-4">
               {users?.map((user) => (
-                <div key={user?._id} className="col mb-4">
+                <div
+                  key={user?._id}
+                  // className="col mb-4"
+                  style={{
+                   
+                    marginBottom: "100px",
+                  }}
+                >
                   <div
-                    className="card card-user"
+                    className="card card-user mb-4"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
                   >
-                    <div className="card-header">
+                    <div
+                      className="card-header"
+                      style={{
+                        borderRadius: "50%",
+                        width: "200px",
+                        height: "200px",
+                        position: "absolute",
+                        top: "-60%",
+                        left: "3%"
+                      }}
+                    >
                       <img
                         className="img-md img-avatar"
-                        src={user?.image}
-                        alt="User Picture"
+                        src={user?.image ||
+                          "https://media.istockphoto.com/photos/girl-with-headphones-and-neon-lighting-stylized-3d-character-picture-id1330874201?b=1&k=20&m=1330874201&s=170667a&w=0&h=GL7X6kheNB4ip-Mw8B0aI3KbUfWCzRthJqCNv5qq2jg="
+                        }
+                        alt={`Picture of ${user?.name}`}
                         style={{ height: "170px", width: "100%" }}
                       />
                     </div>
-                    <div className="card-body">
+                    <div className="card-body mt-2">
                       <h5 className="card-title mt-5 text-truncate d-inline-block">
                         {user?.name}
                       </h5>

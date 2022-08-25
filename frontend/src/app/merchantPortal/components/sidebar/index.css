@@ -8,7 +8,7 @@
   /* margin-top: 100px; */
 }
 .sidebar-inner {
-
+border-top-right-radius: 20px;
   width: 250px;
   display: flex;
   flex-direction: column;

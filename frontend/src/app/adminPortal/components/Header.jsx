@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { logout } from '../../../redux/actions/userActions';
 
@@ -9,6 +9,12 @@ export const Header = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
+
+    const adminNotificationList = useSelector(
+      (state) => state?.adminNotificationList
+    );
+    const { notifications } = adminNotificationList;
+    const pendingNotifications = notifications?.data?.filter(notif=>notif?.status==="Pending");
 
   const handleLogout = () => {
     dispatch(logout())
@@ -47,30 +53,53 @@ export const Header = () => {
         </form>
       </div>
       <div className="col-nav">
-        <button
+        {/* <button
           className="btn btn-icon btn-mobile me-auto"
           data-trigger="#offcanvas_aside"
         >
           <i className="md-28 fas fa-bars"></i>
-        </button>
+        </button> */}
         <ul className="nav">
           {/* <li className="nav-item">
             <Link className="nav-link btn-icon" title="Dark-mode" to={"#"}>
               <i className="fas fa-moon"></i>
             </Link>
           </li> */}
-          {/* <li className="nav-item">
-            <Link className="nav-link" to={"#"}>
-              English
+          <li className="nav-item">
+            <Link className="nav-link" to={"/notifications"}>
+              <i
+                className="fa fa-bell fa-lg"
+                style={{ color: "#0E6B60" }}
+              ></i>
+              <small
+                className=""
+                style={{
+                  borderRadius: "50%",
+                  background: "red",
+                  color: "#fff",
+                  padding: "2px",
+                  marginLeft: "-5px",
+                  marginTop: "10px",
+                  fontSize: "12px",
+                }}
+              >
+                {pendingNotifications?.length}
+              </small>
             </Link>
-          </li> */}
+          </li>
           <li className="dropdown nav-item">
             <Link
               className="dropdown-toggle"
               data-bs-toggle="dropdown"
               to={"#"}
             >
-              <img className="img-xs rounded-circle" width={"30px"} height="30px" src={logo} alt="user" />
+              <img
+                className="img-xs rounded-circle"
+                width={"30px"}
+                height="30px"
+                src={logo}
+                alt="user"
+              />
             </Link>
             <div className="dropdown-menu dropdown-menu-end">
               <Link className="dropdown-item" to="/">

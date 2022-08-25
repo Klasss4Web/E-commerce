@@ -211,7 +211,7 @@ export const MainEditProduct = ({ productId }) => {
                             </button>
                           </>
                         ) : (
-                          <button>Add to store</button>
+                          <button>Update</button>
                         )}
                       </div>
                     </>

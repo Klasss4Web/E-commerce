@@ -38,7 +38,7 @@ export const CategoriesPage = () => {
       <Toast />
       <main className="main-wrap">
         <div className="content-header">
-          <h2 className="content-title">Categories</h2>
+          <h2 className="content-title">Categories: {categories?.length}</h2>
           <div>
             {/* <button className="btn btn-primary">
             Add New Merchant
