@@ -71,10 +71,10 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   background: "green",
-                  width: "100px",
+                  width: "150px",
                   height: "40px",
                   color: "#fff",
-                  borderRadius: "10px",
+                  borderRadius: "5px",
                   marginBottom: "10px",
                   marginTop: "10px",
                 }}

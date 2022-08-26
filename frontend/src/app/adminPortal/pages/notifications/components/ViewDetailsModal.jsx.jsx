@@ -122,7 +122,7 @@ export const ViewDetails = ({
                 
               >
                 <button>Resolved</button>
-                <p>{timeago(notification?.updatedAt)}</p>
+                <p>{timeago(notification?.createdAt)}</p>
               </div>
             )}
           </div>
