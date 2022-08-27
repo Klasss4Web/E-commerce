@@ -89,7 +89,7 @@ const AdminPortalRoutes = () => {
               path="/product/:id/edit"
               component={ProductEditPage}
             />
-            {/* <ProtectedRoutes path="/settings" component={Settings} /> */}
+            <ProtectedRoutes path="/settings" component={Settings} />
             <ProtectedRoutes path="/profile" component={Profile} />
             <ProtectedRoutes path="/counter" component={CounterPractice} />
             {/* <Route exact path="/login" component={Login} /> */}
