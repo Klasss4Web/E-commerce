@@ -1,7 +1,7 @@
 import React from 'react'
 import { PersonalDetailsSettings } from './components/PersonalDetailsSettings';
 
-export const Settings = () => {
+export const Profile = () => {
   return (
     <div className="settings">
       <main className="main-wrap">

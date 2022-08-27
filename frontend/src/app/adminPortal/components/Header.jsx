@@ -114,10 +114,10 @@ export const Header = ({ toggle, sideBarActive, showSidebar }) => {
               />
             </Link>
             <div className="dropdown-menu dropdown-menu-end">
-              <Link className="dropdown-item" to="/">
+              <Link className="dropdown-item" to="/profile">
                 My Profile
               </Link>
-              <Link className="dropdown-item" to="#">
+              <Link className="dropdown-item" to="/settings">
                 My Settings
               </Link>
               <Link

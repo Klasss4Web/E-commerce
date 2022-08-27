@@ -435,7 +435,7 @@ body .aside-mini .menu-aside .menu .has-submenu .menu-link:after {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.notifications {
+.notifications, .settings {
   padding: 50px;
 }
 
@@ -486,7 +486,7 @@ body .aside-mini .menu-aside .menu .has-submenu .menu-link:after {
   /* border-radius: "10px" */
 }
 
-.notifications {
+.notifications, .settings {
   padding: 10px;
 }
 
