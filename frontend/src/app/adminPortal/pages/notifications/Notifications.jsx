@@ -23,7 +23,7 @@ export const Notifications = () => {
   }, [dispatch, refresh]);
 
   return (
-    <div style={{ padding: "50px" }}>
+    <div className="notifications">
       <main className="main-wrap">
         <h2>Notifications</h2>
         {error && <Message variant="alert-danger">{error}</Message>}

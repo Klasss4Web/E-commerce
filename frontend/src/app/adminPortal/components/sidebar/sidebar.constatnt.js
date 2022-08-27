@@ -7,10 +7,12 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { BsBell, BsStar } from "react-icons/bs";
 import { FiTruck } from "react-icons/fi";
 import { GiGalleon } from "react-icons/gi";
+import { FiSettings } from "react-icons/fi"
 
 const {
    DASHBOARD,
   PRODUCTS,
+  SETTINGS,
   ADD_PRODUCTS,
   CATEGORIES,
   CUSTOMERS,
@@ -75,5 +77,10 @@ export const ADMIN_NAV_ITEMS = [
     title: "Notifications",
     to: NOTIFICATIONS,
     icon: BsBell,
+  },
+  {
+    title: "Settings",
+    to: SETTINGS,
+    icon: FiSettings,
   },
 ];

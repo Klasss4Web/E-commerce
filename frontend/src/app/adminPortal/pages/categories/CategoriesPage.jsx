@@ -34,7 +34,7 @@ export const CategoriesPage = () => {
   console.log("categories", categories);
 
   return (
-    <div style={{ padding: "50px" }}>
+    <div className="category-page">
       <Toast />
       <main className="main-wrap">
         <div className="content-header">

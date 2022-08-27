@@ -25,6 +25,7 @@ export const PROTECTED_PATHS = {
   RATINGS: "/ratings",
   TRANSACTIONS: "/transactions",
   NOTIFICATIONS: "/notifications",
+  SETTINGS: "/settings"
 };
 
 export const DATA_ROWS = {

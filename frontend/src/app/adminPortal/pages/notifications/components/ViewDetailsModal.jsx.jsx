@@ -13,17 +13,12 @@ export const ViewDetails = ({
   notification,
   handleApprove,
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
-  const [imageUrl, setimageUrl] = useState();
-  const [file, setFile] = useState();
-  const dispatch = useDispatch();
+
 
   return (
     <div>
       <button
-        className="btn btn-success"
+        className="btn btn-success sm-btn"
         type="button"
         data-bs-toggle="modal"
         data-bs-target={`#staticBackdropModal1${notification?._id}`}
@@ -46,11 +41,11 @@ export const ViewDetails = ({
       </div> */}
 
       <div
-        class="modal fade"
+        className="modal fade"
         id={`staticBackdropModal1${notification?._id}`}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="staticBackdropLabel1"
         aria-hidden="true"
       >
@@ -107,7 +102,7 @@ export const ViewDetails = ({
                 ) : (
                   <button
                     type="button"
-                    class="btn btn-primary mb-4"
+                    className="btn btn-primary mb-4"
                     data-bs-dismiss="modal"
                     // disabled={!name || !image}
                     onClick={() => handleApprove(notification)}
@@ -117,11 +112,10 @@ export const ViewDetails = ({
                 )}
               </div>
             ) : (
-              <div
-              className="my-3 px-3 pb-4"
-                
-              >
-                <button>Resolved</button>
+              <div className="my-3 px-3 pb-4">
+                <button className="" disabled>
+                  Resolved
+                </button>
                 <p>{timeago(notification?.createdAt)}</p>
               </div>
             )}

@@ -92,7 +92,7 @@ export const MainProducts = ({ products = [], loading, error }) => {
           </div>
         </header>
 
-        <div className="card-bod">
+        <div className="card-body">
           {loading ? (
             <Loading />
           ) : error ? (

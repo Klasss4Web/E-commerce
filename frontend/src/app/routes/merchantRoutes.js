@@ -1,5 +1,5 @@
 import React from "react";
-import "../merchantPortal/Admin.css";
+import "../merchantPortal/merchant.css";
 // import "react-toastify/dist/ReactToastify.css"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AddProductPage } from "../merchantPortal/pages/AddProductPage";

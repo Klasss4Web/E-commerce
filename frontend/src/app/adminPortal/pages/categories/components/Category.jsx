@@ -15,14 +15,8 @@ export const Category = ({ category, setRefresh }) => {
   }
   return (
     <div
-      class="card"
-      style={{
-        width: "300px",
-        maxHeight: "200px",
-        marginBottom: "40px",
-        borderRadius: "10px",
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-      }}
+      class="card category-card"
+ 
     >
       <img
         class="card-img-top"

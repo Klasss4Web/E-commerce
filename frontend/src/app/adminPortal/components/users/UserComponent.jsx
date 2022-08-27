@@ -76,15 +76,8 @@ export const UserComponent = ({
                     style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
                   >
                     <div
-                      className="card-header"
-                      style={{
-                        borderRadius: "50%",
-                        width: "200px",
-                        height: "200px",
-                        position: "absolute",
-                        top: "-60%",
-                        left: "3%"
-                      }}
+                      className="card-header card_header"
+                      
                     >
                       <img
                         className="img-md img-avatar"

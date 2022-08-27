@@ -1,14 +1,14 @@
 .sidebar {
-    position: fixed;
-  /* margin-top: 75px; */
+   
+  margin-top: 75px;
   /* position: relative; */
-  z-index: 1002;
+  z-index: 12;
   width: 250px;
   height: 100%;
   /* margin-top: 100px; */
 }
 .sidebar-inner {
-
+ position: fixed;
   width: 250px;
   display: flex;
   flex-direction: column;

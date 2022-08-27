@@ -39,7 +39,7 @@ export const RejectRequestModal = ({
         className="btn btn-danger"
         type="button"
         data-bs-toggle="modal"
-        data-bs-target={`#staticBackdropModal1${notification?._id}`}
+        data-bs-target={`#staticBackdropModal1${notification?._id}x`}
       >
         Reject
       </button>
@@ -60,7 +60,7 @@ export const RejectRequestModal = ({
 
       <div
         class="modal fade"
-        id={`staticBackdropModal1${notification?._id}`}
+        id={`staticBackdropModal1${notification?._id}x`}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"

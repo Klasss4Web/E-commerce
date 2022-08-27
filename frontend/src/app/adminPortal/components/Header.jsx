@@ -1,24 +1,30 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { logout } from '../../../redux/actions/userActions';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { logout } from "../../../redux/actions/userActions";
 
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
-export const Header = () => {
+export const Header = ({ toggle, sideBarActive, showSidebar }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [toggleSide] = useState(false);
 
-  const dispatch = useDispatch()
-  const history = useHistory()
-
-    const adminNotificationList = useSelector(
-      (state) => state?.adminNotificationList
-    );
-    const { notifications } = adminNotificationList;
-    const pendingNotifications = notifications?.data?.filter(notif=>notif?.status==="Pending");
+  const adminNotificationList = useSelector(
+    (state) => state?.adminNotificationList
+  );
+  const { notifications } = adminNotificationList;
+  const pendingNotifications = notifications?.data?.filter(
+    (notif) => notif?.status === "Pending"
+  );
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
+
+  const handleToggle = () => {
+    toggle(!toggleSide);
+  };
   return (
     <header className="main-header navbar">
       <div className="col-search">
@@ -32,8 +38,17 @@ export const Header = () => {
               alt="logo"
               width={"30px"}
               height="30px"
+              cursor="pointer"
               style={{ cursor: "pointer" }}
             />
+            {showSidebar && (
+              <i
+                className="md-28 fas fa-bars"
+                cursor="pointer"
+                onClick={()=>handleToggle()}
+              ></i>
+            )}
+
             {/* <input
               list="search_terms"
               type={"text"}
@@ -67,10 +82,7 @@ export const Header = () => {
           </li> */}
           <li className="nav-item">
             <Link className="nav-link" to={"/notifications"}>
-              <i
-                className="fa fa-bell fa-lg"
-                style={{ color: "#0E6B60" }}
-              ></i>
+              <i className="fa fa-bell fa-lg" style={{ color: "#0E6B60" }}></i>
               <small
                 className=""
                 style={{
@@ -121,4 +133,4 @@ export const Header = () => {
       </div>
     </header>
   );
-}
+};

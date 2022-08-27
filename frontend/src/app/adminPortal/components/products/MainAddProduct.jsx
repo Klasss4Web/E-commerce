@@ -71,11 +71,11 @@ export const MainAddProduct = () => {
               Go to products
             </Link>
             <h2 className="content-title">Add Product</h2>
-            <div style={{ visibility: "hidden" }}>
+            {/* <div style={{ visibility: "hidden" }}>
               <button type="submit" className="btn btn-primary">
                 Update
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="row mb-4">

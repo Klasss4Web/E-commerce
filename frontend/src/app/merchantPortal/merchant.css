@@ -1,5 +1,10 @@
 
 /* Adin Portal */
+.app-container {
+  display: flex;
+  width: 100%;
+}
+
 .table thead th {
   color: #c4c4c4;
   font-weight: 400;
@@ -93,7 +98,7 @@ a .disabled {
 
 body {
   position: relative;
-  min-width: 100vh;
+  /* min-width: 100vh; */
 }
 
 body .offcanvas-active {
@@ -400,4 +405,30 @@ body .aside-mini .menu-aside .menu .has-submenu .menu-link:after {
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.charts {
+  display: flex;
+  justify-content: space-between;
+}
+
+.charts > div {
+  width: 49%;
+}
+
+/* Media Query */
+@media (max-width: 700px) {
+  .main-wrap {
+  width: 100%;
+  margin-left: 0px;
+  }
+
+  .charts {
+  display: block;
+  justify-content: space-between;
+}
+
+.charts > div {
+  width: 100%;
+}
 }

@@ -13,8 +13,10 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
     const payload = {
       status: "Resolved",
       productStatus: "Approved",
-      ...notification,
+      _id: notification?._id,
     };
+
+    console.log("payyy", payload)
 
     dispatch(updateNotificationDetails(payload, setRefresh));
   };
@@ -24,6 +26,7 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
       <Toast />
       {notifications?.map((notification) => (
         <div
+          key={notification?._id}
           className="card"
           style={{
             width: "100%",
@@ -50,11 +53,12 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
                   className="btn btn-primary"
                   style={{ width: "48%" }}
                   onClick={() => handleApprove(notification)}
+                  data-bs-target={`#${notification?._id}`}
                 >
                   {loading ? (
-                    <>
+                    <p id={`${notification?._id}`}>
                       <i class="fa fa-spinner fa-spin mr-2"></i>Loading...
-                    </>
+                    </p>
                   ) : (
                     "Approve"
                   )}
@@ -79,7 +83,7 @@ export const NotificationCard = ({ notifications, setRefresh, loading }) => {
                   marginTop: "10px",
                 }}
               >
-                <p>Resolved</p>
+                <p className="">Resolved</p>
               </div>
             )}
             <p>{timeago(notification?.createdAt)}</p>

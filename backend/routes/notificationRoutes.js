@@ -21,7 +21,7 @@ notificationRoute.get(
     // const { rating, comment } = req.body;
     const notifications = await Notifications.find({})
       .sort({ _id: -1 })
-      .populate("product", "id name image price countInStock")
+      .populate("product", "id name image price countInStock, createStatus")
       .populate("sender", "id name email");
     const productNotifications = notifications.filter(
       (product) => product.status === "Pending"
@@ -36,7 +36,7 @@ notificationRoute.get(
       });
     } else {
       res.status(404);
-      throw new Error("No Reviews Found");
+      throw new Error("No Notifications Found");
     }
   })
 );
@@ -52,16 +52,16 @@ notificationRoute.put(
     const { status, productStatus } = req.body;
 
     if (notification && product) {
-      notification.sender = notification.sender;
-      notification.product = notification.product;
-      notification.description = notification.description;
-      notification.image = notification.image;
-      notification.title = notification.title;
-      notification.category = notification.category;
+      notification.sender = notification?.sender;
+      notification.product = notification?.product;
+      notification.description = notification?.description;
+      notification.image = notification?.image;
+      notification.title = notification?.title;
+      notification.category = notification?.category;
       notification.status = status;
 
       product.createStatus = productStatus;
-      await product.save()
+      await product.save();
 
       const updatedNotification = await notification.save();
       res.json({
@@ -72,6 +72,40 @@ notificationRoute.put(
     } else {
       res.status(404);
       throw new Error("Notification not found");
+    }
+  })
+);
+
+//MERCHANT: GET NOTIFICATIONS
+//NEW PRODUCT NOTIFICATIONS
+notificationRoute.get(
+  "/merchant/notifications",
+  protect,
+  merchantsOnly,
+  asyncHandler(async (req, res) => {
+    // console.log("req", req, "user", req.user);
+    // const { rating, comment } = req.body;
+    const notifications = await Notifications.find({})
+      .sort({ _id: -1 })
+      .populate("product", "id name image price countInStock, createStatus")
+      .populate("sender", "id name email");
+    const allNotifications = notifications.filter(
+      (notification) => notification?.sender?.email === req.user.email
+    );
+
+    const myNotifications = notifications.filter(
+      (notification) => notification?.status === "Pending"
+    );
+    console.log("mynotifications", myNotifications);
+    if (myNotifications) {
+      res.json({
+        status: 200,
+        message: "Notifications successfully fetched",
+        data: myNotifications,
+      });
+    } else {
+      res.status(404);
+      throw new Error("No Notifications Found");
     }
   })
 );

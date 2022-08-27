@@ -23,12 +23,12 @@ export const Main = () => {
         {/* Total Sales */}
         <Cards orders={orders} products={products} />
 
-        <div className="d-flex justify-content-between">
+        <div className="charts">
           {/* STATS */}
-          <div style={{ width: "49%" }}>
+          <div>
             <SalesStatistics />
           </div>
-          <div style={{ width: "49%" }}>
+          <div>
             <ProductsStatistics />
           </div>
         </div>

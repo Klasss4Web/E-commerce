@@ -8,6 +8,7 @@ export const LinkTo = ({
   iconComponent: I,
   title,
   toggle,
+  isMobileScreen,
 }) => {
   // const [isMobileScreen] = useMediaQuery("(max-width: 600px)");
 
@@ -23,7 +24,7 @@ export const LinkTo = ({
       }}
       activeClassName="active"
       className={`${classname} link`}
-      // onClick={() => (isMobileScreen ? toggle() : null)}
+      onClick={() => (isMobileScreen ? toggle() : null)}
       // target={title}
       to={to ? to : "/"}
     >
