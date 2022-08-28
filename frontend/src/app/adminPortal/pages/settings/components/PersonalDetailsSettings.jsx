@@ -4,6 +4,14 @@ export const PersonalDetailsSettings = () => {
   return (
     <div className="mt-3">
       <form>
+        <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0m5Cy4lXCbuyG54L0vuo3i5-ALavHe9KmhWA_wDM&s"
+            }
+            alt=""
+          />
+        </div>
         <div
           style={{
             display: "flex",
