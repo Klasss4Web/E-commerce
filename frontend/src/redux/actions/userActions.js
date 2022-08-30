@@ -1,7 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { ToastObjects } from "../../app/adminPortal/components/loadingError/toastObject";
 import { ORDER_LIST_RESET } from "../constants/orderConstants";
 import {
+  ADMIN_UPDATE_PROFILE_SUCCESS,
   GET_USERS_FAILURE,
   GET_USERS_REQUEST,
   GET_USERS_RESET,
@@ -179,6 +181,45 @@ export const updateProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    const message =
+      error?.response && error?.response?.data?.message
+        ? error?.response?.data?.message
+        : error?.message;
+    if (message === "Not authorized, no token found") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAILURE,
+      payload: message,
+    });
+  }
+};
+
+// UPDATE ADMIN PROFILE ACTIONS
+export const updateAdminProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_PROFILE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/admin/profile`, user, config);
+    toast.success("Profile successfully updated", ToastObjects);
+
+    dispatch({ type: ADMIN_UPDATE_PROFILE_SUCCESS, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     const message =

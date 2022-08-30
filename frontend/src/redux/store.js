@@ -20,6 +20,7 @@ import {
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  adminUpdateProfileReducer,
   userListReducer,
   userLoginReducer,
   userProfileReducer,
@@ -77,6 +78,7 @@ const reducer = combineReducers({
   adminAddCategory: adminAddCategoryReducer,
   adminGetCategories: categoryListReducer,
   adminUpdateCategory: adminUpdateCategoryReducer,
+  adminUpdateProfile: adminUpdateProfileReducer,
   adminDeleteCategory: adminDeleteCategoryReducer,
   merchantAddProduct: merchantAddProductReducer,
   merchantProductList: merchantProductListReducer,

@@ -120,6 +120,40 @@ userRoute.put(
   })
 );
 
+//UPDATE ADMIN PROFILE
+userRoute.put(
+  "/admin/profile",
+  protect,
+  adminOnly,
+  asyncHandler(async (req, res) => {
+    // res.send("User Profile")
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req?.body?.name || user?.name;
+      user.email = req?.body?.email || user?.email;
+      user.image = req?.body?.image || user?.image
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      const updateUser = await user.save();
+      res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        isAdmin: updateUser.isAdmin,
+        createdAt: updateUser.createdAt,
+        token: generateToken(updateUser._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+
+
+
 //GET ALL USER: ADMIN ONLY ACCESS
 userRoute.get(
   "/",

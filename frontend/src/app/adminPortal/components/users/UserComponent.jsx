@@ -15,7 +15,7 @@ export const UserComponent = ({
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="content-title">Customers</h2>
+        <h2 className="content-title">Users</h2>
         <div>
           <Link to="#" className="btn btn-primary">
             <i className="material-icons md-plus"></i>

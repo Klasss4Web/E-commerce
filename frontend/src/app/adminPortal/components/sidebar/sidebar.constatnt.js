@@ -43,7 +43,7 @@ export const ADMIN_NAV_ITEMS = [
   //   icon: FaCartPlus,
   // },
   {
-    title: "Customers",
+    title: "Users",
     to: CUSTOMERS,
     icon: IoPeopleOutline,
   },
