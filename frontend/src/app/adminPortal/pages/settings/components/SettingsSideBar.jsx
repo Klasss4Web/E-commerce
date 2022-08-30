@@ -166,7 +166,7 @@ export const SettingsSideBar = () => {
                 </div>
               ) : (
                 <div>
-                  <BsCardImage size={"100%"} />
+                  <BsCardImage size={"100%"} color="#d4d4d4" />
                 </div>
               )}
             </div>
