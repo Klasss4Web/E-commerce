@@ -14,7 +14,7 @@ export const MainProducts = ({ products, loading, error }) => {
 
   const [value, setValue] = useState("");
 
-  const [filteredData, setFilteredData] = useState([...products]);
+  const [filteredData, setFilteredData] = useState(products);
 
   const adminDeleteProduct = useSelector((state) => state.adminDeleteProduct);
   const { error: deleteError, success } = adminDeleteProduct;

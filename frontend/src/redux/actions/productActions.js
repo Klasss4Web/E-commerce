@@ -20,6 +20,9 @@ import {
   MERCHANT_ADD_PRODUCT_FAILURE,
   MERCHANT_ADD_PRODUCT_REQUEST,
   MERCHANT_ADD_PRODUCT_SUCCESS,
+  MERCHANT_GET_REVIEWS_FAILURE,
+  MERCHANT_GET_REVIEWS_REQUEST,
+  MERCHANT_GET_REVIEWS_SUCCESS,
   MERCHANT_PRODUCT_LIST_FAILURE,
   MERCHANT_PRODUCT_LIST_REQUEST,
   MERCHANT_PRODUCT_LIST_SUCCESS,
@@ -35,6 +38,7 @@ import {
 } from "../constants/productConstants";
 import axios from "axios";
 import { logout } from "./userActions";
+import { toast } from "react-toastify";
 
 // ALL PRODUCTS
 export const listProducts =
@@ -470,6 +474,43 @@ export const merchantListProducts = () => async (dispatch, getState) => {
     }
     dispatch({
       type: MERCHANT_PRODUCT_LIST_FAILURE,
+      payload: message,
+    });
+  }
+};
+
+// MERCHANT GET ALL REVIEWS
+export const merchantGetReviewsActions = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: MERCHANT_GET_REVIEWS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/products/merchant/reviews`, config);
+
+    dispatch({ type: MERCHANT_GET_REVIEWS_SUCCESS, payload: data });
+    
+  } catch (error) {
+    const message =
+      error?.response && error?.response?.data?.message
+        ? error?.response?.data?.message
+        : error?.message;
+    if (message === "Not authorized, no token found") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: MERCHANT_GET_REVIEWS_FAILURE,
       payload: message,
     });
   }

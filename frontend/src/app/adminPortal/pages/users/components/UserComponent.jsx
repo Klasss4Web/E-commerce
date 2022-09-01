@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Message from '../../../userPortal/components/loadingError/Error';
-import Loading from '../../../userPortal/components/loadingError/Loading';
+import Message from '../../../../userPortal/components/loadingError/Error';
+import Loading from '../../../../userPortal/components/loadingError/Loading';
+import Toast from '../../../components/loadingError/Toast';
+import { AddNewUserModal } from './AddNewUserModal';
 
 
 export const UserComponent = ({
@@ -10,6 +12,7 @@ export const UserComponent = ({
   loading,
   value,
   setValue,
+  setRefresh,
   handleFilter,
 }) => {
   return (
@@ -17,13 +20,15 @@ export const UserComponent = ({
       <div className="content-header">
         <h2 className="content-title">Users</h2>
         <div>
-          <Link to="#" className="btn btn-primary">
+          <AddNewUserModal setRefresh={setRefresh} />
+          {/* <Link to="#" className="btn btn-primary">
             <i className="material-icons md-plus"></i>
             Create New
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="card mb-4">
+        <Toast />
         <header className="card-header">
           <div className="row gx-3">
             <div className="col-lg-4 col-md-6 me-auto">
@@ -67,7 +72,6 @@ export const UserComponent = ({
                   key={user?._id}
                   // className="col mb-4"
                   style={{
-                   
                     marginBottom: "100px",
                   }}
                 >
@@ -75,13 +79,11 @@ export const UserComponent = ({
                     className="card card-user mb-4"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
                   >
-                    <div
-                      className="card-header card_header"
-                      
-                    >
+                    <div className="card-header card_header">
                       <img
                         className="img-md img-avatar"
-                        src={user?.image ||
+                        src={
+                          user?.image ||
                           "https://media.istockphoto.com/photos/girl-with-headphones-and-neon-lighting-stylized-3d-character-picture-id1330874201?b=1&k=20&m=1330874201&s=170667a&w=0&h=GL7X6kheNB4ip-Mw8B0aI3KbUfWCzRthJqCNv5qq2jg="
                         }
                         alt={`Picture of ${user?.name}`}

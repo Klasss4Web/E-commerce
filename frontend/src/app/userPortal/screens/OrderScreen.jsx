@@ -73,14 +73,14 @@ export const OrderScreen = ({ match }) => {
   return (
     <div>
       {/* <Header /> */}
-      <div className="container">
-        {loading && <Loading />}
+      <div className="container mt-4">
+        {/* {loading && <Loading />} */}
         {error && <Message variant="alert-danger">{error}</Message>}
         <div className="row order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="aler-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-user"></i>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export const OrderScreen = ({ match }) => {
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="aler-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-truck-moving"></i>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export const OrderScreen = ({ match }) => {
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="alert-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-map-marker-alt"></i>
                 </div>
               </div>
@@ -165,27 +165,38 @@ export const OrderScreen = ({ match }) => {
 
         <div className="row order-products justify-content-between">
           <div className="col-lg-8">
-            {order?.orderItems.lenggth === 0 ? (
+            {order?.orderItems?.length === 0 ? (
               <Message variant="alert-info mt-5">Your order is empty</Message>
             ) : (
               <>
                 {order?.orderItems?.map((item, index) => (
-                  <div className="order-product row" key={index}>
-                    <div className="col-md-3 col-6">
-                      <img src={item?.image} alt={item?.name} />
+                  <div className="order-product row mb-3" key={index}>
+                    <div
+                      className="col-md-3 col-6"
+                      style={{ marginRight: "20px" }}
+                    >
+                      <img
+                        src={item?.image}
+                        alt={item?.name}
+                        width="100%"
+                        style={{ borderRadius: "10px" }}
+                      />
                     </div>
-                    <div className="col-md-5 col-6 d-flex align-items-center">
+                    <div className="col-md-4 col-6 d-flex flex-column">
                       <Link to={`/products/${item?.productId}`}>
                         <h6>{item?.name}</h6>
                       </Link>
+                      <h6 className="mt-2">
+                        Status: <span style={{ color: "red" }}>Not Paid</span>
+                      </h6>
                     </div>
                     <div className="mt-3 mt-md-0 col-md-2 col-6 d-flex align-items-center flex-column">
-                      <h4>Quantity</h4>
-                      <h4>{item?.qty}</h4>
+                      <h5>Quantity</h5>
+                      <h5>{item?.qty}</h5>
                     </div>
                     <div className="mt-3 mt-md-0 col-md-2 col-6 d-flex align-items-center flex-column">
-                      <h4>Subtotal</h4>
-                      <h4>{item?.qty * item?.price}</h4>
+                      <h5>Subtotal</h5>
+                      <h5>{item?.qty * item?.price}</h5>
                     </div>
                   </div>
                 ))}
@@ -202,11 +213,11 @@ export const OrderScreen = ({ match }) => {
                 </Link>
               </div>
               <div className="mt-3 mt-d-0 col-md-2 d-flex align-items-center">
-                <h4>QUANTITY</h4>
+                <h5>QUANTITY</h5>
                 <h6>10</h6>
               </div>
               <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end d-flex">
-                <h4>SUBTOTAL</h4>
+                <h5>SUBTOTAL</h5>
                 <h6>$1000</h6>
               </div>
             </div> */}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ImFileEmpty } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { adminCategoriesListAction } from "../../../../redux/actions/categoriesActions";
@@ -37,7 +38,7 @@ export const MainProducts = ({ products = [], loading, error }) => {
   //   setValue(keyword);
   // };
 
-  console.log("filteredData", filteredData);
+  // console.log("filteredData", filteredData);
 
   useEffect(() => {
     dispatch(adminListProducts());
@@ -101,20 +102,29 @@ export const MainProducts = ({ products = [], loading, error }) => {
             <div className="row">
               {/* Products */}
 
-              {products?.filter((prod) => prod?.category === category).length >
-              0
-                ? products
+              {products?.length > 0 ? (
+                products?.filter((prod) => prod?.category === category).length >
+                0 ? (
+                  products
                     ?.filter((prod) => prod?.category === category)
                     ?.map((product) => (
                       <Product product={product} key={product?._id} />
                     ))
-                : filteredData?.length > 0
-                ? filteredData?.map((product) => (
+                ) : filteredData?.length > 0 ? (
+                  filteredData?.map((product) => (
                     <Product product={product} key={product?._id} />
                   ))
-                : products?.map((product) => (
+                ) : (
+                  products?.map((product) => (
                     <Product product={product} key={product?._id} />
-                  ))}
+                  ))
+                )
+              ) : (
+                <div className="d-flex justify-content-center align-items-center flex-column">
+                  <ImFileEmpty size="30%" />
+                  <h4 className="mt-3">No Product Available At This Time</h4>
+                </div>
+              )}
             </div>
           )}
 

@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 import { ToastObjects } from "../../app/adminPortal/components/loadingError/toastObject";
 import { ORDER_LIST_RESET } from "../constants/orderConstants";
 import {
+  ADMIN_REGISTER_USER_FAILURE,
+  ADMIN_REGISTER_USER_REQUEST,
+  ADMIN_REGISTER_USER_SUCCESS,
   ADMIN_UPDATE_PROFILE_SUCCESS,
   GET_USERS_FAILURE,
   GET_USERS_REQUEST,
@@ -122,6 +125,83 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+// ADMIN CREATE NEW USER ACTIONS
+export const adminCreateUser =
+  (payload, setRefresh, setLoading) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ADMIN_REGISTER_USER_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      let imgUrlsFromCloudinary;
+      const formData = new FormData();
+
+      formData.append("file", payload?.image);
+      formData.append("upload_preset", "emmanuel");
+      // console.log("image", image);
+      await axios
+        .post(
+          "https://api.cloudinary.com/v1_1/emy-commerce/image/upload",
+          formData,
+          {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
+          imgUrlsFromCloudinary = data.secure_url;
+        });
+
+        payload.image = imgUrlsFromCloudinary
+
+      // const formPayload = {
+      //   name,
+      //   email,
+      //   password,
+      //   image: imgUrlsFromCloudinary,
+      //   userType,
+      // };
+
+      const { data } = await axios.post(
+        "/api/users/admin/create-user",
+        payload,
+        config
+      );
+      toast.success("User Successfully Added", ToastObjects);
+
+      dispatch({ type: ADMIN_REGISTER_USER_SUCCESS, payload: data });
+      // dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+      setLoading(false);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      setLoading(false);
+      const message =
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message;
+      if (message === "Not authorized, no token found") {
+        dispatch(logout());
+      }
+      toast.error(message, ToastObjects);
+      dispatch({
+        type: ADMIN_REGISTER_USER_FAILURE,
+        payload: message,
+      });
+    }
+  };
 
 // USER PROFILE ACTIONS
 export const getUserProfile = () => async (dispatch, getState) => {

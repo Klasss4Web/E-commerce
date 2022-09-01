@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../../../redux/actions/userActions';
-import { Header } from '../components/Header';
+import { getUsers } from '../../../../redux/actions/userActions';
+import { Header } from '../../components/Header';
 // import { Sidebar } from '../components/Sidebar';
-import SideBar from "../components/sidebar/index";
-import { UserComponent } from '../components/users/UserComponent';
+import SideBar from "../../components/sidebar/index";
+import { UserComponent } from './components/UserComponent';
 
 export const UsersPage = () => {
 
     const dispatch = useDispatch();
     const allUsers = useSelector((state) => state.userList);
+    const [refresh, setRefresh] = useState(false)
     const { loading, error, users } = allUsers;
     console.log("users", users);
    
@@ -38,7 +39,7 @@ export const UsersPage = () => {
 
     useEffect(() => {
       dispatch(getUsers());
-    }, [dispatch]);
+    }, [dispatch, refresh]);
 
   return (
     <div>
@@ -52,6 +53,7 @@ export const UsersPage = () => {
           setValue={setValue}
           error={error}
           loading={loading}
+          setRefresh={setRefresh}
         />
       </main>
     </div>

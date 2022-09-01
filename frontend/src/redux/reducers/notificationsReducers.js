@@ -1,4 +1,4 @@
-import { ADMIN_GET_NOTIFICATIONS_FAILURE, ADMIN_GET_NOTIFICATIONS_REQUEST, ADMIN_GET_NOTIFICATIONS_SUCCESS, ADMIN_UPDATE_NOTIFICATIONS_FAILURE, ADMIN_UPDATE_NOTIFICATIONS_REQUEST, ADMIN_UPDATE_NOTIFICATIONS_RESET, ADMIN_UPDATE_NOTIFICATIONS_SUCCESS } from "../constants/notificationConstants";
+import { ADMIN_GET_NOTIFICATIONS_FAILURE, ADMIN_GET_NOTIFICATIONS_REQUEST, ADMIN_GET_NOTIFICATIONS_SUCCESS, ADMIN_UPDATE_NOTIFICATIONS_FAILURE, ADMIN_UPDATE_NOTIFICATIONS_REQUEST, ADMIN_UPDATE_NOTIFICATIONS_RESET, ADMIN_UPDATE_NOTIFICATIONS_SUCCESS, MERCHANT_GET_NOTIFICATIONS_FAILURE, MERCHANT_GET_NOTIFICATIONS_REQUEST, MERCHANT_GET_NOTIFICATIONS_SUCCESS } from "../constants/notificationConstants";
 
 //ADMIN GET ALL NOTIFICATIONS
 export const notificationListReducer = (state = { notifications: [] }, action) => {
@@ -64,6 +64,33 @@ export const adminUpdateNotificationReducer = (
   }
 };
 
+//MERCHANT GET ALL NOTIFICATIONS
+export const merchantNotificationList = (state = { notifications: [] }, action) => {
+  switch (action.type) {
+    case MERCHANT_GET_NOTIFICATIONS_REQUEST:
+      return {
+        loading: true,
+        // notifications: [],
+      };
+
+    case MERCHANT_GET_NOTIFICATIONS_SUCCESS:
+      return {
+        loading: false,
+        // page: action.payload.page,
+        // pages: action.payload.pages,
+        notifications: action.payload,
+      };
+
+    case MERCHANT_GET_NOTIFICATIONS_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
 //ADMIN DELETE NOTIFICATIONS
 // export const adminDeleteProductReducer = (state = {}, action) => {
 //   switch (action.type) {

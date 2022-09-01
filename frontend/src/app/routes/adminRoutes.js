@@ -10,7 +10,7 @@ import { OrderDetailsPage } from "../adminPortal/pages/OrderDetailsPage";
 import { OrderPage } from "../adminPortal/pages/OrderPage";
 import { ProductEditPage } from "../adminPortal/pages/ProductEditPage";
 import { ProductsPage } from "../adminPortal/pages/ProductsPage";
-import { UsersPage } from "../adminPortal/pages/UsersPage";
+import { UsersPage } from "../adminPortal/pages/users/UsersPage";
 import { ProtectedRoutes } from "../../ProtectedRoutes";
 import { Header } from "../adminPortal/components/Header";
 import SideBar from "../adminPortal/components/sidebar/index";

@@ -44,7 +44,7 @@ export const adminCreateMerchantAction = (payload) => async (dispatch, getState)
     };
 
     const {data} = await axios.post(`/api/merchants`, payload, config);
-console.log("merchants added", data)
+// console.log("merchants added", data)
     dispatch({ type: ADMIN_ADD_MERCHANT_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -81,7 +81,7 @@ export const adminMerchantListAction = () => async(dispatch, getState) => {
 
 
   const { data: {data} } = await axios.get(`/api/merchants`, config);
-  console.log("data", data)
+  // console.log("data", data)
 
   dispatch({ type: ADMIN_MERCHANT_LIST_SUCCESS, payload: data })
 
@@ -121,7 +121,7 @@ export const getMerchantDetails = (id) => async (dispatch, getState) => {
     const {
       data: { data },
     } = await axios.get(`/api/merchants/${id}`, config);
-    console.log("dataaaa", data);
+    // console.log("dataaaa", data);
     dispatch({ type: ADMIN_GET_MERCHANT_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -160,7 +160,7 @@ export const updateMerchantStatusAction = (merchantId, status) => async (dispatc
     const {
       data: { data },
     } = await axios.put(`/api/merchants/${merchantId}`, status, config);
-    console.log("dataaaa", data)
+    // console.log("dataaaa", data)
     dispatch({ type: ADMIN_UPDATE_MERCHANT_STATUS_SUCCESS, payload: data });
     dispatch({ type: ADMIN_GET_MERCHANT_SUCCESS, payload: data });
  

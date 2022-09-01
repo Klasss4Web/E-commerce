@@ -23,6 +23,9 @@ import {
   MERCHANT_ADD_PRODUCT_REQUEST,
   MERCHANT_ADD_PRODUCT_RESET,
   MERCHANT_ADD_PRODUCT_SUCCESS,
+  MERCHANT_GET_REVIEWS_FAILURE,
+  MERCHANT_GET_REVIEWS_REQUEST,
+  MERCHANT_GET_REVIEWS_SUCCESS,
   MERCHANT_PRODUCT_LIST_FAILURE,
   MERCHANT_PRODUCT_LIST_REQUEST,
   MERCHANT_PRODUCT_LIST_SUCCESS,
@@ -39,6 +42,7 @@ import {
 } from "../constants/productConstants";
 
 //USERS
+//GET ALL PRODUCTS
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
@@ -338,6 +342,32 @@ export const merchantProductListReducer = (state = { products: [] }, action) => 
       };
 
     case MERCHANT_PRODUCT_LIST_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//MERCHANT GET ALL REVIEWS
+export const merchantReviewListReducer = (state = { reviews: [] }, action) => {
+  switch (action.type) {
+    case MERCHANT_GET_REVIEWS_REQUEST:
+      return {
+        loading: true,
+        reviews: [],
+      };
+
+    case MERCHANT_GET_REVIEWS_SUCCESS:
+      return {
+        loading: false,
+        reviews: action.payload,
+      };
+
+    case MERCHANT_GET_REVIEWS_FAILURE:
       return {
         loading: false,
         error: action.payload,

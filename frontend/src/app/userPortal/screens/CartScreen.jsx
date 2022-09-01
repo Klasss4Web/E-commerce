@@ -57,12 +57,12 @@ const CartScreen = ({ match, location, history }) => {
             <div className="aler alert-info text-center mt-3">
               Total Cart Products
               <Link className="text-success mx-2" to="/cart">
-                ({cartItems.length})
+                ({cartItems?.length})
               </Link>
             </div>
             {/* cart items */}
-            {cartItems.map((cartItem) => (
-              <div className="cart-item-row" key={cartItem?.productId}>
+            {cartItems?.map((cartItem) => (
+              <div className="cart-item row" key={cartItem?.productId}>
                 <div
                   className="remove-button d-flex justify-content-center align-items-center"
                   style={{ color: "red", cursor: "pointer" }}
@@ -70,42 +70,51 @@ const CartScreen = ({ match, location, history }) => {
                 >
                   <i className="fas fa-times"></i>
                 </div>
-                <div className="cart-image col-md-3">
-                  <img src={cartItem?.image} alt={cartItem?.name} />
+                <div className=" col-md-4">
+                  <img
+                    src={cartItem?.image}
+                    alt={cartItem?.name}
+                    width="100%"
+                    style={{ borderRadius: "10px" }}
+                  />
                 </div>
-                <div className="cart-text col-md-5 d-flex align-items-center">
-                  <Link to={`/products/${cartItem?.productId}`}>
-                    <h4>{cartItem?.name}</h4>
-                  </Link>
-                </div>
-                <div className="cart-qty col-md-2 col-md-5 mt-md-5 mt-3 mt-md-0">
-                  <h6>QUANTITY</h6>
-                  <select
-                    value={cartItem?.qty}
-                    onChange={(e) =>
-                      dispatch(
-                        addItemToCart(cartItem?.productId, e.target.value)
-                      )
-                    }
-                  >
-                    {[...Array(cartItem.countInStock).keys()].map((val) => (
-                      <option key={val + 1} value={val + 1}>
-                        {val + 1}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end">
-                  <h6>PRICE</h6>
-                  <h4>${cartItem?.price}</h4>
+                <div className="col-md-5 d-md-flex">
+                  <div className="cart-text col-md-6">
+                    <Link to={`/products/${cartItem?.productId}`}>
+                      <h5>{cartItem?.name}</h5>
+                    </Link>
+                    <h5>{cartItem?.description}</h5>
+                    <h6>Quantity in store: {cartItem?.countInStock}</h6>
+                  </div>
+                  <div className="cart-qty col-md-2 col-md-5 my-2">
+                    <h6>QUANTITY</h6>
+                    <select
+                      value={cartItem?.qty}
+                      onChange={(e) =>
+                        dispatch(
+                          addItemToCart(cartItem?.productId, e.target.value)
+                        )
+                      }
+                    >
+                      {[...Array(cartItem?.countInStock).keys()].map((val) => (
+                        <option key={val + 1} value={val + 1}>
+                          {val + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end">
+                    <h6>PRICE</h6>
+                    <h4>${cartItem?.price}</h4>
+                  </div>
                 </div>
               </div>
             ))}
 
             {/* End of cart items */}
-            <div className="total">
-              <span className="sub">total:</span>
-              <span className="total-price">${totalPrice}</span>
+            <div className="total mt-4 d-flex justify-content-end">
+              <h3 className="sub">Total:</h3>
+              <h3 className="total-price">${totalPrice}</h3>
             </div>
             <hr />
             <div className="cart-buttons d-flex align-items-center row">

@@ -64,7 +64,7 @@ function App() {
       return <UsersPortalRoutes />;
     }
   }
-  return <UnAuthenticatedRoutes />;
+  return <UsersPortalRoutes />;
 }
 
 export default App;

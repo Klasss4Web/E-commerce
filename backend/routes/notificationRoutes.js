@@ -54,7 +54,7 @@ notificationRoute.put(
     if (notification && product) {
       notification.sender = notification?.sender;
       notification.product = notification?.product;
-      notification.description = notification?.description;
+      notification.description = `Admins response on: ${notification?.description}`;
       notification.image = notification?.image;
       notification.title = notification?.title;
       notification.category = notification?.category;

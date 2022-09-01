@@ -15,11 +15,13 @@ import {
   createProductReviewReducer,
   merchantAddProductReducer,
   merchantProductListReducer,
+  merchantReviewListReducer,
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  adminCreateUserReducer,
   adminUpdateProfileReducer,
   userListReducer,
   userLoginReducer,
@@ -45,7 +47,7 @@ import {
 } from "./reducers/merchantReducer";
 import { adminAddCategoryReducer, adminDeleteCategoryReducer, adminUpdateCategoryReducer, categoryListReducer } from "./reducers/categoriesReducers";
 import { counterReducer } from "./reducers/counterReducer";
-import { adminUpdateNotificationReducer, notificationListReducer } from "./reducers/notificationsReducers";
+import { adminUpdateNotificationReducer, merchantNotificationList, notificationListReducer } from "./reducers/notificationsReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -61,6 +63,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderList: orderListReducer,
   userList: userListReducer,
+  adminAddUser: adminCreateUserReducer,
   adminProductList: adminProductListReducer,
   adminDeleteProduct: adminDeleteProductReducer,
   adminCreateProduct: adminAddProductReducer,
@@ -82,6 +85,8 @@ const reducer = combineReducers({
   adminDeleteCategory: adminDeleteCategoryReducer,
   merchantAddProduct: merchantAddProductReducer,
   merchantProductList: merchantProductListReducer,
+  merchantReviews: merchantReviewListReducer,
+  merchantNotifications: merchantNotificationList,
   adminNotificationList: notificationListReducer,
   adminUpdateNotification: adminUpdateNotificationReducer,
   counter: counterReducer,

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../../redux/actions/userActions";
+import logo from "../../adminPortal/assets/logo.png";
 
 const Header = () => {
 
-  const logo =
-    "https://cdn2.vectorstock.com/i/thumb-large/68/01/shopping-cart-logo-design-vector-14646801.jpg";
+ 
   
   const [keyword, setKeyword] = useState("")
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const Header = () => {
               <div className="row">
                 <div className="col-6 d-flex align-items-center">
                   <Link className="navbar-brand" to="/">
-                    <img alt="logo" src={logo} />
+                    <img alt="logo" src={logo} width="40px" height={"40px"} />
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-center">
@@ -146,7 +146,7 @@ const Header = () => {
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">
                 <Link className="navbar-brand" to="/">
-                  <img alt="logo" src={logo} width="120px" height={"80px"} />
+                  <img alt="logo" src={logo} width="100px" height={"40px"} />
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">

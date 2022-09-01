@@ -63,12 +63,12 @@ export const PlaceOrderScreen = ({ history }) => {
   return (
     <>
       {/* <Header /> */}
-      <div className="container">
+      <div className="container mt-4">
         <div className="row order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="alert-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-user"></i>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export const PlaceOrderScreen = ({ history }) => {
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="alert-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-truck-moving"></i>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export const PlaceOrderScreen = ({ history }) => {
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
-                <div className="alert-success order-box">
+                <div className="alert-success order-box d-flex justify-content-center py-2 rounded-circle">
                   <i className="fas fa-map-marker-alt"></i>
                 </div>
               </div>
@@ -126,22 +126,33 @@ export const PlaceOrderScreen = ({ history }) => {
             ) : (
               <>
                 {cartItems?.map((item, index) => (
-                  <div className="order-product row" key={index}>
-                    <div className="col-md-3 col-6">
-                      <img src={item?.image} alt={item?.name} />
+                  <div className="order-product row mb-3" key={index}>
+                    <div
+                      className="col-md-3 col-6"
+                      style={{ marginRight: "20px" }}
+                    >
+                      <img
+                        src={item?.image}
+                        alt={item?.name}
+                        width="100%"
+                        style={{ borderRadius: "10px" }}
+                      />
                     </div>
-                    <div className="col-md-5 col-6 d-flex align-items-center">
+                    <div className="col-md-4 col-6 d-flex flex-column">
                       <Link to={`/products/${item?.productId}`}>
                         <h6>{item?.name}</h6>
                       </Link>
+                      <h6 className="mt-2">
+                        Status: <span style={{ color: "red" }}>Not Paid</span>
+                      </h6>
                     </div>
                     <div className="mt-3 mt-md-0 col-md-2 col-6 d-flex align-items-center flex-column">
-                      <h4>Quantity</h4>
-                      <h4>{item?.qty}</h4>
+                      <h5>Quantity</h5>
+                      <h5>{item?.qty}</h5>
                     </div>
                     <div className="mt-3 mt-md-0 col-md-2 col-6 d-flex align-items-center flex-column">
-                      <h4>Subtotal</h4>
-                      <h4>{item?.qty * item?.price}</h4>
+                      <h5>Subtotal</h5>
+                      <h5>{item?.qty * item?.price}</h5>
                     </div>
                   </div>
                 ))}

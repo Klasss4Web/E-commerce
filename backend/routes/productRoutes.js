@@ -10,7 +10,7 @@ const productRoute = express.Router();
 productRoute.get(
   "/",
   asyncHandler(async (req, res) => {
-    const pageSize = 3;
+    const pageSize = 6;
     const page = Number(req.query.pageNumber) || 1;
     const keyword = req.query.keyword
       ? {
@@ -281,15 +281,46 @@ productRoute.get(
       const merchantsOwnProducts = products?.filter(
         (product) => product?.owner?._id.toString() === req.user._id.toString()
       );
-      console.log(
-        "users",
-        req.user,
-        "products",
-        merchantsOwnProducts
-      );
+      // console.log(
+      //   "users",
+      //   req.user,
+      //   "products",
+      //   merchantsOwnProducts
+      // );
     res.json(merchantsOwnProducts);
         
 
+  })
+);
+
+//MERCHANT: GET ALL PRODUCT REVIEWS/RATINGS
+//PRODUCT REVIEW/RATING
+productRoute.get(
+  "/merchant/reviews",
+  protect,
+  merchantsOnly,
+  asyncHandler(async (req, res) => {
+    // console.log("req", req, "user", req.user);
+    // const { rating, comment } = req.body;
+    const products = await Products.find({});
+    const productWithReviews = products.filter(product=>product.reviews.length > 0)
+    // const reviews = productWithReviews.map(reviews=> reviews.reviews)
+    // const reviews = product.reviews;
+console.log("products", products)
+    const merchantsOwnreviews = productWithReviews?.filter(
+      (product) => product?.owner?._id.toString() === req.user._id.toString()
+    );
+    if (products) {
+      
+      res.json({
+        status: 200,
+        message: "Reviews successfully fetched",
+        data: merchantsOwnreviews,
+      });
+    } else {
+      res.status(404);
+      throw new Error("No Reviews Found");
+    }
   })
 );
 
