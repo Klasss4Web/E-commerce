@@ -384,3 +384,8 @@ transform: scale(1.05);
 .fa-star, .fa-star-half-alt {
   color: goldenrod
 }
+
+.greet {
+  display: block;
+  color: orange
+}

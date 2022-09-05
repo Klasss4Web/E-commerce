@@ -24,6 +24,8 @@ import { AddProductPage } from "../adminPortal/pages/products/components/AddProd
  import { ProductEditPage } from "../adminPortal/pages/products/components/ProductEditPage";
 import { OrderDetailsPage } from "../adminPortal/pages/ordersPage/orderDetailsPage/OrderDetailsPage";
 import { OrderPage } from "../adminPortal/pages/ordersPage/orderPage/OrderPage";
+import { adminListNotifications } from "../../redux/actions/notificationsActions";
+import { useDispatch } from "react-redux";
 
 
 const AdminPortalRoutes = () => {
@@ -31,6 +33,7 @@ const AdminPortalRoutes = () => {
   const [toggleSide, setToggleSide] = useState(false);
   const [showSidebar, setShowSideBar] = useState(true);
   // const [isMobileScreen] = window.innerWidth < "700px";
+  const dispatch = useDispatch()
   const [isMobileScreen] = useState(
     () => window.matchMedia("(max-width: 700px)")?.matches
   );
@@ -45,6 +48,7 @@ const AdminPortalRoutes = () => {
       if (isMobileScreen) {
         setToggleSide((initial) => !initial);
       }
+      dispatch(adminListNotifications());
     }, [isMobileScreen]);
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../../redux/actions/userActions";
+import { greet } from "../../../utils/greet";
 
 import logo from "../assets/logo.png";
 
@@ -67,6 +68,7 @@ export const Header = ({ toggle, sideBarActive, showSidebar }) => {
           </datalist>
         </form>
       </div>
+      <p>{greet()}</p>
       <div className="col-nav">
         {/* <button
           className="btn btn-icon btn-mobile me-auto"
@@ -95,7 +97,7 @@ export const Header = ({ toggle, sideBarActive, showSidebar }) => {
                   fontSize: "12px",
                 }}
               >
-                {pendingNotifications?.length}
+                {pendingNotifications?.length || 0}
               </small>
             </Link>
           </li>

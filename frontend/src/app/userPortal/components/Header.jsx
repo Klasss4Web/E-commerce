@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../../redux/actions/userActions";
+import { greet } from "../../../utils/greet";
 import logo from "../../adminPortal/assets/logo.png";
 
 const Header = () => {
@@ -40,7 +41,9 @@ const Header = () => {
               <p>info@ecommerce.ng</p>
             </div>
             <div className="col-12 col-lg-6 d-flex justify-content-between">
-              <p className="d-block d-md-none" style={{color: "#fff"}}>info@ecommerce.ng</p>
+              <p className="d-block d-md-none" style={{ color: "#fff" }}>
+                info@ecommerce.ng
+              </p>
               <div className="d-none d-md-block">
                 <Link to="">
                   <i className="fab fa-facebook-f"></i>
@@ -55,7 +58,10 @@ const Header = () => {
                   <i className="fab fa-youtube"></i>
                 </Link>
               </div>
-              <span style={{ color: "#fff" }}>Hi, {userInfo?.name || "Guest"}</span>
+              <span style={{ color: "#fff" }}>
+                Hi, {userInfo?.name || "Guest"}
+              </span>
+              <span className="greet">{greet()}</span>
             </div>
 
             {/* <p>Hi, {userInfo?.name}</p> */}
