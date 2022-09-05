@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { adminCategoriesListAction } from "../../../../redux/actions/categoriesActions";
-import { adminListProducts } from "../../../../redux/actions/productActions";
-import { handleFilter } from "../../../utils/filterSearch";
-import Message from "../loadingError/Error";
-import Loading from "../loadingError/Loading";
+import { adminCategoriesListAction } from "../../../../../redux/actions/categoriesActions";
+import { adminListProducts } from "../../../../../redux/actions/productActions";
+import { handleFilter } from "../../../../utils/filterSearch";
+
+import Message from "../../../components/loadingError/Error";
+import Loading from "../../../components/loadingError/Loading";
 import { Product } from "./Product";
 
 export const MainProducts = ({ products, loading, error }) => {
@@ -21,22 +22,6 @@ export const MainProducts = ({ products, loading, error }) => {
 
   const adminGetCategories = useSelector((state) => state.adminGetCategories);
   const { categories } = adminGetCategories;
-
-
-  // const handleFilter = (e) => {
-  //   const keyword = e.target.value;
-
-  //   if (keyword !== "") {
-  //     const results = products?.filter((product) => {
-  //       return product.name.toLowerCase().includes(keyword.toLowerCase());
-  //       // Use the toLowerCase() method to make it case-insensitive
-  //     });
-  //     setFilteredData(results);
-  //   } else {
-  //     setFilteredData(products);
-  //   }
-  //   setValue(keyword);
-  // };
 
   console.log("filteredData", filteredData);
 

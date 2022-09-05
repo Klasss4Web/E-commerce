@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../adminPortal/Admin.css";
 // import "react-toastify/dist/ReactToastify.css"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AddProductPage } from "../adminPortal/pages/AddProductPage";
-import { HomePage } from "../adminPortal/pages/HomePage";
-import { Login } from "../adminPortal/pages/Login";
-import { NotFound } from "../adminPortal/pages/NotFound";
-import { OrderDetailsPage } from "../adminPortal/pages/OrderDetailsPage";
-import { OrderPage } from "../adminPortal/pages/OrderPage";
-import { ProductEditPage } from "../adminPortal/pages/ProductEditPage";
-import { ProductsPage } from "../adminPortal/pages/ProductsPage";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+// import { AddProductPage } from "../adminPortal/pages/products/components/AddProductPage";
+import { HomePage } from "../adminPortal/pages/homePage/HomePage";
+// import { Login } from "../adminPortal/pages/login/Login";
+// import { NotFound } from "../adminPortal/pages/NotFound";
+// import { ProductEditPage } from "../adminPortal/pages/products/ProductEditPage";
+import { ProductsPage } from "../adminPortal/pages/products/ProductsPage";
 import { UsersPage } from "../adminPortal/pages/users/UsersPage";
 import { ProtectedRoutes } from "../../ProtectedRoutes";
 import { Header } from "../adminPortal/components/Header";
@@ -22,6 +20,10 @@ import { CategoriesPage } from "../adminPortal/pages/categories/CategoriesPage";
 import { CounterPractice } from "../adminPortal/pages/CounterPractice";
 import { Settings } from "../adminPortal/pages/settings/Settings";
 import { Profile } from "../adminPortal/pages/profile/Profile";
+import { AddProductPage } from "../adminPortal/pages/products/components/AddProductPage";
+ import { ProductEditPage } from "../adminPortal/pages/products/components/ProductEditPage";
+import { OrderDetailsPage } from "../adminPortal/pages/ordersPage/orderDetailsPage/OrderDetailsPage";
+import { OrderPage } from "../adminPortal/pages/ordersPage/orderPage/OrderPage";
 
 
 const AdminPortalRoutes = () => {

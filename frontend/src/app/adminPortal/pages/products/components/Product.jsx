@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { adminDeleteProduct } from '../../../../redux/actions/productActions'
+import { adminDeleteProduct } from '../../../../../redux/actions/productActions'
+
 
 export const Product = ({ product }) => {
 

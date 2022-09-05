@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Header } from '../components/Header'
-import { MainEditProduct } from '../components/products/MainEditProduct'
+import { MainEditProduct } from './MainEditProduct'
 // import { Sidebar } from '../components/Sidebar'
 
 export const ProductEditPage = ({ match }) => {

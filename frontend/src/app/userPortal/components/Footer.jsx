@@ -1,36 +1,46 @@
 import React from 'react'
+import flutterWave from "../images/flutterwave.png"
 
 const Footer = () => {
 
   const masterCard =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUOWW2kP8u2RS_pKq5NbNBhm-Z3Hmo3AelVQ&usqp=CAU";
+    "https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png";
 
   return (
     <div className="footer">
-      <div className="justify-content-center d-flex">
+      <div className="justify-content-center align-items-center d-flex flex-column flex-md-row">
         <div className="card-name">
           <img
-            height={"40px"}
-            width="50px"
+            // height={"40px"}
+            width="120px"
             alt="master card"
             src={masterCard}
           />
         </div>
-        <div className="card-name" style={{ marginRight: "20px", marginLeft: "20px"}}>
+        <div
+          className="card-name"
+          style={{ marginRight: "20px", marginLeft: "20px" }}
+        >
           <img
-            height={"40px"}
-            width="50px"
-            alt="Visa card"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMPBpIHHIOncGXhBZ0Owqj7sGfRkoNSWXuTqHCeo812XG3b5A7Sjdm&usqp=CAE&s"
+            height={"50px"}
+            width="120px"
+            alt="stripe logo"
+            src="https://banner2.cleanpng.com/20180601/lje/kisspng-stripe-payment-gateway-paypal-e-commerce-linkedin-5b110ef782f6b7.4138399715278445995364.jpg"
           />
         </div>
         <div className="card-name">
           <img
             height={"50px"}
-            width="100px"
+            width="120px"
             alt="paypal"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf0H2GDv1mx-8kIJ51OEwAfyri7_i7hUaUXw&usqp=CAU"
+            src="https://logolook.net/wp-content/uploads/2021/06/Paypal-Logo.png"
           />
+        </div>
+        <div
+          className="card-name"
+          style={{ marginRight: "20px", marginLeft: "20px" }}
+        >
+          <img height={"50px"} width="120px" alt="paypal" src={flutterWave} />
         </div>
       </div>
     </div>

@@ -13,13 +13,13 @@ import {
   merchantListProducts,
 } from "./redux/actions/productActions";
 import { adminOrdersListAction } from "./redux/actions/orderActions";
-import { UnAuthenticatedRoutes } from "./app/routes/unAuthenticatedRoutes";
-import { adminListNotifications } from "./redux/actions/notificationsActions";
+// import { UnAuthenticatedRoutes } from "./app/routes/unAuthenticatedRoutes";
+// import { adminListNotifications } from "./redux/actions/notificationsActions";
 
 function App() {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
   const { userInfo } = userLogin;
   const userData = localStorage.getItem("userInfo");
   const parsedData = JSON.parse(userData);

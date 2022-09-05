@@ -20,7 +20,7 @@ export const OrderDetailProducts = ({ order, loading }) => {
              <th style={{ width: "40%" }}>Product</th>
              <th style={{ width: "20%" }}>Unit Price</th>
              <th style={{ width: "20%" }}>Quantity</th>
-             <th style={{ width: "20%" }}>Total</th>
+             <th style={{ width: "13%" }}>Total</th>
            </tr>
          </thead>
        </table>
@@ -33,8 +33,8 @@ export const OrderDetailProducts = ({ order, loading }) => {
                    <img
                      src={item?.image}
                      alt={item?.name}
-                     style={{ height: "40px", width: "40px" }}
-                     className="img-xs"
+                     style={{ width: "90%", borderRadius: "10px" }}
+                    //  className="img-xs"
                    />
                  </div>
                  <p className="info">{item?.name}</p>

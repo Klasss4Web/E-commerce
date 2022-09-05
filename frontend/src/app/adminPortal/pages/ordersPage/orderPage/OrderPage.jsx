@@ -1,19 +1,17 @@
 import React from 'react'
 // import { Header } from '../components/Header';
-import { Main } from '../components/HomeComponents/Main';
-// import { Sidebar } from '../components/Sidebar';
+import { MainOrder } from '../components/MainOrder';
 // import SideBar from "../components/sidebar/index";
 
-export const HomePage = () => {
+export const OrderPage = ({ match }) => {
+
   return (
     <div>
-      {/* <main className="main-wrap"> */}
       {/* <Header />
       <SideBar /> */}
       <main className="main-wrap">
-        <Main />
+        <MainOrder />
       </main>
-      {/* </main> */}
     </div>
   );
 }

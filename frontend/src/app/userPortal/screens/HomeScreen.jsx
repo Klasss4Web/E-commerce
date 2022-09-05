@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from '../components/Footer'
 // import Header from '../components/Header'
-import { CallToActionSection } from '../components/homeComponents/CallToActionSection'
+// import { CallToActionSection } from '../components/homeComponents/CallToActionSection'
 import { ContactInfo } from '../components/homeComponents/ContactInfo'
 import { ShopSection } from '../components/homeComponents/ShopSection'
 
@@ -15,7 +15,7 @@ export const HomeScreen = ({ match }) => {
     <div>
       {/* <Header /> */}
       <ShopSection keyword={keyword} pageNumber={pageNumber} />
-      <CallToActionSection />
+      {/* <CallToActionSection /> */}
       <ContactInfo />
       <Footer />
     </div>

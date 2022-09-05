@@ -13,7 +13,7 @@ export const ContactInfo = () => {
             <p>07035607059</p>
           </div>
         </div>
-        <div className="col-12 col-md-4 contact-Box">
+        <div className="col-12 col-md-4 contact-box">
           <div className="box-info">
             <div className="info-image">
               <i className="fas fa-map-marker-alt"></i>
@@ -22,7 +22,7 @@ export const ContactInfo = () => {
             <p>Lekki, Lagos</p>
           </div>
         </div>
-        <div className="col-12 col-md-4 contact-Box">
+        <div className="col-12 col-md-4 contact-box">
           <div className="box-info">
             <div className="info-image">
               <i className="fas fa-fax"></i>

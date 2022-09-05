@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { handleFilter } from "../../../utils/filterSearch";
-import Message from "../loadingError/Error";
-import Loading from "../loadingError/Loading";
+import { handleFilter } from "../../../../utils/filterSearch";
+import Message from "../../../components/loadingError/Error";
+import Loading from "../../../components/loadingError/Loading";
 import { Orders } from "./Orders";
 
 export const MainOrder = ({ orderId }) => {

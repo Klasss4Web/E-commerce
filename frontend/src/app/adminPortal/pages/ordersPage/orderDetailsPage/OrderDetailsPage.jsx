@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Header } from '../components/Header';
-import { OrderDetailsMain } from '../components/orders/OrderDetailsMain';
+import { OrderDetailsMain } from '../components/OrderDetailsMain';
 // import SideBar from "../components/sidebar/index";
 
 export const OrderDetailsPage = ({ match }) => {

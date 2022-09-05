@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {
-  updateProductDetails,
-  getProductDetails,
-} from "../../../../redux/actions/productActions";
-import { ADMIN_UPDATE_PRODUCT_DETAILS_RESET } from "../../../../redux/constants/productConstants";
-import Toast from "../../../userPortal/components/loadingError/Toast";
-import Message from "../loadingError/Error";
-import Loading from "../loadingError/Loading";
+import { getProductDetails, updateProductDetails } from "../../../../../redux/actions/productActions";
+
+import { ADMIN_UPDATE_PRODUCT_DETAILS_RESET } from "../../../../../redux/constants/productConstants";
+import Toast from "../../../components/loadingError/Toast";
+import Message from "../../../components/loadingError/Error";
+import Loading from "../../../components/loadingError/Loading";
 
 export const MainEditProduct = ({ productId }) => {
 

@@ -15,7 +15,7 @@ import axios from "axios";
 import { ORDER_CREATE_PAYMENT_RESET } from "../../../redux/constants/orderConstants";
 
 export const OrderScreen = ({ match }) => {
-  window.scroll(0, 0);
+  // window.scroll(0, 0);
 
   const [paypalSdkReady, setPaypalSdkReady] = useState(false);
   const orderId = match.params.id;

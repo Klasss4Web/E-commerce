@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { admiGetOrderDetailsAction, updatedDeliveryAction } from '../../../../redux/actions/orderActions';
-import Message from '../loadingError/Error';
-import Loading from '../loadingError/Loading';
+
+import Message from "../../../components/loadingError/Error";
+import Loading from "../../../components/loadingError/Loading";
 import { OrderDetailProducts } from './OrderDetailProducts';
 import { OrderDetailsInfo } from './OrderDetailsInfo';
 import moment from "moment";
-import Toast from '../../../userPortal/components/loadingError/Toast';
+import Toast from '../../../components/loadingError/Toast';
+import { admiGetOrderDetailsAction, updatedDeliveryAction } from '../../../../../redux/actions/orderActions';
 
 
 export const OrderDetailsMain = ({ orderId }) => {
@@ -17,12 +18,7 @@ export const OrderDetailsMain = ({ orderId }) => {
   const [refresh, setRefresh] = useState(false)
 
   const orderDetails = useSelector(state=>state.adminOrderDetails)
-  const { loading, error, order } = orderDetails
-
-  // const adminUpdateOrderDelivery = useSelector(
-  //   (state) => state?.adminUpdateOrderDelivery
-  // );
-
+  const { loading, error, order } = orderDetails;
 
   const handleUpdateDeliveryStatus = () => {
     dispatch(updatedDeliveryAction(order, setRefresh));

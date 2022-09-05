@@ -1,8 +1,8 @@
 import moment from 'moment';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Message from '../loadingError/Error';
-import Loading from '../loadingError/Loading';
+import Message from '../../../components/loadingError/Error';
+import Loading from "../../../components/loadingError/Loading";
 
 export const LatestOrders = ({ loading, error, orders }) => {
 
@@ -17,7 +17,7 @@ export const LatestOrders = ({ loading, error, orders }) => {
         <div className="table-responsive">
           <table className="table">
             <tbody>
-              {orders.slice(0, 5)?.map((order) => (
+              {orders?.slice(0, 5)?.map((order) => (
                 <tr key={order?._id}>
                   <td>
                     <b>{order?.user?.name}</b>
@@ -41,7 +41,7 @@ export const LatestOrders = ({ loading, error, orders }) => {
                     {order?.isDelivered ? (
                       <span className="rounded-pill alert-success px-2">
                         Delivered At{" "}
-                        {moment(order?.isDelivered).format("MMM Do YY")}
+                        {moment(order?.deliveredAt).format("MMM Do YY")}
                       </span>
                     ) : (
                       <span className="rounded-pill alert-danger px-2">
@@ -51,7 +51,7 @@ export const LatestOrders = ({ loading, error, orders }) => {
                     )}
                   </td>
                   <td className="d-flex justify-content-end align-item-center">
-                    <Link to={`/order/${order._id}`} className="text-success">
+                    <Link to={`/order/${order?._id}`} className="text-success">
                       <i className="fas fa-eye"></i>
                     </Link>
                   </td>

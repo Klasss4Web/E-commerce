@@ -4,8 +4,8 @@ import { LatestOrders } from './LatestOrders'
 import { ProductsStatistics } from './ProductsStatistics'
 import { SalesStatistics } from './SalesStatistics'
 import { Cards } from './Cards'
-import Loading from '../loadingError/Loading'
-import Message from '../loadingError/Error'
+// import Loading from '../loadingError/Loading'
+// import Message from '../loadingError/Error'
 
 export const Main = () => {
 

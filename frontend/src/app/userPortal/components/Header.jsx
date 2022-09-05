@@ -39,20 +39,26 @@ const Header = () => {
               <p>+234 703 560 7059</p>
               <p>info@ecommerce.ng</p>
             </div>
-            <div className="col-12 col-lg-6 justify-content-center">
-              <Link to="">
-                <i className="fab fa-facebook-f"></i>
-              </Link>
-              <Link to="">
-                <i className="fab fa-instagram"></i>
-              </Link>
-              <Link to="">
-                <i className="fab fa-linkedin-in"></i>
-              </Link>
-              <Link to="">
-                <i className="fab fa-youtube"></i>
-              </Link>
+            <div className="col-12 col-lg-6 d-flex justify-content-between">
+              <p className="d-block d-md-none" style={{color: "#fff"}}>info@ecommerce.ng</p>
+              <div className="d-none d-md-block">
+                <Link to="">
+                  <i className="fab fa-facebook-f"></i>
+                </Link>
+                <Link to="">
+                  <i className="fab fa-instagram"></i>
+                </Link>
+                <Link to="">
+                  <i className="fab fa-linkedin-in"></i>
+                </Link>
+                <Link to="">
+                  <i className="fab fa-youtube"></i>
+                </Link>
+              </div>
+              <span style={{ color: "#fff" }}>Hi, {userInfo?.name || "Guest"}</span>
             </div>
+
+            {/* <p>Hi, {userInfo?.name}</p> */}
           </div>
         </div>
       </div>
@@ -66,7 +72,7 @@ const Header = () => {
               <div className="row">
                 <div className="col-6 d-flex align-items-center">
                   <Link className="navbar-brand" to="/">
-                    <img alt="logo" src={logo} width="40px" height={"40px"} />
+                    <img alt="logo" src={logo} width="40px" height={"30px"} />
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-center">
@@ -78,6 +84,7 @@ const Header = () => {
                         aria-haspopup="true"
                         data-toggle="dropdown"
                         aria-expanded="false"
+                        style={{ color: "#2A9D8F" }}
                       >
                         <i className="fas fa-user"></i>
                       </button>
@@ -100,7 +107,7 @@ const Header = () => {
                       <button
                         type="button"
                         className="name-button dropdown-toggle"
-                        data-toggle="dropdown"
+                        data-bs-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
@@ -118,16 +125,33 @@ const Header = () => {
                     </div>
                   )}
 
-                  <Link className="cart-mobile" to="/cart">
+                  <Link
+                    className="cart-mobile"
+                    to="/cart"
+                    style={{ position: "relative" }}
+                  >
+                    <span className="badge">{cartItems?.length}</span>
+                    <i
+                      class="fa fa-shopping-cart"
+                      aria-hidden="true"
+                      style={{ fontSize: "40px", color: "#264653" }}
+                    ></i>
+                  </Link>
+
+                  {/* <Link className="cart-mobile" to="/cart">
                     <i className="fas fa-shopping-bag"></i>
                     <span className="badge">{cartItems?.length}</span>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="col-12 d-flex align-items-center">
-                  <form className="input-group" onSubmit={handleSubmit}>
+                  <form
+                    className="input-group"
+                    onSubmit={handleSubmit}
+                    style={{ width: "100%" }}
+                  >
                     <input
                       type={"search"}
-                      className="form-control rounded-search"
+                      className="form-control rounded-search search"
                       placeholder="Search"
                       value={keyword}
                       onChange={(e) => setKeyword(e.target.value)}
@@ -225,13 +249,13 @@ const Header = () => {
                   </>
                 )}
 
-                <Link className="" to="/cart">
+                <Link className="" to="/cart" style={{ position: "relative" }}>
+                  <span className="badge">{cartItems?.length}</span>
                   <i
                     class="fa fa-shopping-cart"
                     aria-hidden="true"
                     style={{ fontSize: "40px", color: "#264653" }}
                   ></i>
-                  <span className="badge">{cartItems?.length}</span>
                 </Link>
               </div>
             </div>

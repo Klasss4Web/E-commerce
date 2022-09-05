@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { adminListProducts } from '../../../redux/actions/productActions';
-// import { Header } from '../components/Header';
-import { MainProducts } from '../components/products/MainProducts';
-// import SideBar from "../components/sidebar/index";
-// import { Sidebar } from '../components/Sidebar';
+import { adminListProducts } from '../../../../redux/actions/productActions';
+import { MainProducts } from './components/MainProducts';
+
 
 export const ProductsPage = () => {
 
