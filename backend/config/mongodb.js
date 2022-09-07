@@ -9,7 +9,7 @@ const connectToDataBase = () => {
 
     console.log("Mongo dB Connected", connection);
   } catch (error) {
-    console.error(`Error:, ${error.message}`);
+    console.error(`Error:, ${error?.message}`);
     // throw new Error(`Error:, ${error.message}`);
     process.exit(1);
   }
