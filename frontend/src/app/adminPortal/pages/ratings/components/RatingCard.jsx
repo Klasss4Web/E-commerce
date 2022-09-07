@@ -17,6 +17,7 @@ export const RatingCard = ({ reviews }) => {
     <div
       style={{
         width: "99%",
+        // height: "300px",
         marginBottom: "20px",
         boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
         borderRadius: "10px",
@@ -33,6 +34,7 @@ export const RatingCard = ({ reviews }) => {
           >
             <img
               width={"100%"}
+              height="200px"
               src={reviews?.image}
               alt=""
               style={{ borderRadius: "10px" }}
@@ -57,6 +59,7 @@ export const RatingCard = ({ reviews }) => {
             <div className="slide-image">
               <img
                 width={"100%"}
+                height="200px"
                 src={reviews?.image}
                 alt=""
                 style={{ borderRadius: "10px" }}

@@ -40,18 +40,16 @@ export const PasswordSettings = () => {
           }}
         >
           <div className="form-group" style={{ width: "49%" }}>
-            <label for="phone">Confirm Password</label>
+            <label for="confirm">Confirm Password</label>
             <input
               type="password"
               className="form-control"
-              id="phone"
+              id="confirm"
               placeholder="Confirm Password"
             />
           </div>
-
-         
         </div>
-       
+
         <div className="form-group" style={{ display: "flex" }}>
           <button>Update</button>
         </div>
